@@ -1,0 +1,42 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:LabShell"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="LabShell.MainWindow"
+        Title="LabShell" Height="350" Width="639">
+    <Grid>
+        <GroupBox Header="当前成员" Margin="27,39,0,55" HorizontalAlignment="Left" Width="238">
+        	<Grid Margin="0,0,-4,-1.337">
+        		<ListView x:Name="MemberList" Margin="8,8,0,64" HorizontalAlignment="Left" Width="214">
+        			<ListView.View>
+        				<GridView>
+        					<GridViewColumn x:Name="gvc">
+        						<GridViewColumn.CellTemplate>
+        							<DataTemplate>
+        								<CheckBox x:Name="checkbox" Click="CheckBox_Click" Tag="{Binding Uid}"/>
+        							</DataTemplate>
+        						</GridViewColumn.CellTemplate>
+        						<CheckBox x:Name="titlecb" Click="CheckBox_Click_1" Content="全选"/>
+        					</GridViewColumn>
+        					<GridViewColumn Header="学号" DisplayMemberBinding="{Binding Uid}" />
+        					<GridViewColumn Header="姓名" DisplayMemberBinding="{Binding Username}" />
+        				</GridView>
+        			</ListView.View>
+        		</ListView>
+        		<Button Content="移除" HorizontalAlignment="Left" Margin="8,0,0,20.829" VerticalAlignment="Bottom" Width="81.333" Height="23.171" Click="Button_Click" d:LayoutOverrides="HorizontalAlignment" />
+        		<Button Content="重置" HorizontalAlignment="Left" Margin="137.667,0,0,20.829" VerticalAlignment="Bottom" Width="84.333" Height="23.171" Click="ResetButton_Click" />
+        	</Grid>
+        </GroupBox>
+        <local:LabMenu/>
+        <GroupBox Header="添加成员" Margin="269,39,27.563,55">
+        	<Grid>
+        		<Label Content="学号" Height="27.163" VerticalAlignment="Top" HorizontalAlignment="Left" Width="67.437" Margin="37,57,0,0"/>
+				<Label Content="密码" Height="27.163" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="67.437" Margin="37,0,0,68"/>
+				<Button Content="添加" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" Margin="0,0,18.437,18.326"/>
+				<TextBox Text="" VerticalAlignment="Top" Margin="108.437,59,18.437,0"/>
+				<PasswordBox VerticalAlignment="Bottom" Margin="108.437,0,18.437,71.326"/>
+        	</Grid>
+		</GroupBox>
+        <Button Content="开始试验" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" Margin="0,0,50,20"/>
+    </Grid>
+</Window>
