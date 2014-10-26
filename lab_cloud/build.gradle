@@ -30,7 +30,6 @@ dependencies {
 			 'org.codehaus.jackson:jackson-mapper-asl:1.9.13',
 			 'org.codehaus.jackson:jackson-core-asl:1.9.13',
 			 'org.hibernate:hibernate-core:4.3.5.Final',
-			 'org.hibernate:hibernate-validator:4.3.5.Final',
 			 'org.hibernate:hibernate-entitymanager:4.3.5.Final',
 			 'org.hibernate:hibernate-c3p0:4.3.5.Final',
 			 'mysql:mysql-connector-java:5.1.24',
