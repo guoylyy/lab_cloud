@@ -15,7 +15,6 @@ hs_err_pid*
 *.log
 *.log.*
 *.classpath
-persistence-mysql.properties
 
 *.DS_Store
 bin/
