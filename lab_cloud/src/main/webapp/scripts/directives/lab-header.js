@@ -13,7 +13,8 @@ angular.module('prjApp')
       restrict: 'E',
       replace: true,
       link: function postLink(scope, element, attrs) {
-        
+
       }
     };
   });
+

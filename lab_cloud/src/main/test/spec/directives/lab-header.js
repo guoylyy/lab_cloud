@@ -3,7 +3,7 @@
 describe('Directive: labHeader', function () {
 
   // load the directive's module
-  beforeEach(module('srcApp'));
+  beforeEach(module('prjApp'));
 
   var element,
     scope;
@@ -15,6 +15,6 @@ describe('Directive: labHeader', function () {
   it('should make hidden element visible', inject(function ($compile) {
     element = angular.element('<lab-header></lab-header>');
     element = $compile(element)(scope);
-    expect(element.text()).toBe('this is the labHeader directive');
+    expect(element.text()).toBe('');
   }));
 });

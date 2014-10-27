@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name srcApp.controller:AboutCtrl
+ * @name prjApp.controller:ProfileCtrl
  * @description
- * # AboutCtrl
- * Controller of the srcApp
+ * # ProfileCtrl
+ * Controller of the prjApp
  */
 angular.module('prjApp')
-  .controller('AboutCtrl', function ($scope) {
+  .controller('ProfileCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
