@@ -7,7 +7,7 @@
  * # TestCtrl
  * Controller of the srcApp
  */
-angular.module('srcApp')
+angular.module('prjApp')
   .controller('TestCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
