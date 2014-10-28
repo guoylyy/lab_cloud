@@ -16,65 +16,65 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.prj.entity.User;
-import com.prj.service.UserService;
+import com.prj.entity.Account;
+import com.prj.service.AccountService;
 import com.prj.util.JsonUtil;
 import com.prj.util.Page;
 import com.prj.util.RequestHelper;
 
 @Controller
-@RequestMapping(value = "/User")
-public class UserController {
+@RequestMapping(value = "/Account")
+public class AccountController {
 
-	@Resource(name = "UserServiceImpl")
-	UserService vs;
+	@Resource(name = "AccountServiceImpl")
+	AccountService vs;
 
 	@Autowired
 	JsonUtil jsonutil;
 
 	@RequestMapping(value = "/table", method = RequestMethod.GET)
 	public String IndexView(Model model) {
-		return "User/table";
+		return "Account/table";
 	}
 
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	@ResponseBody
-	public List<User> ListUser(Model model) {
-		return vs.getAllUser();
+	public List<Account> ListAccount(Model model) {
+		return vs.getAllAccount();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public User getUser(@PathVariable int id) {
-		return vs.getUserById(id);
+	public Account getAccount(@PathVariable int id) {
+		return vs.getAccountById(id);
 	}
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public boolean deleteUser(@PathVariable int id) {
-		User v = new User();
+	public boolean deleteAccount(@PathVariable int id) {
+		Account v = new Account();
 		v.setId(id);
-		return vs.deleteUser(v);
+		return vs.deleteAccount(v);
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean addUser(@RequestBody String data) {
+	public boolean addAccount(@RequestBody String data) {
 		System.out.println("json string:" + data);
-		User v = jsonutil.toObject(data, User.class);
-		return vs.addUser(v);
+		Account v = jsonutil.toObject(data, Account.class);
+		return vs.addAccount(v);
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	@ResponseBody
-	public User updateUser(@RequestBody String data) {
-		User v = jsonutil.toObject(data, User.class);
-		return vs.updateUser(v);
+	public Account updateAccount(@RequestBody String data) {
+		Account v = jsonutil.toObject(data, Account.class);
+		return vs.updateAccount(v);
 	}
 
 	@RequestMapping(value = "/conditions/{page_number}/{page_size}", method = RequestMethod.GET)
 	@ResponseBody
-	public Page<User> getTaxByConditions(@PathVariable int page_number,
+	public Page<Account> getTaxByConditions(@PathVariable int page_number,
 			@PathVariable int page_size, HttpServletRequest request) {
 		String[] parameters = { "year", "month" };
 
@@ -83,8 +83,4 @@ public class UserController {
 
 		return vs.getByPageWithConditions(page_number, page_size, list);
 	}
-	
-//	@RequsestMapping(value = "/login", method = RequestMethod.POST)
-//	@ResponseBody
-//	public 
 }
