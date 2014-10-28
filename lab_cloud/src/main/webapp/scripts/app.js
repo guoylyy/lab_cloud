@@ -21,15 +21,24 @@ angular
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
+      .when('/login', {
+        templateUrl: 'views/login.html',
+        controller: 'LoginCtrl'
       })
-      .when('/test', {
-        templateUrl: 'views/test.html',
-        controller: 'TestCtrl'
+      .when('/profile', {
+        templateUrl: 'views/profile.html',
+        controller: 'ProfileCtrl'
+      })
+      .when('/register', {
+        templateUrl: 'views/register.html',
+        controller: 'RegisterCtrl'
       })
       .otherwise({
         redirectTo: '/'
       });
   });
+
+
+
+
+  
