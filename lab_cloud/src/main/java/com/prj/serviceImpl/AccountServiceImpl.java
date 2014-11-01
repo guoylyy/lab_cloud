@@ -1,5 +1,6 @@
 package com.prj.serviceImpl;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -11,6 +12,7 @@ import com.prj.dao.AccountDao;
 import com.prj.entity.Account;
 import com.prj.service.AccountService;
 import com.prj.util.Page;
+import com.prj.util.TokenTool;
 
 @Service("AccountServiceImpl")
 public class AccountServiceImpl implements AccountService {
@@ -53,4 +55,13 @@ public class AccountServiceImpl implements AccountService {
 		return dao.getByPageWithConditions(pagenumber, pagesize, list);
 	}
 
+	public Account login(Account account) {
+		Account r = dao.getAccountByNumber(account.getAccountNumber());
+		if (r != null && r.getIsActive() && r.getAccountPassword().equals(account.getAccountPassword())) {
+			r.setLastLoginTime(Calendar.getInstance().getTime());
+			r.setLoginToken(TokenTool.generateToken(account));
+			return updateAccount(r);
+		}
+		return null;
+	}
 }

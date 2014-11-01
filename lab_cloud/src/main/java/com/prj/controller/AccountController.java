@@ -83,4 +83,10 @@ public class AccountController {
 
 		return vs.getByPageWithConditions(page_number, page_size, list);
 	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@ResponseBody
+	public Account login(@RequestBody Account account) {
+		return vs.login(account);
+	}
 }

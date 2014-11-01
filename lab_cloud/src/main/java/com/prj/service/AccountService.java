@@ -25,4 +25,6 @@ public interface AccountService {
 	Page<Account> getByPageWithConditions(int pagenumber, int pagesize,
 			List<SimpleExpression> list);
 
+	Account login(Account account);
+
 }

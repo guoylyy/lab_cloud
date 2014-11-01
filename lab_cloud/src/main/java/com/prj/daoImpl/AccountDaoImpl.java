@@ -27,7 +27,7 @@ public class AccountDaoImpl implements AccountDao {
 	private static Logger logger = Logger.getLogger(AccountDaoImpl.class);
 
 	public boolean addAccount(Account v) {
-		// TODO Auto-generated method stub
+		v.setIsActive(true);
 		return commonDao.addObject(v);
 	}
 
@@ -73,16 +73,13 @@ public class AccountDaoImpl implements AccountDao {
 		return commonDao.getByConditions("com.prj.entity.Account", list);
 	}
 
-	public Account checkAccount(Account v) {
+	public Account getAccountByNumber(String number) {
 		List<SimpleExpression> list = new ArrayList<SimpleExpression>();
-		list.add(Restrictions.eq("accountNumber", v.getAccountNumber()));
-		list.add(Restrictions.eq("accountPassword", v.getAccountPassword()));
-		List r = commonDao.getByConditions("com.prj.entity.Account", list);
+		list.add(Restrictions.eq("accountNumber", number));
+		List<?> r = commonDao.getByConditions("com.prj.entity.Account", list);
 		if (r.isEmpty()) {
 			return null;
 		}
 		return (Account) r.get(0);
 	}
-
-	
 }
