@@ -16,6 +16,6 @@ public class CodeHelper {
             sb.append(base.charAt(number));
         }
         return sb.toString();
+    
     }
-
 }
