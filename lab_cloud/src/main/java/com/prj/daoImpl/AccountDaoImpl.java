@@ -1,10 +1,12 @@
 package com.prj.daoImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.SimpleExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,4 +73,16 @@ public class AccountDaoImpl implements AccountDao {
 		return commonDao.getByConditions("com.prj.entity.Account", list);
 	}
 
+	public Account checkAccount(Account v) {
+		List<SimpleExpression> list = new ArrayList<SimpleExpression>();
+		list.add(Restrictions.eq("accountNumber", v.getAccountNumber()));
+		list.add(Restrictions.eq("accountPassword", v.getAccountPassword()));
+		List r = commonDao.getByConditions("com.prj.entity.Account", list);
+		if (r.isEmpty()) {
+			return null;
+		}
+		return (Account) r.get(0);
+	}
+
+	
 }

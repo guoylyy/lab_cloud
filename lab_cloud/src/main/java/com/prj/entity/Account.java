@@ -1,13 +1,22 @@
 package com.prj.entity;
 
 import java.sql.Date;
-import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 @Table(name = "account")
@@ -24,10 +33,14 @@ public class Account extends BaseEntity {
 	private String accountEmail;
 	private Character accountCharacter;
 	private String studentGrade;
-	private Date entranceYearmonth;
-	private Time lastLoginTime;
+	private Date entranceYearMonth;//used by student
+	private Timestamp lastLoginTime;
 	private Boolean isActive;
-
+	private String loginToken;
+	private Set<Class> classes = new HashSet<Class>(0);//used by teacher
+	private StudentClass studentClass;//used by student
+	private StudentReservation studentReservation;//used by student
+	
 	@Column(nullable = false)
 	public String getAccountNumber() {
 		return accountNumber;
@@ -55,6 +68,7 @@ public class Account extends BaseEntity {
 		this.accountName = accountName;
 	}
 
+	@Column
 	public String getAccountEmail() {
 		return accountEmail;
 	}
@@ -72,6 +86,7 @@ public class Account extends BaseEntity {
 		this.accountCharacter = accountCharacter;
 	}
 
+	@Column
 	public String getStudentGrade() {
 		return studentGrade;
 	}
@@ -80,29 +95,70 @@ public class Account extends BaseEntity {
 		this.studentGrade = studentGrade;
 	}
 
-	public Date getEntranceYearmonth() {
-		return entranceYearmonth;
+	@Column
+	public Date getEntranceYearMonth() {
+		return entranceYearMonth;
 	}
 
-	public void setEntranceYearmonth(Date entranceYearmonth) {
-		this.entranceYearmonth = entranceYearmonth;
+	public void setEntranceYearMonth(Date entranceYearMonth) {
+		this.entranceYearMonth = entranceYearMonth;
 	}
 
 	@Column(nullable = false)
-	public Time getLastLoginTime() {
+	public Timestamp getLastLoginTime() {
 		return lastLoginTime;
 	}
 
-	public void setLastLoginTime(Time lastLoginTime) {
+	public void setLastLoginTime(Timestamp lastLoginTime) {
 		this.lastLoginTime = lastLoginTime;
 	}
 
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition="BIT default 1")
 	public Boolean getIsActive() {
 		return isActive;
 	}
 
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
+	}
+
+	@Column
+	public String getLoginToken() {
+		return loginToken;
+	}
+
+	public void setLoginToken(String loginToken) {
+		this.loginToken = loginToken;
+	}
+
+	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "teacher")
+	public Set<Class> getClasses() {
+		return classes;
+	}
+
+	public void setClasses(Set<Class> classes) {
+		this.classes = classes;
+	}
+
+	@ManyToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
+	@JoinColumn(name = "studentClassId")
+	@JsonIgnore
+	public StudentClass getStudentClass() {
+		return studentClass;
+	}
+
+	public void setStudentClass(StudentClass studentClass) {
+		this.studentClass = studentClass;
+	}
+
+	@ManyToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
+	@JoinColumn(name = "studentReaservationId")
+	@JsonIgnore
+	public StudentReservation getStudentReservation() {
+		return studentReservation;
+	}
+
+	public void setStudentReservation(StudentReservation studentReservation) {
+		this.studentReservation = studentReservation;
 	}
 }

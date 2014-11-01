@@ -24,4 +24,6 @@ public interface AccountDao {
 	Page<Account> getByPageWithConditions(int pagenumber, int pagesize,
 			List<SimpleExpression> list);
 
+	Account checkAccount(Account v);
+
 }

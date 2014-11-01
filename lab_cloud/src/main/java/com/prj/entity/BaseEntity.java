@@ -10,16 +10,13 @@ import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public class BaseEntity {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	int id;
 	
-	@Column(nullable=false)
 	Date create_time;
-	
-	@Column( nullable=false)
 	Date modify_time;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int getId() {
 		return id;
 	}
@@ -28,6 +25,7 @@ public class BaseEntity {
 		this.id = id;
 	}
 
+	@Column(nullable = false)
 	public Date getCreate_time() {
 		return create_time;
 	}
@@ -36,6 +34,7 @@ public class BaseEntity {
 		this.create_time = create_time;
 	}
 
+	@Column(nullable = false)
 	public Date getModify_time() {
 		return modify_time;
 	}

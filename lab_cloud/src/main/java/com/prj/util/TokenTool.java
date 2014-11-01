@@ -8,7 +8,7 @@ import java.util.Random;
 
 import org.apache.log4j.Logger;
 
-import com.prj.entity.User;
+import com.prj.entity.Account;
 
 
 public class TokenTool {
@@ -19,9 +19,9 @@ public class TokenTool {
 
 	private static Logger logger = Logger.getLogger(TokenTool.class);
 
-	public static String generateToken(User user) {
-		String token = MD5Tool.GetMd5(user.getAccount() + ":"
-				+ user.getPassword() + ":" + TOKEN_RANDOM);
+	public static String generateToken(Account account) {
+		String token = MD5Tool.GetMd5(account.getAccountNumber() + ":"
+				+ account.getAccountPassword() + ":" + TOKEN_RANDOM);
 		Calendar c = Calendar.getInstance();
 		c.set(Calendar.MONTH, c.get(Calendar.MONTH) + 1);
 		DateFormat f = new SimpleDateFormat(TOKEN_DATE_FORMAT);
