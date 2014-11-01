@@ -11,6 +11,8 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 @Table(name = "semester")
 public class Semester extends BaseEntity {
@@ -19,6 +21,7 @@ public class Semester extends BaseEntity {
 	private Set<Class> classes = new HashSet<Class>(0);
 	
 	@Column(nullable = false)
+	@Type(type = "date")
 	public Date getStartDate() {
 		return startDate;
 	}
@@ -27,6 +30,7 @@ public class Semester extends BaseEntity {
 	}
 	
 	@Column(nullable = false)
+	@Type(type = "date")
 	public Date getEndDate() {
 		return endDate;
 	}

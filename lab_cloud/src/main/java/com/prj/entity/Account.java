@@ -1,7 +1,6 @@
 package com.prj.entity;
 
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "account")
@@ -34,7 +34,7 @@ public class Account extends BaseEntity {
 	private Character accountCharacter;
 	private String studentGrade;
 	private Date entranceYearMonth;//used by student
-	private Timestamp lastLoginTime;
+	private Date lastLoginTime;
 	private Boolean isActive;
 	private String loginToken;
 	private Set<Class> classes = new HashSet<Class>(0);//used by teacher
@@ -77,6 +77,7 @@ public class Account extends BaseEntity {
 		this.accountEmail = accountEmail;
 	}
 
+	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	public Character getAccountCharacter() {
 		return accountCharacter;
@@ -96,6 +97,7 @@ public class Account extends BaseEntity {
 	}
 
 	@Column
+	@Type(type = "date")
 	public Date getEntranceYearMonth() {
 		return entranceYearMonth;
 	}
@@ -104,16 +106,16 @@ public class Account extends BaseEntity {
 		this.entranceYearMonth = entranceYearMonth;
 	}
 
-	@Column(nullable = false)
-	public Timestamp getLastLoginTime() {
+	@Type(type = "timestamp")
+	public Date getLastLoginTime() {
 		return lastLoginTime;
 	}
 
-	public void setLastLoginTime(Timestamp lastLoginTime) {
+	public void setLastLoginTime(Date lastLoginTime) {
 		this.lastLoginTime = lastLoginTime;
 	}
 
-	@Column(nullable = false, columnDefinition="BIT default 1")
+	@Column(nullable = false)//columnDefinition="BIT default 1"
 	public Boolean getIsActive() {
 		return isActive;
 	}

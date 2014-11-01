@@ -1,6 +1,7 @@
 package com.prj.entity;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,13 +15,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "class_reservation")
 public class ClassReservation extends BaseEntity {
 	private String classReservationNo;
 	private Account reservator;
-	private Timestamp timestamp;
+	private Date timestamp;
 	private Set<StudentClass> studentClasses = new HashSet<StudentClass>(0);
 	private Set<LabPlan> labPlans = new HashSet<LabPlan>(0);
 	
@@ -43,7 +45,8 @@ public class ClassReservation extends BaseEntity {
 	}
 	
 	@Column(nullable = false)
-	public Timestamp getTimestamp() {
+	@Type(type = "timestamp")
+	public Date getTimestamp() {
 		return timestamp;
 	}
 	public void setTimestamp(Timestamp timestamp) {

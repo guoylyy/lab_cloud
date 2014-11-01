@@ -14,6 +14,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 @Table(name = "course")
 public class Course extends BaseEntity {
@@ -40,6 +42,7 @@ public class Course extends BaseEntity {
 	}
 	
 	@Column(nullable = false)
+	@Type(type = "date")
 	public Date getStartYear() {
 		return startYear;
 	}

@@ -11,16 +11,20 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "lab_plan")
 public class LabPlan extends BaseEntity {
 	private enum LabStatus {
-		COURSE, STUDENT
+		COURSE, 
+		STUDENT
 	}
 
 	private enum ReservationType {
-		NONE, COURSE, STUDENT
+		NONE, 
+		COURSE, 
+		STUDENT
 	}
 
 	private Date date;
@@ -34,6 +38,7 @@ public class LabPlan extends BaseEntity {
 	private StudentReservation studentReservation;
 
 	@Column(nullable = false)
+	@Type(type = "date")
 	public Date getDate() {
 		return date;
 	}
