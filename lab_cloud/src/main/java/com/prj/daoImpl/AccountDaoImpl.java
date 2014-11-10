@@ -27,7 +27,6 @@ public class AccountDaoImpl implements AccountDao {
 	private static Logger logger = Logger.getLogger(AccountDaoImpl.class);
 
 	public boolean addAccount(Account v) {
-		v.setIsActive(true);
 		return commonDao.addObject(v);
 	}
 

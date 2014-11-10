@@ -3,8 +3,8 @@ package com.prj.util;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Component;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component  
 public class JsonUtil {  

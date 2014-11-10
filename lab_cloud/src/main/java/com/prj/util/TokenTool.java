@@ -13,7 +13,7 @@ import com.prj.entity.Account;
 
 public class TokenTool {
 
-	private final static String TOKEN_RANDOM = "404_lab_good";
+	private final static String TOKEN_RANDOM = "lab_cloud_good";
 	private final static String TOKEN_DATE_FORMAT = "yyyy/MM/dd";
 	private final static String TOKEN_SPLIT = ":";
 
@@ -25,7 +25,7 @@ public class TokenTool {
 		Calendar c = Calendar.getInstance();
 		c.set(Calendar.MONTH, c.get(Calendar.MONTH) + 1);
 		DateFormat f = new SimpleDateFormat(TOKEN_DATE_FORMAT);
-		token = token + TOKEN_SPLIT + f.format(c.getTime());
+		token = token + TOKEN_SPLIT + f.format(c.getTime()) + account.getId();
 		return token;
 	}
 
@@ -43,6 +43,10 @@ public class TokenTool {
 			logger.info(e.getMessage());
 			return false;
 		}
+	}
+	
+	public static Integer getId(String token) {
+		return Integer.getInteger(token.split(TOKEN_SPLIT)[2]);
 	}
 	
 	public static String randomToken() {

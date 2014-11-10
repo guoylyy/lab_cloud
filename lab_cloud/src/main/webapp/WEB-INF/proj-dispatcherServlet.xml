@@ -15,6 +15,7 @@
 	<context:component-scan base-package="com.prj.daoImpl" />
 	<context:component-scan base-package="com.prj.serviceImpl" />
 	<context:component-scan base-package="com.prj.util" />
+	<context:component-scan base-package="com.prj.aspect" />
 	
 	<!-- freemarker config -->
 	<bean id="freemarkerConfig"
@@ -59,7 +60,23 @@
         <property name="maxUploadSize" value="10000000" />
     </bean>
  
-	
+	<!--JSON配置-->
+
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<!-- 该类只有org.springframework.web-3.1.2.RELEASE.jar及以上版本才有 使用该配置后，才可以使用JSON相关的一些注解 -->
+				<bean
+					class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+					<property name="objectMapper">
+						<bean class="com.fasterxml.jackson.databind.ObjectMapper" />
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean> 
+    
 	<!-- <mvc:interceptors> <mvc:interceptor> <mvc:mapping path="/**" /> <bean 
 		class="com.tj.kpi.interceptor.LoginInterceptor"> </bean> </mvc:interceptor> 
 		</mvc:interceptors> -->

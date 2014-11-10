@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.prj.entity.Account;
 import com.prj.service.AccountService;
+import com.prj.util.DataWrapper;
 import com.prj.util.JsonUtil;
 import com.prj.util.Page;
 import com.prj.util.RequestHelper;
@@ -86,7 +87,13 @@ public class AccountController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public Account login(@RequestBody Account account) {
+	public DataWrapper<Account> login(@RequestBody Account account) {
 		return vs.login(account);
+	}	
+	
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	@ResponseBody
+	public DataWrapper<Account> register(@RequestBody Account account) {
+		return vs.register(account);
 	}
 }

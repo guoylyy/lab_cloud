@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import com.prj.dao.AccountDao;
 import com.prj.entity.Account;
 import com.prj.service.AccountService;
+import com.prj.util.CallStatusEnum;
+import com.prj.util.DataWrapper;
+import com.prj.util.ErrorCodeEnum;
 import com.prj.util.Page;
 import com.prj.util.TokenTool;
 
@@ -55,13 +58,40 @@ public class AccountServiceImpl implements AccountService {
 		return dao.getByPageWithConditions(pagenumber, pagesize, list);
 	}
 
-	public Account login(Account account) {
-		Account r = dao.getAccountByNumber(account.getAccountNumber());
-		if (r != null && r.getIsActive() && r.getAccountPassword().equals(account.getAccountPassword())) {
-			r.setLastLoginTime(Calendar.getInstance().getTime());
-			r.setLoginToken(TokenTool.generateToken(account));
-			return updateAccount(r);
+	public DataWrapper<Account> login(Account account) {
+		DataWrapper<Account> ret = new DataWrapper<Account>();
+		Account a = dao.getAccountByNumber(account.getAccountNumber());
+		ret.setCallStatus(CallStatusEnum.FAILED);
+		if (a == null) {
+			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
+		} else if (!a.getIsActive()) {
+			ret.setErrorCode(ErrorCodeEnum.Employ_Not_Active);
+		} else if (!a.getAccountPassword().equals(account.getAccountPassword())) {
+			ret.setErrorCode(ErrorCodeEnum.Password_Wrong);
+		} else {
+			a.setLastLoginTime(Calendar.getInstance().getTime());
+			a.setLoginToken(TokenTool.generateToken(account));
+			ret.setToken(a.getLoginToken());
+			ret.setData(updateAccount(a));
+			ret.setCallStatus(CallStatusEnum.SUCCEED);
 		}
-		return null;
+		return ret;
+	}
+	
+	public DataWrapper<Account> register(Account account) {
+		DataWrapper<Account> ret = new DataWrapper<Account>();
+		Account a = dao.getAccountByNumber(account.getAccountNumber());
+		if (a == null) {
+			if (dao.addAccount(account)) {
+				ret.setData(account);
+			} else {
+				ret.setCallStatus(CallStatusEnum.FAILED);
+				ret.setErrorCode(ErrorCodeEnum.Unknown_Error);
+			}
+		} else {
+			ret.setCallStatus(CallStatusEnum.FAILED);
+			ret.setErrorCode(ErrorCodeEnum.Account_Exist);
+		}
+		return ret;
 	}
 }

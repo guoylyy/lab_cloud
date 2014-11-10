@@ -35,7 +35,7 @@ public class Account extends BaseEntity {
 	private String studentGrade;
 	private Date entranceYearMonth;//used by student
 	private Date lastLoginTime;
-	private Boolean isActive;
+	private Boolean isActive = true;
 	private String loginToken;
 	private Set<Class> classes = new HashSet<Class>(0);//used by teacher
 	private StudentClass studentClass;//used by student

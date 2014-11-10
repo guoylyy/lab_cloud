@@ -13,7 +13,17 @@
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
         ">
-
+        
+<!-- 	<context:component-scan base-package="com.prj.entity" />
+	<context:component-scan base-package="com.prj.controller" />
+	<context:component-scan base-package="com.prj.daoImpl" />
+	<context:component-scan base-package="com.prj.serviceImpl" />
+	<context:component-scan base-package="com.prj.util" />
+	<context:component-scan base-package="com.prj.aspect" /> -->
+	
+	<aop:aspectj-autoproxy/>
+	
+	
 	<!-- Hibernate4 -->
 	<!-- 加载资源文件 其中包含变量信息，必须在Spring配置文件的最前面加载，即第一个加载 -->
 	<context:property-placeholder
@@ -95,5 +105,8 @@
 		<!-- Advisor定义，切入点和通知分别为txPointcut、txAdvice -->
 		<aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice" />
 	</aop:config>
-
+	
+	<!-- <bean id="ser" class="com.prj.serviceImpl.AccountServiceImpl"/> -->
+	<!-- <bean class="com.prj.aspect.AccountAspect"/>
+	<bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator"/> -->
 </beans>

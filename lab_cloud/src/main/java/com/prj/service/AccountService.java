@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.criterion.SimpleExpression;
 
 import com.prj.entity.Account;
+import com.prj.util.DataWrapper;
 import com.prj.util.Page;
 
 public interface AccountService {
@@ -25,6 +26,8 @@ public interface AccountService {
 	Page<Account> getByPageWithConditions(int pagenumber, int pagesize,
 			List<SimpleExpression> list);
 
-	Account login(Account account);
+	DataWrapper<Account> login(Account account);
+
+	DataWrapper<Account> register(Account account);
 
 }
