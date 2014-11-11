@@ -27,6 +27,7 @@ dependencies {
 			'org.springframework:spring-orm:4.0.5.RELEASE',
 			'org.springframework:spring-tx:4.0.5.RELEASE',
 			 'org.springframework.ws:spring-ws-core:2.2.0.RELEASE',
+			 'org.springframework:spring-aop:4.0.5.RELEASE',
 			 'org.codehaus.jackson:jackson-mapper-asl:1.9.13',
 			 'org.codehaus.jackson:jackson-core-asl:1.9.13',
 			 'org.hibernate:hibernate-core:4.3.5.Final',

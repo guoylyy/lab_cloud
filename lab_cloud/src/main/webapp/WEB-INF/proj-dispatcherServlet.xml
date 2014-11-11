@@ -61,7 +61,6 @@
     </bean>
  
 	<!--JSON配置-->
-
 	<bean
 		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<property name="messageConverters">
@@ -76,7 +75,7 @@
 			</list>
 		</property>
 	</bean> 
-    
+	
 	<!-- <mvc:interceptors> <mvc:interceptor> <mvc:mapping path="/**" /> <bean 
 		class="com.tj.kpi.interceptor.LoginInterceptor"> </bean> </mvc:interceptor> 
 		</mvc:interceptors> -->

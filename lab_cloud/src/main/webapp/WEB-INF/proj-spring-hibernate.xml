@@ -13,17 +13,7 @@
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
         ">
-        
-<!-- 	<context:component-scan base-package="com.prj.entity" />
-	<context:component-scan base-package="com.prj.controller" />
-	<context:component-scan base-package="com.prj.daoImpl" />
-	<context:component-scan base-package="com.prj.serviceImpl" />
-	<context:component-scan base-package="com.prj.util" />
-	<context:component-scan base-package="com.prj.aspect" /> -->
-	
-	<aop:aspectj-autoproxy/>
-	
-	
+
 	<!-- Hibernate4 -->
 	<!-- 加载资源文件 其中包含变量信息，必须在Spring配置文件的最前面加载，即第一个加载 -->
 	<context:property-placeholder
@@ -46,38 +36,18 @@
 				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
 				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
 				<!-- <prop key="hibernatere.current_session_context_class">thread</prop> -->
-				
-				<prop key="hibernate.c3p0.min_size">5</prop>
-				<prop key="hibernate.c3p0.max_size">20</prop>
-				<prop key="hibernate.c3p0.timeout">300</prop>
-				<prop key="hibernate.c3p0.max_statements">50</prop>
-				<prop key="hibernate.c3p0.idle_test_period">3000</prop>
 			</props>
 		</property>
 	</bean>
 
 	<!-- 数据库映射 -->
-	<!-- <bean id="dataSource"
+	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="${jdbc.driverClassName}" />
 		<property name="url" value="${jdbc.url}" />
 		<property name="username" value="${jdbc.user}" />
 		<property name="password" value="${jdbc.pass}" />
-	</bean> -->
-
-    <!-- 配置数据源，从上面配置文件读取-->
-    <bean id="dataSource"
-          class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <property name="driverClass" value="${jdbc.driverClassName}"/>
-        <property name="jdbcUrl" value="${jdbc.url}"/>
-        <property name="user" value="${jdbc.user}"/>
-        <property name="password" value="${jdbc.pass}"/>
-        <property name="initialPoolSize" value="${pool.initialPoolSize}"/>
-        <property name="minPoolSize" value="${pool.minPoolSize}"/>
-        <property name="maxPoolSize" value="${pool.maxPoolSize}"/>
-        <property name="maxIdleTime" value="${pool.maxIdleTime}"/>
-        <property name="acquireIncrement" value="${pool.acquireIncrement}"/>
-    </bean>
+	</bean>
 
 	<!-- 配置Hibernate事务管理器 -->
 	<bean id="transactionManager"
@@ -106,7 +76,12 @@
 		<aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice" />
 	</aop:config>
 	
-	<!-- <bean id="ser" class="com.prj.serviceImpl.AccountServiceImpl"/> -->
-	<!-- <bean class="com.prj.aspect.AccountAspect"/>
-	<bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator"/> -->
+	<!-- <aop:config proxy-target-class="true">
+		<aop:aspect ref="accountAdviceMethods">
+			<aop:before pointcut="target(com.prj.controller.AccountController) and execution (* *(..))" method="preGreeting"/>
+		</aop:aspect>
+	</aop:config>
+	<bean id="accountAdviceMethods" class="com.prj.aspect.AccountAdviceMethods"/> -->
+	<aop:aspectj-autoproxy/>
+	<!-- <bean class="com.prj.aspect.AccountAspect"/> -->
 </beans>
