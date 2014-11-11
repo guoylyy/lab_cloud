@@ -10,6 +10,7 @@ import org.hibernate.criterion.SimpleExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,9 +45,9 @@ public class AccountController {
 		return vs.getAllAccount();
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
 	@ResponseBody
-	public Account getAccount(@PathVariable int id) {
+	public DataWrapper<Account> getAccount(@PathVariable int id, @RequestBody DataWrapper<Account> account) {
 		return vs.getAccountById(id);
 	}
 
@@ -87,13 +88,19 @@ public class AccountController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public DataWrapper<Account> login(@RequestBody Account account) {
-		return vs.login(account);
+	public DataWrapper<Account> login(@RequestBody DataWrapper<Account> account) {
+		return vs.login(account.getData());
 	}	
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	@ResponseBody
-	public DataWrapper<Account> register(@RequestBody Account account) {
-		return vs.register(account);
+	public DataWrapper<Account> register(@RequestBody DataWrapper<Account> account) {
+		return vs.register(account.getData());
+	}
+	
+	@ExceptionHandler(Exception.class)
+	public String handleAllException(Exception ex) {
+		System.out.println(ex.getMessage());
+		return "index";
 	}
 }

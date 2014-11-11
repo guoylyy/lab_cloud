@@ -75,13 +75,6 @@
 		<!-- Advisor定义，切入点和通知分别为txPointcut、txAdvice -->
 		<aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice" />
 	</aop:config>
-	
-	<!-- <aop:config proxy-target-class="true">
-		<aop:aspect ref="accountAdviceMethods">
-			<aop:before pointcut="target(com.prj.controller.AccountController) and execution (* *(..))" method="preGreeting"/>
-		</aop:aspect>
-	</aop:config>
-	<bean id="accountAdviceMethods" class="com.prj.aspect.AccountAdviceMethods"/> -->
+
 	<aop:aspectj-autoproxy/>
-	<!-- <bean class="com.prj.aspect.AccountAspect"/> -->
 </beans>

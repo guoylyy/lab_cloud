@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.prj.dao.AccountDao;
 import com.prj.entity.Account;
 import com.prj.service.AccountService;
-import com.prj.util.CallStatusEnum;
 import com.prj.util.DataWrapper;
 import com.prj.util.ErrorCodeEnum;
 import com.prj.util.Page;
@@ -39,8 +38,11 @@ public class AccountServiceImpl implements AccountService {
 		return dao.updateAccount(v);
 	}
 
-	public Account getAccountById(int id) {
-		return dao.findAccountbyId(id);
+	public DataWrapper<Account> getAccountById(int id) {
+		DataWrapper<Account> ret = new DataWrapper<Account>();
+		Account a = dao.findAccountbyId(id);
+		ret.setData(a);
+		return ret;
 	}
 
 	public Page<Account> getAccountbyPage(int pagenumber, int pagesize) {
@@ -61,7 +63,6 @@ public class AccountServiceImpl implements AccountService {
 	public DataWrapper<Account> login(Account account) {
 		DataWrapper<Account> ret = new DataWrapper<Account>();
 		Account a = dao.getAccountByNumber(account.getAccountNumber());
-		ret.setCallStatus(CallStatusEnum.FAILED);
 		if (a == null) {
 			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
 		} else if (!a.getIsActive()) {
@@ -70,10 +71,9 @@ public class AccountServiceImpl implements AccountService {
 			ret.setErrorCode(ErrorCodeEnum.Password_Wrong);
 		} else {
 			a.setLastLoginTime(Calendar.getInstance().getTime());
-			a.setLoginToken(TokenTool.generateToken(account));
+			a.setLoginToken(TokenTool.generateToken(a));
 			ret.setToken(a.getLoginToken());
 			ret.setData(updateAccount(a));
-			ret.setCallStatus(CallStatusEnum.SUCCEED);
 		}
 		return ret;
 	}
@@ -85,11 +85,9 @@ public class AccountServiceImpl implements AccountService {
 			if (dao.addAccount(account)) {
 				ret.setData(account);
 			} else {
-				ret.setCallStatus(CallStatusEnum.FAILED);
 				ret.setErrorCode(ErrorCodeEnum.Unknown_Error);
 			}
 		} else {
-			ret.setCallStatus(CallStatusEnum.FAILED);
 			ret.setErrorCode(ErrorCodeEnum.Account_Exist);
 		}
 		return ret;

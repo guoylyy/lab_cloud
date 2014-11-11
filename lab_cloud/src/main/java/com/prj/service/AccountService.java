@@ -17,7 +17,7 @@ public interface AccountService {
 
 	Account updateAccount(Account entity);
 
-	Account getAccountById(int id);
+	DataWrapper<Account> getAccountById(int id);
 
 	Page<Account> getAccountbyPage(int pagenumber, int pagesize);
 
