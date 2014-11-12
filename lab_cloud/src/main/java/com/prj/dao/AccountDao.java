@@ -3,11 +3,12 @@ package com.prj.dao;
 import java.util.List;
 
 import org.hibernate.criterion.SimpleExpression;
+
 import com.prj.entity.Account;
 import com.prj.util.Page;
 
 public interface AccountDao {
-	boolean addAccount(Account v);
+	Integer addAccount(Account v);
 
 	boolean deleteAccount(Account v);
 
@@ -25,5 +26,7 @@ public interface AccountDao {
 			List<SimpleExpression> list);
 
 	Account getAccountByNumber(String number);
+
+	Account findAccountbyToken(String token);
 
 }

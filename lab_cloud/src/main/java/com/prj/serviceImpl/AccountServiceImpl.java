@@ -14,6 +14,7 @@ import com.prj.service.AccountService;
 import com.prj.util.DataWrapper;
 import com.prj.util.ErrorCodeEnum;
 import com.prj.util.Page;
+import com.prj.util.PasswordReset;
 import com.prj.util.TokenTool;
 
 @Service("AccountServiceImpl")
@@ -30,7 +31,7 @@ public class AccountServiceImpl implements AccountService {
 		return dao.deleteAccount(v);
 	}
 
-	public boolean addAccount(Account v) {
+	public Integer addAccount(Account v) {
 		return dao.addAccount(v);
 	}
 
@@ -81,15 +82,33 @@ public class AccountServiceImpl implements AccountService {
 	public DataWrapper<Account> register(Account account) {
 		DataWrapper<Account> ret = new DataWrapper<Account>();
 		Account a = dao.getAccountByNumber(account.getAccountNumber());
-		if (a == null) {
-			if (dao.addAccount(account)) {
-				ret.setData(account);
-			} else {
-				ret.setErrorCode(ErrorCodeEnum.Unknown_Error);
-			}
-		} else {
+		if (a != null) {
 			ret.setErrorCode(ErrorCodeEnum.Account_Exist);
+		} else if (dao.addAccount(account)!=null) {
+			ret.setData(account);
+		} else {
+			ret.setErrorCode(ErrorCodeEnum.Unknown_Error);
 		}
 		return ret;
+	}
+
+	public DataWrapper<Account> reset(PasswordReset reset) {
+		Account a = dao.findAccountbyId(reset.getId());
+		DataWrapper<Account> ret = new DataWrapper<Account>();
+		if (a == null) {
+			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
+		} else if (!a.getAccountPassword().equals(reset.getOldPassword())) {
+			ret.setErrorCode(ErrorCodeEnum.Password_Wrong);
+		} else {
+			a.setAccountPassword(reset.getNewPassword());
+			dao.updateAccount(a);
+		}
+		return ret;
+	}
+
+	public void logout(Integer id) {
+		Account a = dao.findAccountbyId(id);
+		a.setLoginToken(null);
+		dao.updateAccount(a);
 	}
 }

@@ -10,7 +10,8 @@ public class DataWrapper<T> implements Serializable {
 	private ErrorCodeEnum errorCode;
 
 	private String token;
-
+	private Integer accountId;
+	
 	private T data;
 
 	private int numPerPage;
@@ -50,6 +51,14 @@ public class DataWrapper<T> implements Serializable {
 		this.token = token;
 	}
 
+	public Integer getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(Integer accountId) {
+		this.accountId = accountId;
+	}
+	
 	public T getData() {
 		return data;
 	}

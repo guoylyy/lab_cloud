@@ -21,7 +21,7 @@ import org.hibernate.annotations.Type;
 @Entity
 @Table(name = "account")
 public class Account extends BaseEntity {
-	private enum Character {
+	public enum Character {
 		ADMINISTRATOR,
 		TEACHER,
 		STUDENT

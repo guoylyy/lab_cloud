@@ -7,13 +7,14 @@ import org.hibernate.criterion.SimpleExpression;
 import com.prj.entity.Account;
 import com.prj.util.DataWrapper;
 import com.prj.util.Page;
+import com.prj.util.PasswordReset;
 
 public interface AccountService {
 	List<Account> getAllAccount();
 
 	boolean deleteAccount(Account entity);
 
-	boolean addAccount(Account entity);
+	Integer addAccount(Account entity);
 
 	Account updateAccount(Account entity);
 
@@ -29,5 +30,9 @@ public interface AccountService {
 	DataWrapper<Account> login(Account account);
 
 	DataWrapper<Account> register(Account account);
+
+	DataWrapper<Account> reset(PasswordReset data);
+
+	void logout(Integer id);
 
 }

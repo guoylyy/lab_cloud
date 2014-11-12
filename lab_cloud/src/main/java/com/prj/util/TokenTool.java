@@ -25,11 +25,12 @@ public class TokenTool {
 		Calendar c = Calendar.getInstance();
 		c.set(Calendar.MONTH, c.get(Calendar.MONTH) + 1);
 		DateFormat f = new SimpleDateFormat(TOKEN_DATE_FORMAT);
-		token = token + TOKEN_SPLIT + f.format(c.getTime()) + TOKEN_SPLIT + account.getId();
+		token = token + TOKEN_SPLIT + f.format(c.getTime());
 		return token;
 	}
 
 	public static boolean isTokenValid(String token) {
+		if (token == null) return false;
 		try {
 			String date_time = token.split(TOKEN_SPLIT)[1];
 			DateFormat f = new SimpleDateFormat(TOKEN_DATE_FORMAT);
@@ -45,9 +46,9 @@ public class TokenTool {
 		}
 	}
 	
-	public static Integer getId(String token) {
-		return Integer.valueOf(token.split(TOKEN_SPLIT)[2]);
-	}
+//	public static Integer getId(String token) {
+//		return Integer.valueOf(token.split(TOKEN_SPLIT)[2]);
+//	}
 	
 	public static String randomToken() {
 		String base = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";

@@ -19,9 +19,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.prj.entity.Account;
 import com.prj.service.AccountService;
+import com.prj.util.AccountAccess;
+import com.prj.util.AuthorityException;
 import com.prj.util.DataWrapper;
 import com.prj.util.JsonUtil;
 import com.prj.util.Page;
+import com.prj.util.PasswordReset;
 import com.prj.util.RequestHelper;
 
 @Controller
@@ -45,12 +48,6 @@ public class AccountController {
 		return vs.getAllAccount();
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
-	@ResponseBody
-	public DataWrapper<Account> getAccount(@PathVariable int id, @RequestBody DataWrapper<Account> account) {
-		return vs.getAccountById(id);
-	}
-
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	@ResponseBody
 	public boolean deleteAccount(@PathVariable int id) {
@@ -59,13 +56,13 @@ public class AccountController {
 		return vs.deleteAccount(v);
 	}
 
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	@ResponseBody
-	public boolean addAccount(@RequestBody String data) {
-		System.out.println("json string:" + data);
-		Account v = jsonutil.toObject(data, Account.class);
-		return vs.addAccount(v);
-	}
+//	@RequestMapping(value = "/add", method = RequestMethod.POST)
+//	@ResponseBody
+//	public DataWrapper<Account> addAccount(@RequestBody String data) {
+//		System.out.println("json string:" + data);
+//		Account v = jsonutil.toObject(data, Account.class);
+//		return vs.addAccount(v);
+//	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	@ResponseBody
@@ -90,17 +87,53 @@ public class AccountController {
 	@ResponseBody
 	public DataWrapper<Account> login(@RequestBody DataWrapper<Account> account) {
 		return vs.login(account.getData());
-	}	
+	}
 	
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	@SuppressWarnings("rawtypes")
+	@AccountAccess
+	@RequestMapping(value = "/logout", method = RequestMethod.POST)
 	@ResponseBody
-	public DataWrapper<Account> register(@RequestBody DataWrapper<Account> account) {
+	public DataWrapper logout(@RequestBody DataWrapper<Account> wrapper) {
+		vs.logout(wrapper.getAccountId());
+		return new DataWrapper();
+	}
+
+	@AccountAccess
+	@RequestMapping(value = "/profile", method = RequestMethod.POST)
+	@ResponseBody
+	public DataWrapper<Account> getAccount(@RequestBody DataWrapper<?> wrapper) {
+		return vs.getAccountById(wrapper.getAccountId());
+	}
+
+	@AccountAccess
+	@RequestMapping(value = "/reset", method = RequestMethod.POST)
+	@ResponseBody
+	public DataWrapper<Account> resetPassword(@RequestBody DataWrapper<PasswordReset> wrapper) {
+		wrapper.getData().setId(wrapper.getAccountId());
+		return vs.reset(wrapper.getData());
+	}
+	
+	@AccountAccess(checkAdmin = true)
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	@ResponseBody
+	public DataWrapper<Account> add(@RequestBody DataWrapper<Account> account) {
 		return vs.register(account.getData());
 	}
 	
-	@ExceptionHandler(Exception.class)
-	public String handleAllException(Exception ex) {
-		System.out.println(ex.getMessage());
-		return "index";
+	@AccountAccess(checkAdmin = true)
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
+	@ResponseBody
+	public DataWrapper<Account> getAccount(@RequestBody DataWrapper<Account> account, @PathVariable int id) {
+		return vs.getAccountById(id);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@ExceptionHandler(AuthorityException.class)
+	@ResponseBody
+	public DataWrapper handleAuthorityException(AuthorityException ex) {
+		System.out.println(ex.getErrorCode().getLabel());
+		DataWrapper ret = new DataWrapper();
+		ret.setErrorCode(ex.getErrorCode());
+		return ret;
 	}
 }

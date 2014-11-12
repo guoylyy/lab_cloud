@@ -37,7 +37,7 @@
 	</bean>
 
 
-	<bean
+<!-- 	<bean
 		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<property name="messageConverters">
 			<bean
@@ -52,7 +52,7 @@
 				</property>
 			</bean>
 		</property>
-	</bean>
+	</bean> -->
 	
 	<bean id="multipartResolver"
         class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

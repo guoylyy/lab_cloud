@@ -12,7 +12,7 @@ import javax.persistence.MappedSuperclass;
 public class BaseEntity {
 	int id;
 	
-	Date create_time;
+	Date create_time = new Date();
 	Date modify_time;
 
 	@Id
