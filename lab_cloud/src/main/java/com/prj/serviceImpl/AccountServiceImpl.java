@@ -14,6 +14,7 @@ import com.prj.service.AccountService;
 import com.prj.util.AccountCharacter;
 import com.prj.util.DataWrapper;
 import com.prj.util.ErrorCodeEnum;
+import com.prj.util.MD5Tool;
 import com.prj.util.Page;
 import com.prj.util.PasswordReset;
 import com.prj.util.TokenTool;
@@ -82,7 +83,7 @@ public class AccountServiceImpl implements AccountService {
 			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
 		} else if (!a.getIsActive()) {
 			ret.setErrorCode(ErrorCodeEnum.Employ_Not_Active);
-		} else if (!a.getAccountPassword().equals(account.getAccountPassword())) {
+		} else if (!a.getAccountPassword().equals(MD5Tool.GetMd5(account.getAccountPassword()))) {
 			ret.setErrorCode(ErrorCodeEnum.Password_Wrong);
 		} else {
 			a.setLastLoginTime(Calendar.getInstance().getTime());
@@ -96,6 +97,7 @@ public class AccountServiceImpl implements AccountService {
 	public DataWrapper<Account> addAccount(Account account) {
 		DataWrapper<Account> ret = new DataWrapper<Account>();
 		Account a = dao.getAccountByNumber(account.getAccountNumber());
+		account.setAccountPassword(MD5Tool.GetMd5(account.getAccountPassword()));
 		if (a != null) {
 			ret.setErrorCode(ErrorCodeEnum.Account_Exist);
 		} else if (dao.addAccount(account)!=null) {
@@ -111,10 +113,10 @@ public class AccountServiceImpl implements AccountService {
 		DataWrapper<Account> ret = new DataWrapper<Account>();
 		if (a == null) {
 			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
-		} else if (!a.getAccountPassword().equals(reset.getOldPassword())) {
+		} else if (!a.getAccountPassword().equals(MD5Tool.GetMd5(reset.getOldPassword()))) {
 			ret.setErrorCode(ErrorCodeEnum.Password_Wrong);
 		} else {
-			a.setAccountPassword(reset.getNewPassword());
+			a.setAccountPassword(MD5Tool.GetMd5(reset.getNewPassword()));
 			a.setLoginToken(null);
 			dao.updateAccount(a);
 		}

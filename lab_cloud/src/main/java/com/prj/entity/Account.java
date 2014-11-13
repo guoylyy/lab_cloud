@@ -37,7 +37,7 @@ public class Account extends BaseEntity {
 	private StudentClass studentClass;//used by student
 	private StudentReservation studentReservation;//used by student
 	
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	public String getAccountNumber() {
 		return accountNumber;
 	}
