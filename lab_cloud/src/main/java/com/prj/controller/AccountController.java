@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.prj.entity.Account;
 import com.prj.service.AccountService;
 import com.prj.util.AccountAccess;
+import com.prj.util.AccountCharacter;
 import com.prj.util.AuthorityException;
 import com.prj.util.DataWrapper;
 import com.prj.util.JsonUtil;
@@ -113,14 +114,14 @@ public class AccountController {
 		return vs.reset(wrapper.getData());
 	}
 	
-	@AccountAccess(checkAdmin = true)
+	@AccountAccess(checkAccountCharacter = AccountCharacter.ADMINISTRATOR)
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
 	public DataWrapper<Account> add(@RequestBody DataWrapper<Account> account) {
 		return vs.register(account.getData());
 	}
 	
-	@AccountAccess(checkAdmin = true)
+	@AccountAccess(checkAccountCharacter = AccountCharacter.ADMINISTRATOR)
 	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
 	@ResponseBody
 	public DataWrapper<Account> getAccount(@RequestBody DataWrapper<Account> account, @PathVariable int id) {

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.prj.dao.AccountDao;
 import com.prj.entity.Account;
 import com.prj.util.AccountAccess;
+import com.prj.util.AccountCharacter;
 import com.prj.util.AuthorityException;
 import com.prj.util.DataWrapper;
 import com.prj.util.ErrorCodeEnum;
@@ -68,20 +69,21 @@ public class AccountAspect {
 	
 	private void check(DataWrapper<?> dataWrapper, AccountAccess as) {
 		String token = dataWrapper.getToken();
-		Account a = dao.findAccountbyToken(token);
-		if (token != null && a != null && token.equals(a.getLoginToken())) {
-			if (TokenTool.isTokenValid(token)) {
-				dataWrapper.setAccountId(a.getId());
-			} else {
-				throw new AuthorityException(ErrorCodeEnum.Token_Expired);
-			}
-		} else {
+		if (token == null) {
 			throw new AuthorityException(ErrorCodeEnum.Token_Invalid);
-		}
-		
-		if (as.checkAdmin()) {
-			if (a.getAccountCharacter() != Account.Character.ADMINISTRATOR) {
-				throw new AuthorityException(ErrorCodeEnum.Access_Denied);
+		} else {
+			Account a = dao.findAccountbyToken(token);
+			if (a == null) {
+				throw new AuthorityException(ErrorCodeEnum.Token_Invalid);
+			} else if (!TokenTool.isTokenValid(token)) {
+				throw new AuthorityException(ErrorCodeEnum.Token_Expired);
+			} else {
+				dataWrapper.setAccountId(a.getId());
+				if (as.checkAccountCharacter() != AccountCharacter.ANY) {
+					if (a.getAccountCharacter() != as.checkAccountCharacter()) {
+						throw new AuthorityException(ErrorCodeEnum.Access_Denied);
+					}
+				}
 			}
 		}
 	}

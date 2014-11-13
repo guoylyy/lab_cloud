@@ -18,20 +18,16 @@ import javax.persistence.Table;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Type;
 
+import com.prj.util.AccountCharacter;
+
 @Entity
 @Table(name = "account")
-public class Account extends BaseEntity {
-	public enum Character {
-		ADMINISTRATOR,
-		TEACHER,
-		STUDENT
-	}
-	
+public class Account extends BaseEntity {	
 	private String accountNumber;
 	private String accountPassword;
 	private String accountName;
 	private String accountEmail;
-	private Character accountCharacter;
+	private AccountCharacter accountCharacter;
 	private String studentGrade;
 	private Date entranceYearMonth;//used by student
 	private Date lastLoginTime;
@@ -79,11 +75,11 @@ public class Account extends BaseEntity {
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
-	public Character getAccountCharacter() {
+	public AccountCharacter getAccountCharacter() {
 		return accountCharacter;
 	}
 
-	public void setAccountCharacter(Character accountCharacter) {
+	public void setAccountCharacter(AccountCharacter accountCharacter) {
 		this.accountCharacter = accountCharacter;
 	}
 

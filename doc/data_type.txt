@@ -1,0 +1,152 @@
+REQUEST和RESPOND的类型都是WrapperData
+{
+    "callStatus": "",
+    "errorCode": "",
+    "token": "",
+    "accountId": "",
+    "data": {},
+    "numPerPage": 0,
+    "currPageNum": 0,
+    "totalItemNum": 0,
+    "totalPageNum": 0
+}
+下面只列出有用的属性
+
+1. 用户登录
+POST
+Account/login
+{
+  "data":
+        {
+          "accountNumber":"123",
+          "accountPassword":"123"
+        }
+}
+RETURN
+{
+    "callStatus": "SUCCEED",
+    "errorCode": "No_Error",
+    "token": "a6d0a32ab22166fa1759e7b392eee6fb:2014/12/13",
+    "data": {
+        "id": 1,
+        "create_time": 1414860396000,
+        "modify_time": 1415843230874,
+        "accountNumber": "123",
+        "accountPassword": "123",
+        "accountName": "sau测试",
+        "accountEmail": "sau@ccq.com",
+        "accountCharacter": "ADMINISTRATOR",
+        "studentGrade": null,
+        "entranceYearMonth": null,
+        "lastLoginTime": 1415843230841,
+        "isActive": true,
+        "loginToken": "a6d0a32ab22166fa1759e7b392eee6fb:2014/12/13",
+        "classes": [],
+        "studentClass": null,
+        "studentReservation": null
+    }
+}
+ERROR
+{
+    "callStatus": "FAILED",
+    "errorCode": "Account_Not_Exist" || "Password_Wrong" || "Account_Not_Active"
+}
+2. 用户登出
+POST
+Account/logout
+{
+	"token":"a6d0a32ab22166fa1759e7b392eee6fb:2014/12/13"
+}
+RETURN
+{
+    "callStatus": "SUCCEED",
+    "errorCode": "No_Error"
+}
+ERROR
+{
+    "callStatus": "FAILED",
+    "errorCode": "Token_Expired" || "Token_Invalid"
+}
+3. 获取用户 Profile
+POST
+Account/profile
+{
+	"token":"a6d0a32ab22166fa1759e7b392eee6fb:2014/12/13"
+}
+RETURN
+{
+    "callStatus": "SUCCEED",
+    "errorCode": "No_Error"
+    "data": {
+        "id": 1,
+        "create_time": 1414860396000,
+        "modify_time": 1415843394000,
+        "accountNumber": "123",
+        "accountPassword": "123",
+        "accountName": "sau测试",
+        "accountEmail": "sau@ccq.com",
+        "accountCharacter": "ADMINISTRATOR",
+        "studentGrade": null,
+        "entranceYearMonth": null,
+        "lastLoginTime": 1415843394000,
+        "isActive": true,
+        "loginToken": "a6d0a32ab22166fa1759e7b392eee6fb:2014/12/13",
+        "classes": [],
+        "studentClass": null,
+        "studentReservation": null
+    }
+}
+ERROR
+{
+    "callStatus": "FAILED",
+    "errorCode": "Token_Expired" || "Token_Invalid"
+}
+4. 修改密码 （输入原始密码和新密码，错误需要返回错误的message）
+POST
+Account/reset
+{
+  "token":"a6d0a32ab22166fa1759e7b392eee6fb:2014/12/13",
+  "data":
+        {
+          "oldPassword":"123",
+          "newPassword":"456"
+        }
+}
+RETURN
+{
+    "callStatus": "SUCCEED",
+    "errorCode": "No_Error"
+}
+ERROR
+{
+    "callStatus": "FAILED",
+    "errorCode": "Token_Expired" || "Token_Invalid" || "Password_Wrong"
+}
+下面的需要管理员权限控制，没有权限提示错误信息
+
+5. 管理员获取用户列表
+6. 添加一个用户  （估计接口需要修改成post form 的形式）
+7. 删除一个用户 
+8. 查看用户信息
+9. 修改用户角色
+10. 更新用户信息
+
+
+11. 添加一个实验室
+12. 删除一个实验室 （不是真删除，目前看来 设置一个判断是否启用 column的可以了）
+13. 列出实验室 （ 列出实验室列表，没有启用的不用列出）
+14. 查看实验室详情
+15. 更细实验室信息
+
+
+16. 添加一个课程
+17. 删除课程  （同样不是真删除，设置一个停用column）
+18. 列出所有课程 
+19. 查看课程详情
+20. 更新课程
+
+21. 添加一门实验
+22 删除实验 （同样不是真删除，设置一个停用column）
+23 列出所有实验
+24 查看实验详情
+25 更新实验信息

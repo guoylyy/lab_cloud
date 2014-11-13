@@ -43,6 +43,9 @@ public class AccountServiceImpl implements AccountService {
 		DataWrapper<Account> ret = new DataWrapper<Account>();
 		Account a = dao.findAccountbyId(id);
 		ret.setData(a);
+		if (a == null) {
+			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
+		}
 		return ret;
 	}
 
@@ -101,6 +104,7 @@ public class AccountServiceImpl implements AccountService {
 			ret.setErrorCode(ErrorCodeEnum.Password_Wrong);
 		} else {
 			a.setAccountPassword(reset.getNewPassword());
+			a.setLoginToken(null);
 			dao.updateAccount(a);
 		}
 		return ret;

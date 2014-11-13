@@ -6,7 +6,7 @@ public enum ErrorCodeEnum implements Serializable{
 	No_Error("No Error", 0),
 	Unknown_Error("Unknown Error", 1),
 
-	Account_Not_Exist("Account not exist", 2),
+	Account_Not_Exist("Account Not Exist", 2),
 	Password_Wrong("Password Wrong", 3),
 	Account_Exist("Account Exist", 4),
 	Employ_Not_Active("Account Not Active", 5),
