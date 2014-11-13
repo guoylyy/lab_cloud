@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.prj.dao.AccountDao;
 import com.prj.entity.Account;
 import com.prj.service.AccountService;
+import com.prj.util.AccountCharacter;
 import com.prj.util.DataWrapper;
 import com.prj.util.ErrorCodeEnum;
 import com.prj.util.Page;
@@ -23,20 +24,30 @@ public class AccountServiceImpl implements AccountService {
 	@Resource(name = "AccountDaoImpl")
 	AccountDao dao;
 
-	public List<Account> getAllAccount() {
+	public DataWrapper<List<Account>> getAllAccount() {
 		return dao.getAllAccount();
 	}
 
-	public boolean deleteAccount(Account v) {
-		return dao.deleteAccount(v);
+	public DataWrapper<Account> deleteAccountById(Integer id) {
+		Account a = dao.deleteAccountById(id);
+		DataWrapper<Account> ret = new DataWrapper<Account>(a);
+		if (a == null) {
+			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
+		}
+		return ret;
 	}
 
-	public Integer addAccount(Account v) {
-		return dao.addAccount(v);
-	}
+//	public Integer addAccount(Account v) {
+//		return dao.addAccount(v);
+//	}
 
-	public Account updateAccount(Account v) {
-		return dao.updateAccount(v);
+	public DataWrapper<Account> updateAccount(Account v) {
+		Account a = dao.updateAccount(v);
+		DataWrapper<Account> ret = new DataWrapper<Account>(a);
+		if (a == null) {
+			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
+		}
+		return ret;
 	}
 
 	public DataWrapper<Account> getAccountById(int id) {
@@ -77,12 +88,12 @@ public class AccountServiceImpl implements AccountService {
 			a.setLastLoginTime(Calendar.getInstance().getTime());
 			a.setLoginToken(TokenTool.generateToken(a));
 			ret.setToken(a.getLoginToken());
-			ret.setData(updateAccount(a));
+			ret.setData(dao.updateAccount(a));
 		}
 		return ret;
 	}
 	
-	public DataWrapper<Account> register(Account account) {
+	public DataWrapper<Account> addAccount(Account account) {
 		DataWrapper<Account> ret = new DataWrapper<Account>();
 		Account a = dao.getAccountByNumber(account.getAccountNumber());
 		if (a != null) {
@@ -114,5 +125,18 @@ public class AccountServiceImpl implements AccountService {
 		Account a = dao.findAccountbyId(id);
 		a.setLoginToken(null);
 		dao.updateAccount(a);
+	}
+
+	public DataWrapper<Account> updateAccountCharacter(Integer accountId,
+			AccountCharacter accountCharacter) {
+		Account a = dao.findAccountbyId(accountId);
+		DataWrapper<Account> ret = new DataWrapper<Account>(a);
+		if (a == null) {
+			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
+		} else {
+			a.setAccountCharacter(accountCharacter);
+			dao.updateAccount(a);
+		}
+		return ret;
 	}
 }

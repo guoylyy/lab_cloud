@@ -23,6 +23,11 @@ public class DataWrapper<T> implements Serializable {
 		this.callStatus = CallStatusEnum.SUCCEED;
 		this.errorCode = ErrorCodeEnum.No_Error;
 	}
+	
+	public DataWrapper(T data) {
+		this();
+		this.data = data;
+	}
 
 	public CallStatusEnum getCallStatus() {
 		return callStatus;

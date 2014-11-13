@@ -1,13 +1,9 @@
 package com.prj.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
-import org.hibernate.criterion.SimpleExpression;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,10 +19,7 @@ import com.prj.util.AccountAccess;
 import com.prj.util.AccountCharacter;
 import com.prj.util.AuthorityException;
 import com.prj.util.DataWrapper;
-import com.prj.util.JsonUtil;
-import com.prj.util.Page;
 import com.prj.util.PasswordReset;
-import com.prj.util.RequestHelper;
 
 @Controller
 @RequestMapping(value = "/Account")
@@ -35,27 +28,27 @@ public class AccountController {
 	@Resource(name = "AccountServiceImpl")
 	AccountService vs;
 
-	@Autowired
-	JsonUtil jsonutil;
+//	@Autowired
+//	JsonUtil jsonutil;
 
 	@RequestMapping(value = "/table", method = RequestMethod.GET)
 	public String IndexView(Model model) {
 		return "Account/table";
 	}
 
-	@RequestMapping(value = "/all", method = RequestMethod.GET)
-	@ResponseBody
-	public List<Account> ListAccount(Model model) {
-		return vs.getAllAccount();
-	}
+//	@RequestMapping(value = "/all", method = RequestMethod.GET)
+//	@ResponseBody
+//	public List<Account> ListAccount(Model model) {
+//		return vs.getAllAccount();
+//	}
 
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-	@ResponseBody
-	public boolean deleteAccount(@PathVariable int id) {
-		Account v = new Account();
-		v.setId(id);
-		return vs.deleteAccount(v);
-	}
+//	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+//	@ResponseBody
+//	public boolean deleteAccount(@PathVariable int id) {
+//		Account v = new Account();
+//		v.setId(id);
+//		return vs.deleteAccount(v);
+//	}
 
 //	@RequestMapping(value = "/add", method = RequestMethod.POST)
 //	@ResponseBody
@@ -65,24 +58,24 @@ public class AccountController {
 //		return vs.addAccount(v);
 //	}
 
-	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	@ResponseBody
-	public Account updateAccount(@RequestBody String data) {
-		Account v = jsonutil.toObject(data, Account.class);
-		return vs.updateAccount(v);
-	}
-
-	@RequestMapping(value = "/conditions/{page_number}/{page_size}", method = RequestMethod.GET)
-	@ResponseBody
-	public Page<Account> getTaxByConditions(@PathVariable int page_number,
-			@PathVariable int page_size, HttpServletRequest request) {
-		String[] parameters = { "year", "month" };
-
-		ArrayList<SimpleExpression> list = RequestHelper.parseParameters(
-				request, parameters);
-
-		return vs.getByPageWithConditions(page_number, page_size, list);
-	}
+//	@RequestMapping(value = "/update", method = RequestMethod.PUT)
+//	@ResponseBody
+//	public Account updateAccount(@RequestBody String data) {
+//		Account v = jsonutil.toObject(data, Account.class);
+//		return vs.updateAccount(v);
+//	}
+//
+//	@RequestMapping(value = "/conditions/{page_number}/{page_size}", method = RequestMethod.GET)
+//	@ResponseBody
+//	public Page<Account> getTaxByConditions(@PathVariable int page_number,
+//			@PathVariable int page_size, HttpServletRequest request) {
+//		String[] parameters = { "year", "month" };
+//
+//		ArrayList<SimpleExpression> list = RequestHelper.parseParameters(
+//				request, parameters);
+//
+//		return vs.getByPageWithConditions(page_number, page_size, list);
+//	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
@@ -94,7 +87,7 @@ public class AccountController {
 	@AccountAccess
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
 	@ResponseBody
-	public DataWrapper logout(@RequestBody DataWrapper<Account> wrapper) {
+	public DataWrapper logout(@RequestBody DataWrapper<?> wrapper) {
 		vs.logout(wrapper.getAccountId());
 		return new DataWrapper();
 	}
@@ -118,14 +111,42 @@ public class AccountController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
 	public DataWrapper<Account> add(@RequestBody DataWrapper<Account> account) {
-		return vs.register(account.getData());
+		return vs.addAccount(account.getData());
 	}
 	
 	@AccountAccess(checkAccountCharacter = AccountCharacter.ADMINISTRATOR)
-	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "/profile/{id}", method = RequestMethod.POST)
 	@ResponseBody
-	public DataWrapper<Account> getAccount(@RequestBody DataWrapper<Account> account, @PathVariable int id) {
+	public DataWrapper<Account> getAccount(@RequestBody DataWrapper<?> wrapper, @PathVariable int id) {
 		return vs.getAccountById(id);
+	}
+	
+	@AccountAccess(checkAccountCharacter = AccountCharacter.ADMINISTRATOR)
+	@RequestMapping(value = "/all", method = RequestMethod.POST)
+	@ResponseBody
+	public DataWrapper<List<Account>> getAccountList(@RequestBody DataWrapper<?> wrapper) {
+		return vs.getAllAccount();
+	}
+	
+	@AccountAccess(checkAccountCharacter = AccountCharacter.ADMINISTRATOR)
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public DataWrapper<Account> deleteAccount(@RequestBody DataWrapper<?> wrapper, @PathVariable int id) {
+		return vs.deleteAccountById(id);
+	}
+	
+	@AccountAccess(checkAccountCharacter = AccountCharacter.ADMINISTRATOR)
+	@RequestMapping(value = "/updateAccountCharacter/{id}", method = RequestMethod.POST)
+	@ResponseBody
+	public DataWrapper<Account> updateAccountCharacter(@RequestBody DataWrapper<Account> account,  @PathVariable int id) {
+		return vs.updateAccountCharacter(id, account.getData().getAccountCharacter());
+	}
+	
+	@AccountAccess(checkAccountCharacter = AccountCharacter.ADMINISTRATOR)
+	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+	@ResponseBody
+	public DataWrapper<Account> updateAccount(@RequestBody DataWrapper<Account> account,  @PathVariable int id) {
+		return vs.updateAccount(account.getData());
 	}
 	
 	@SuppressWarnings("rawtypes")

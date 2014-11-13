@@ -5,16 +5,17 @@ import java.util.List;
 import org.hibernate.criterion.SimpleExpression;
 
 import com.prj.entity.Account;
+import com.prj.util.DataWrapper;
 import com.prj.util.Page;
 
 public interface AccountDao {
 	Integer addAccount(Account v);
 
-	boolean deleteAccount(Account v);
+	Account deleteAccountById(Integer id);
 
 	Account findAccountbyId(int id);
 
-	List<Account> getAllAccount();
+	DataWrapper<List<Account>> getAllAccount();
 
 	Account updateAccount(Account v);
 

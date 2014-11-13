@@ -5,18 +5,19 @@ import java.util.List;
 import org.hibernate.criterion.SimpleExpression;
 
 import com.prj.entity.Account;
+import com.prj.util.AccountCharacter;
 import com.prj.util.DataWrapper;
 import com.prj.util.Page;
 import com.prj.util.PasswordReset;
 
 public interface AccountService {
-	List<Account> getAllAccount();
+	DataWrapper<List<Account>> getAllAccount();
 
-	boolean deleteAccount(Account entity);
+	public DataWrapper<Account> deleteAccountById(Integer id);
 
-	Integer addAccount(Account entity);
+//	Integer addAccount(Account entity);
 
-	Account updateAccount(Account entity);
+	DataWrapper<Account> updateAccount(Account entity);
 
 	DataWrapper<Account> getAccountById(int id);
 
@@ -29,10 +30,13 @@ public interface AccountService {
 
 	DataWrapper<Account> login(Account account);
 
-	DataWrapper<Account> register(Account account);
+	DataWrapper<Account> addAccount(Account account);
 
 	DataWrapper<Account> reset(PasswordReset data);
 
 	void logout(Integer id);
+
+	DataWrapper<Account> updateAccountCharacter(Integer accountId,
+			AccountCharacter accountCharacter);
 
 }

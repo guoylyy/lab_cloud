@@ -3,6 +3,8 @@ package com.prj.daoImpl;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.CriteriaSpecification;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.SimpleExpression;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.prj.dao.AbstractHibernateDao;
 import com.prj.dao.AccountDao;
 import com.prj.entity.Account;
+import com.prj.util.DataWrapper;
 import com.prj.util.Page;
 
 @Service("AccountDaoImpl")
@@ -23,18 +26,27 @@ public class AccountDaoImpl extends AbstractHibernateDao<Account, Integer>implem
 		return add(v);
 	}
 
-	public boolean deleteAccount(Account v) {
-		// TODO Auto-generated method stub
-		return false;
+	public Account deleteAccountById(Integer id) {
+		Account a = findById(id);
+		if (a == null)
+			return null;
+		a.setIsActive(false);
+		return a;
 	}
 
 	public Account findAccountbyId(int id) {
 		return findById(id);
 	}
 
-	public List<Account> getAllAccount() {
-		// TODO Auto-generated method stub
-		return null;
+	@SuppressWarnings("unchecked")
+	public DataWrapper<List<Account>> getAllAccount() {
+		List<Account> result = getCurrentSession().createCriteria(Account.class)
+				.addOrder(Order.asc("accountNumber"))
+				.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY)
+				.list();
+		DataWrapper<List<Account>> ret = new DataWrapper<List<Account>>();
+		ret.setData(result);
+		return ret;
 	}
 
 	public Account updateAccount(Account v) {
