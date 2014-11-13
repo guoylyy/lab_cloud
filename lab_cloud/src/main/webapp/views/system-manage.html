@@ -3,6 +3,7 @@
 <div class="command-nav-container">
 <tabset>
 <tab name="">
+
     <tab-heading class="users">
         <span class="title">用户管理</span>
         <span class="info">管理用户权限和资料</span>
@@ -15,6 +16,7 @@
                 </tab-heading>
 
                 <div class="tableTitle">共 个注册用户</div>
+
                 <div class="tableContainer">
                     <table class="table">
                         <thead>
@@ -30,37 +32,41 @@
                             </td>
                             <th>
                                 <div class="btn-group-head">
+                                    <button class="btn cdi-btn-default" ng-click="addUser()">添加用户</button>
+                                    <div style="width: 5px;height: 25px;float: right;"></div>
                                     <button class="btn cdi-btn-default">查找</button>
+
                                 </div>
                             </th>
                             <th style="width: 20px;"></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr ng-repeat="user in currentUserList">
                             <td style="width: 25px; border:none;"></td>
                             <td style="width: 70px;">
-                                <span class="id"></span>
+                                <span class="id">{{user.accountNumber}}</span>
                             </td>
                             <td style="width: 133px;">
-                                <span class="code"></span>
+                                <span class="code">{{user.accountName}}</span>
                             </td>
                             <td style="width: 115px;">
-                                <span class="date"></span>
+                                <span class="date">{{user.role}}</span>
                             </td>
                             <td style="width: 220px;">
                                 <span class="name"></span>
-                                <span class="tel">电话: fsfas</span>
+                                <span class="tel">电话: {{user.accountEmail}}</span>
                             </td>
                             <td>
                                 <div class="optionContainer" style="padding: 0;">
-                                    <button class="btn btn cdi-btn-default">详细介绍</button>
+                                    <button class="btn btn cdi-btn-default" ng-click="userDetails(1)">详细介绍</button>
                                     <div style="width: 13px;height: 25px;float: right;"></div>
-                                    <button class="btn cdi-btn-default">基本资料</button>
+
                                 </div>
                             </td>
                             <td style="width: 20px; border:none;"></td>
                         </tr>
+
                         </tbody>
                     </table>
                 </div>
@@ -114,9 +120,9 @@
                             </td>
                             <td>
                                 <div class="optionContainer" style="padding: 0;">
-                                    <button class="btn cdi-btn-default" ">详细介绍</button>
+                                    <button class="btn cdi-btn-default" ng-click="userDetails(1)">详细介绍</button>
                                     <div style="width: 13px;height: 25px;float: right;"></div>
-                                    <button class="btn cdi-btn-default"">基本资料</button>
+
                                 </div>
                             </td>
                             <td style="width: 20px; border:none;"></td>
@@ -173,9 +179,9 @@
                             </td>
                             <td>
                                 <div class="optionContainer" style="padding: 0;">
-                                    <button class="btn cdi-btn-default" ">详细介绍</button>
+                                    <button class="btn cdi-btn-default"  ng-click="userDetails(1)">详细介绍</button>
                                     <div style="width: 13px;height: 25px;float: right;"></div>
-                                    <button class="btn cdi-btn-default"">基本资料</button>
+
                                 </div>
                             </td>
                             <td style="width: 20px; border:none;"></td>
@@ -232,9 +238,9 @@
                             </td>
                             <td>
                                 <div class="optionContainer" style="padding: 0;">
-                                    <button class="btn cdi-btn-default" ">详细介绍</button>
+                                    <button class="btn cdi-btn-default" ng-click="userDetails(1)">详细介绍</button>
                                     <div style="width: 13px;height: 25px;float: right;"></div>
-                                    <button class="btn cdi-btn-default"">基本资料</button>
+
                                 </div>
                             </td>
                             <td style="width: 20px; border:none;"></td>
@@ -271,11 +277,11 @@
                         <thead>
                         <tr>
                             <th style="width: 25px;"></th>
-                            <th style="width: 70px;">用户ID
+                            <th style="width: 70px;">实验室编号
                             </td>
-                            <th style="width: 142px;">用户类型
+                            <th style="width: 142px;">类型
                             </td>
-                            <th style="width: 106px;">注册日期
+                            <th style="width: 106px;">管理员
                             </td>
                             <th style="width: 220px;">基本信息
                             </td>
@@ -307,7 +313,7 @@
                                 <div class="optionContainer" style="padding: 0;">
                                     <button class="btn btn cdi-btn-default">详细介绍</button>
                                     <div style="width: 13px;height: 25px;float: right;"></div>
-                                    <button class="btn cdi-btn-default">基本资料</button>
+                                    
                                 </div>
                             </td>
                             <td style="width: 20px; border:none;"></td>
@@ -370,7 +376,7 @@
                                 <div class="optionContainer" style="padding: 0;">
                                     <button class="btn btn cdi-btn-default">详细介绍</button>
                                     <div style="width: 13px;height: 25px;float: right;"></div>
-                                    <button class="btn cdi-btn-default">基本资料</button>
+                                    <button class="btn cdi-btn-default"></button>
                                 </div>
                             </td>
                             <td style="width: 20px; border:none;"></td>
@@ -433,7 +439,7 @@
                                 <div class="optionContainer" style="padding: 0;">
                                     <button class="btn btn cdi-btn-default">详细介绍</button>
                                     <div style="width: 13px;height: 25px;float: right;"></div>
-                                    <button class="btn cdi-btn-default">基本资料</button>
+                                    <button class="btn cdi-btn-default"></button>
                                 </div>
                             </td>
                             <td style="width: 20px; border:none;"></td>
@@ -507,7 +513,7 @@
                                 <div class="optionContainer" style="padding: 0;">
                                     <button class="btn btn cdi-btn-default">详细介绍</button>
                                     <div style="width: 13px;height: 25px;float: right;"></div>
-                                    <button class="btn cdi-btn-default">基本资料</button>
+                                    <button class="btn cdi-btn-default"></button>
                                 </div>
                             </td>
                             <td style="width: 20px; border:none;"></td>
@@ -570,7 +576,7 @@
                                 <div class="optionContainer" style="padding: 0;">
                                     <button class="btn btn cdi-btn-default">详细介绍</button>
                                     <div style="width: 13px;height: 25px;float: right;"></div>
-                                    <button class="btn cdi-btn-default">基本资料</button>
+                                    <button class="btn cdi-btn-default"></button>
                                 </div>
                             </td>
                             <td style="width: 20px; border:none;"></td>
@@ -633,7 +639,7 @@
                                 <div class="optionContainer" style="padding: 0;">
                                     <button class="btn btn cdi-btn-default">详细介绍</button>
                                     <div style="width: 13px;height: 25px;float: right;"></div>
-                                    <button class="btn cdi-btn-default">基本资料</button>
+                                    <button class="btn cdi-btn-default"></button>
                                 </div>
                             </td>
                             <td style="width: 20px; border:none;"></td>
@@ -707,7 +713,7 @@
                                 <div class="optionContainer" style="padding: 0;">
                                     <button class="btn btn cdi-btn-default">详细介绍</button>
                                     <div style="width: 13px;height: 25px;float: right;"></div>
-                                    <button class="btn cdi-btn-default">基本资料</button>
+                                    <button class="btn cdi-btn-default"></button>
                                 </div>
                             </td>
                             <td style="width: 20px; border:none;"></td>
@@ -770,7 +776,7 @@
                                 <div class="optionContainer" style="padding: 0;">
                                     <button class="btn btn cdi-btn-default">详细介绍</button>
                                     <div style="width: 13px;height: 25px;float: right;"></div>
-                                    <button class="btn cdi-btn-default">基本资料</button>
+                                    <button class="btn cdi-btn-default"></button>
                                 </div>
                             </td>
                             <td style="width: 20px; border:none;"></td>
@@ -833,7 +839,7 @@
                                 <div class="optionContainer" style="padding: 0;">
                                     <button class="btn btn cdi-btn-default">详细介绍</button>
                                     <div style="width: 13px;height: 25px;float: right;"></div>
-                                    <button class="btn cdi-btn-default">基本资料</button>
+                                    <button class="btn cdi-btn-default"></button>
                                 </div>
                             </td>
                             <td style="width: 20px; border:none;"></td>

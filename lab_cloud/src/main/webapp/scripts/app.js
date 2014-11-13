@@ -19,8 +19,7 @@ angular
         'ui.tinymce',
         'ui.select2',
         'angularFileUpload',
-        'dialogs.main',
-        'textAngular'
+        'dialogs.main'
     ])
     .config(function ($routeProvider) {
         $routeProvider
@@ -50,6 +49,22 @@ angular
             .when('/my-class', {
               templateUrl: 'views/my-class.html',
               controller: 'MyClassCtrl'
+            })
+            .when('/lab-user-manage', {
+              templateUrl: 'views/lab-user-manage.html',
+              controller: 'LabUserManageCtrl'
+            })
+            .when('/lab-manage', {
+              templateUrl: 'views/lab-manage.html',
+              controller: 'LabManageCtrl'
+            })
+            .when('/lab-course-arrangement', {
+              templateUrl: 'views/lab-course-arrangement.html',
+              controller: 'LabCourseArrangementCtrl'
+            })
+            .when('/lab-apply-manage', {
+              templateUrl: 'views/lab-apply-manage.html',
+              controller: 'LabApplyManageCtrl'
             })
             .otherwise({
                 redirectTo: '/'
