@@ -28,7 +28,7 @@
                             <th style="width: 25px;"></th>
                             <th style="width: 70px;">实验室编号
                             </td>
-                            <th style="width: 142px;">类型
+                            <th style="width: 142px;">实验室名
                             </td>
                             <th style="width: 106px;">管理员
                             </td>
@@ -36,6 +36,8 @@
                             </td>
                             <th>
                                 <div class="btn-group-head">
+                                    <button class="btn cdi-btn-default" ng-click="addLab()">添加 Lab</button>
+                                    <div style="width: 5px;height: 25px;float: right;"></div>
                                     <button class="btn cdi-btn-default">查找</button>
                                 </div>
                             </th>
@@ -43,30 +45,31 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr ng-repeat="lab in currentLabList">
                             <td style="width: 25px; border:none;"></td>
                             <td style="width: 70px;">
-                                <span class="id"></span>
+                                <span class="id">{{lab.id}}</span>
                             </td>
                             <td style="width: 133px;">
-                                <span class="code"></span>
+                                <span class="code">{{lab.labName}}</span>
                             </td>
                             <td style="width: 115px;">
-                                <span class="date"></span>
+                                <span class="date">{{lab.labManager}}</span>
                             </td>
                             <td style="width: 220px;">
                                 <span class="name"></span>
-                                <span class="tel">电话: fsfas</span>
+                                <span class="tel">{{lab.desc}}</span>
                             </td>
                             <td>
                                 <div class="optionContainer" style="padding: 0;">
-                                    <button class="btn btn cdi-btn-default">详细介绍</button>
+                                    <button class="btn btn cdi-btn-default" ng-click="editLab(lab)">详细介绍</button>
                                     <div style="width: 13px;height: 25px;float: right;"></div>
-                                    
+                                    <button class="btn cdi-btn-grey btn-danger" ng-click="removeLab(lab)">移除</button>
                                 </div>
                             </td>
                             <td style="width: 20px; border:none;"></td>
                         </tr>
+
                         </tbody>
                     </table>
                 </div>
@@ -83,22 +86,24 @@
                     <span class="name">全部实验</span>
                 </tab-heading>
 
-                <div class="tableTitle">共 个注册用户</div>
+                <div class="tableTitle">共 个实验</div>
                 <div class="tableContainer">
                     <table class="table">
                         <thead>
                         <tr>
                             <th style="width: 25px;"></th>
-                            <th style="width: 70px;">用户ID
+                            <th style="width: 70px;">实验编号
                             </td>
-                            <th style="width: 142px;">用户类型
+                            <th style="width: 142px;">实验名称
                             </td>
-                            <th style="width: 106px;">注册日期
+                            <th style="width: 106px;">是否开放
                             </td>
-                            <th style="width: 220px;">基本信息
+                            <th style="width: 220px;">基本描述
                             </td>
                             <th>
                                 <div class="btn-group-head">
+                                    <button class="btn cdi-btn-default" ng-click="addExperiment()">添加实验</button>
+                                    <div style="width: 5px;height: 25px;float: right;"></div>
                                     <button class="btn cdi-btn-default">查找</button>
                                 </div>
                             </th>
@@ -106,7 +111,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr ng-repeat="exp in currentExperimentList">
                             <td style="width: 25px; border:none;"></td>
                             <td style="width: 70px;">
                                 <span class="id"></span>
@@ -146,22 +151,24 @@
                     <span class="name">全部课程</span>
                 </tab-heading>
 
-                <div class="tableTitle">共 个注册用户</div>
+                <div class="tableTitle">共 门课程</div>
                 <div class="tableContainer">
                     <table class="table">
                         <thead>
                         <tr>
                             <th style="width: 25px;"></th>
-                            <th style="width: 70px;">用户ID
+                            <th style="width: 70px;">课程编号
                             </td>
-                            <th style="width: 142px;">用户类型
+                            <th style="width: 142px;">课程名
                             </td>
-                            <th style="width: 106px;">注册日期
+                            <th style="width: 106px;">是否开课
                             </td>
                             <th style="width: 220px;">基本信息
                             </td>
                             <th>
                                 <div class="btn-group-head">
+                                    <button class="btn cdi-btn-default" ng-click="addCourse()">添加课程</button>
+                                    <div style="width: 5px;height: 25px;float: right;"></div>
                                     <button class="btn cdi-btn-default">查找</button>
                                 </div>
                             </th>
@@ -169,7 +176,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr ng-repeat="course in currentCourseList">
                             <td style="width: 25px; border:none;"></td>
                             <td style="width: 70px;">
                                 <span class="id"></span>

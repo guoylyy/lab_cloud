@@ -15,26 +15,40 @@ angular.module('prjApp')
     		{
     			accountNumber:'132',
     			accountName:'12332131',
+                accountPassword:'12332131',
     			accountEmail:'fdsf@qq.com',
-    			role:'fdsfa'
+                desc:'fdsafa',
+    			role:1
     		},
     		{
     			accountNumber:'132',
     			accountName:'12332131',
+                accountPassword:'12332131',
     			accountEmail:'fdsf@qq.com',
-    			role:'fdsfa'
+                desc:'fdsafa',
+    			role:1
     		},
     		{
     			accountNumber:'132',
     			accountName:'12332131',
+                accountPassword:'12332131',
     			accountEmail:'fdsf@qq.com',
-    			role:'fdsfa'
+                desc:'fdsafa',
+    			role:1
     		}
     	];
     	return ulist;
     };
 
     this.loadLab = function(pageNum){
-    	return ['',''];
+    	return [];
+    };
+
+    this.loadExperiment = function(pageNum){
+        return [];
+    };
+
+    this.loadCourse = function(pageNum){
+        return [];
     };
   });

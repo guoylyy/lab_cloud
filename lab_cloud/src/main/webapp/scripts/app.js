@@ -14,12 +14,14 @@ angular
         'ngRoute',
         'ngSanitize',
         'ngTouch',
+        'ngStorage',
         'ui.sortable',
         'ui.bootstrap',
         'ui.tinymce',
         'ui.select2',
         'angularFileUpload',
         'dialogs.main'
+        
     ])
     .config(function ($routeProvider) {
         $routeProvider

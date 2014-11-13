@@ -12,19 +12,19 @@
 	  		<div class="title">实验平台</div>
 	  		<div class="sub-title">打造更好地实验平台。</div>
 	  	</div>
-	    <div class="login-form-container">
+	    <div class="login-form-container" ng-show="user==false">
 	      <lab-login-form class="login-form">
 	      	<form method="GET">
 		        <h4 class="login-form-heading">登录</h4>
-		        <input name="userName" type="text" class="form-control login-input" placeholder="登录名" autofocus="" ng-model="userName">
-		        <input name="userPWD" type="password" class="form-control login-input" placeholder="密码" ng-model="userPWD">
+		        <input name="userName" type="text" class="form-control login-input" placeholder="登录名" autofocus="" ng-model="accountNumber">
+		        <input name="userPWD" type="password" class="form-control login-input" placeholder="密码" ng-model="accountPassword">
 		        <label class="checkbox" style="width: 90px;">
 		          <input type="checkbox" ng-model="isKeepLogin"> 保持登录状态
 		        </label>
 		        <div>
-		        	<span class="red"></span>
+		        	<span class="red">{{message}}</span>
 		        </div>
-		        <button class="btn btn-primary login-btn theme-1" ng-click="submitLogin()">登录</button>
+		        <button class="btn btn-primary login-btn theme-1" ng-click="login()">登录</button>
 		        <a href="#/register" class="{{themeColor}}">注册你的帐户&nbsp;<span class="plus">+</span></a>
 	    	</form>
 	      </lab-login-form>

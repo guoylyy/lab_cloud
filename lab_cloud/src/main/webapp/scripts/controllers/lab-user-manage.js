@@ -48,37 +48,26 @@ angular.module('prjApp')
                 $scope.currentUserList.push(data);
             });
         };
-        $scope.userDetails = function(uid) {
-            var dialog = dialogs.create('template/lab-add-user-dialog.html', 'userEditCtrl', {
-                item: ''
-            }, {
+        $scope.userDetails = function(user) {
+            var dialog = dialogs.create('template/lab-user-info-dialog.html', 'UserEditCtrl', user, 
+            {
                 size: 'md',
                 keyboard: true,
                 backdrop: 'static',
                 windowClass: 'model-overlay'
             });
+
+            dialog.result.then(function(data){
+                console.log(data);
+            });
         };
 
-        
-        //TO-DO: Make sure redirect to right way
         $scope.tabHref = function(path) {
             $location.path(path);
         };
 
-    }).controller('addUserCtrl', function($log, $scope, $modalInstance, data) {
-        $scope.userRoles = [
-            {
-                name: "学生",
-                value: 1
-            },
-            {
-                name: "管理员",
-                value: 3
-            }, {
-                name: "教师",
-                value: 2
-            } 
-        ];
+    }).controller('addUserCtrl', function($log, $scope, $modalInstance, data, DictService) {
+        $scope.userRoles = DictService.getRoleDict();
 
         $scope.data = {
             accountName: '',
@@ -115,5 +104,15 @@ angular.module('prjApp')
         };
         $scope.confirm = function(){
           $modalInstance.close();
+        };
+   }).controller('UserEditCtrl', function ($scope,$modalInstance,data, DictService) {
+        $scope.data = data;
+        $scope.userRoles = DictService.getRoleDict();
+
+        $scope.cancel = function(){
+          $modalInstance.dismiss('Canceled');
+        };
+        $scope.save = function(){
+          $modalInstance.close($scope.data);
         };
    });
