@@ -2,6 +2,8 @@ package com.prj.util;
 
 import java.io.Serializable;
 
+import com.sun.xml.internal.bind.marshaller.DataWriter;
+
 public class DataWrapper<T> implements Serializable {
 
 	private static final long serialVersionUID = -3075889087516685551L;
@@ -27,6 +29,11 @@ public class DataWrapper<T> implements Serializable {
 	public DataWrapper(T data) {
 		this();
 		this.data = data;
+	}
+	
+	public DataWrapper(String token) {
+		this();
+		this.token = token;
 	}
 
 	public CallStatusEnum getCallStatus() {

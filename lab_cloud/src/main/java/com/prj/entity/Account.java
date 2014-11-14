@@ -28,7 +28,7 @@ public class Account extends BaseEntity {
 	private String accountName;
 	private String accountEmail;
 	private AccountCharacter accountCharacter;
-	private String studentGrade;
+	private String studentGrade;// used by student
 	private Date entranceYearMonth;//used by student
 	private Date lastLoginTime;
 	private Boolean isActive = true;

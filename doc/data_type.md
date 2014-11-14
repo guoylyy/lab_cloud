@@ -1,9 +1,10 @@
-<link rel="stylesheet" href="http://yandex.st/highlightjs/6.1/styles/default.min.css">
-<script src="http://yandex.st/highlightjs/6.1/highlight.min.js"></script>
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/default.min.css">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
 <script>
 hljs.tabReplace = ' ';
 hljs.initHighlightingOnLoad();
 </script>
+
 #传输数据类型说明
 
 ##简要说明
@@ -19,7 +20,7 @@ REQUEST和RESPOND的类型都是WrapperData
         "currPageNum": 0,
         "totalItemNum": 0,
         "totalPageNum": 0
-    }    
+    }        
 下面只列出有用的属性
 
 ##具体说明

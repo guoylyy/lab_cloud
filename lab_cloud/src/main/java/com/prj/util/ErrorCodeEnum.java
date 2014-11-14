@@ -9,7 +9,7 @@ public enum ErrorCodeEnum implements Serializable{
 	Account_Not_Exist("Account Not Exist", 2),
 	Password_Wrong("Password Wrong", 3),
 	Account_Exist("Account Exist", 4),
-	Employ_Not_Active("Account Not Active", 5),
+	Account_Not_Active("Account Not Active", 5),
 	Token_Expired("Token Expired", 6),
 	Token_Invalid("Token Invalid", 7),
 	Access_Denied("Access Denied", 8);

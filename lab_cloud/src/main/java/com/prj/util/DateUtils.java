@@ -1,5 +1,6 @@
 package com.prj.util;
 
+import java.util.Calendar;
 import java.util.Date;
 
 @SuppressWarnings("deprecation")
@@ -46,20 +47,15 @@ public class DateUtils {
 	 * */
 	public static Date getDateFormString(String strDate, String strTime)
 	{
-		Date ret = new Date();
+		Calendar cal = Calendar.getInstance();
 		
 		String[] arrDate = strDate.split("-");
-		
-		ret.setYear(Integer.parseInt(arrDate[0])-1900);
-		ret.setMonth(Integer.parseInt(arrDate[1])-1);
-		ret.setDate(Integer.parseInt(arrDate[2]));
-		
 		String[] arrTime = strTime.split(":");
-		ret.setHours(Integer.parseInt(arrTime[0]));
-		ret.setMinutes(Integer.parseInt(arrTime[1]));
-		ret.setSeconds(Integer.parseInt(arrTime[2]));
 		
-		return ret;
+		cal.set(Integer.parseInt(arrDate[0]), Integer.parseInt(arrDate[1])-1, Integer.parseInt(arrDate[2]), 
+				Integer.parseInt(arrTime[0]), Integer.parseInt(arrTime[1]), Integer.parseInt(arrTime[1]));
+		
+		return cal.getTime();
 	}
 	
 	/**

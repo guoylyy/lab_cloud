@@ -82,8 +82,9 @@ public class AccountServiceImpl implements AccountService {
 		if (a == null) {
 			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
 		} else if (!a.getIsActive()) {
-			ret.setErrorCode(ErrorCodeEnum.Employ_Not_Active);
+			ret.setErrorCode(ErrorCodeEnum.Account_Not_Active);
 		} else if (!a.getAccountPassword().equals(MD5Tool.GetMd5(account.getAccountPassword()))) {
+//			System.out.println("POST:" + MD5Tool.GetMd5(account.getAccountPassword()) + "\nDB  :" + a.getAccountPassword());
 			ret.setErrorCode(ErrorCodeEnum.Password_Wrong);
 		} else {
 			a.setLastLoginTime(Calendar.getInstance().getTime());
@@ -100,7 +101,7 @@ public class AccountServiceImpl implements AccountService {
 		account.setAccountPassword(MD5Tool.GetMd5(account.getAccountPassword()));
 		if (a != null) {
 			ret.setErrorCode(ErrorCodeEnum.Account_Exist);
-		} else if (dao.addAccount(account)!=null) {
+		} else if (dao.addAccount(account) != null) {
 			ret.setData(account);
 		} else {
 			ret.setErrorCode(ErrorCodeEnum.Unknown_Error);
