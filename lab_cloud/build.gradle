@@ -3,8 +3,9 @@ apply plugin: 'eclipse'
 apply plugin: 'war'
 apply plugin: 'jetty'
 apply plugin: 'idea'
+apply plugin: 'war'
 
-sourceCompatibility = 1.5
+sourceCompatibility = 1.6
 version = '2.1'
 war {
     from('WebContent')

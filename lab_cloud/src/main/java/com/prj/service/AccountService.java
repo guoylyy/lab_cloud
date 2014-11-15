@@ -17,7 +17,7 @@ public interface AccountService {
 
 	DataWrapper<Account> addAccount(Account account);
 
-	public DataWrapper<Account> deleteAccountById(Integer id);
+	public DataWrapper<Account> disableAccountById(Integer id);
 
 	DataWrapper<List<Account>> getAllAccount();
 

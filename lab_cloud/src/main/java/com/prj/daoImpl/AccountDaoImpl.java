@@ -28,11 +28,12 @@ public class AccountDaoImpl extends AbstractHibernateDao<Account, Integer>
 		return add(v);
 	}
 
-	public Account deleteAccountById(Integer id) {
+	public Account disableAccountById(Integer id) {
 		Account a = findById(id);
 		if (a == null)
 			return null;
 		a.setIsActive(false);
+//		a.setLoginToken(null);
 		return a;
 	}
 

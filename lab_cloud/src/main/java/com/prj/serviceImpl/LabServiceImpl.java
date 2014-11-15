@@ -22,7 +22,7 @@ public class LabServiceImpl implements LabService {
 
 	public DataWrapper<Lab> addLab(Lab lab) {
 		DataWrapper<Lab> ret = new DataWrapper<Lab>();
-		Lab a = dao.getLabByNumber(lab.getNumber());
+		Lab a = dao.getLabByNumber(lab.getLabNumber());
 		if (a != null) {
 			ret.setErrorCode(ErrorCodeEnum.Lab_Exist);
 		} else if (dao.addLab(lab) != null) {

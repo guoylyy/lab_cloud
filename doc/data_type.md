@@ -22,6 +22,7 @@ REQUEST和RESPOND的类型都是WrapperData
         "totalPageNum": 0
     }        
 下面只列出有用的属性
+标有default的属性可以省略
 
 ##具体说明
 
@@ -234,6 +235,12 @@ __Account/add__
         }
     }
     
+`ERROR`
+
+    {
+        "callStatus": "FAILED",
+        "errorCode": "Token_Expired" || "Token_Invalid" || "Access_Denied" || "Account_Exist"
+    }
 ####删除一个用户（isActive 设置为false）
 `DELETE`
 __Account/delete/{id}__
@@ -423,20 +430,544 @@ __Account/update/{id}__
 
 ### 实验室
 ####添加一个实验室
-####删除一个实验室 （不是真删除，目前看来 设置一个判断是否启用 column的可以了）
-####列出实验室 （ 列出实验室列表，没有启用的不用列出）
-####查看实验室详情
-####更新实验室信息
+`POST`
+    
+    enum Status {
+		OPEN,
+		CLOSED
+	}
+	
+__Lab/add__
 
+    {
+      "token": "a6d0a32ab22166fa1759e7b392eee6fb:2014/12/13",
+      "data":
+            {
+              "labNumber":"330",
+              "capacity":"40",
+              "status":"OPEN"(default "OPEN")
+            }
+    }
+    
+`RETURN`
+
+    {
+        "callStatus": "SUCCEED",
+        "errorCode": "No_Error",
+        "data": {
+            "id": 2,
+            "create_time": 1416039119365,
+            "modify_time": 1416039119920,
+            "labNumber": "330",
+            "isActive": true,
+            "capacity": 40,
+            "status": "OPEN",
+            "experiments": [],
+            "labPlans": []
+        }
+    }
+    
+`ERROR`
+
+    {
+        "callStatus": "FAILED",
+        "errorCode": "Token_Expired" || "Token_Invalid" || "Access_Denied" || "Lab_Exist"
+    }
+####删除一个实验室 （不是真删除，目前看来 设置一个判断是否启用 column的可以了）
+`DELETE`
+	
+__Lab/delete/{id}__
+
+    {
+      "token": "a6d0a32ab22166fa1759e7b392eee6fb:2014/12/13",
+    }
+    
+`RETURN`
+
+    {
+        "callStatus": "SUCCEED",
+        "errorCode": "No_Error",
+        "data": {
+            "id": 2,
+            "create_time": 1416039119365,
+            "modify_time": 1416039119920,
+            "labNumber": "330",
+            "isActive": false,
+            "capacity": 40,
+            "status": "OPEN",
+            "experiments": [],
+            "labPlans": []
+        }
+    }
+    
+`ERROR`
+
+    {
+        "callStatus": "FAILED",
+        "errorCode": "Token_Expired" || "Token_Invalid" || "Access_Denied" || "Lab_Not_Exist"
+    }
+####列出实验室 （ 列出实验室列表，没有启用的不用列出）
+`POST`
+	
+__Lab/all__
+
+    {
+      "token": "a6d0a32ab22166fa1759e7b392eee6fb:2014/12/13",
+    }
+    
+`RETURN`
+
+    {
+        "callStatus": "SUCCEED",
+        "errorCode": "No_Error",
+        "data": [
+            {
+                "id": 2,
+                "create_time": 1416039119365,
+                "modify_time": 1416039119920,
+                "labNumber": "330",
+                "isActive": true,
+                "capacity": 40,
+                "status": "OPEN",
+                "experiments": [],
+                "labPlans": []
+            },
+            ...
+        ]
+    }
+    
+`ERROR`
+
+    {
+        "callStatus": "FAILED",
+        "errorCode": "Token_Expired" || "Token_Invalid" || "Access_Denied" 
+    }
+####查看实验室详情
+`POST`
+	
+__Lab/profile/{id}__
+
+    {
+      "token": "a6d0a32ab22166fa1759e7b392eee6fb:2014/12/13",
+    }
+    
+`RETURN`
+
+    {
+        "callStatus": "SUCCEED",
+        "errorCode": "No_Error",
+        "data": {
+            "id": 2,
+            "create_time": 1416039119365,
+            "modify_time": 1416039119920,
+            "labNumber": "330",
+            "isActive": true,
+            "capacity": 40,
+            "status": "OPEN",
+            "experiments": [],
+            "labPlans": []
+        }
+    }
+    
+`ERROR`
+
+    {
+        "callStatus": "FAILED",
+        "errorCode": "Token_Expired" || "Token_Invalid" || "Access_Denied" || "Lab_Not_Exist"
+    }
+####更新实验室信息
+`POST`
+	
+__Lab/update/{id}__
+
+    {
+      "token": "a6d0a32ab22166fa1759e7b392eee6fb:2014/12/13",
+    }
+    
+`RETURN`
+
+    {
+        "callStatus": "SUCCEED",
+        "errorCode": "No_Error",
+        "data": {
+            "id": 2,
+            "create_time": 1416039119365,
+            "modify_time": 1416039119920,
+            "labNumber": "330",
+            "isActive": true,
+            "capacity": 40,
+            "status": "OPEN",
+            "experiments": [],
+            "labPlans": []
+        }
+    }
+    
+`ERROR`
+
+    {
+        "callStatus": "FAILED",
+        "errorCode": "Token_Expired" || "Token_Invalid" || "Access_Denied" || "Lab_Not_Exist"
+    }
 
 ####添加一个课程
-####删除课程  （同样不是真删除，设置一个停用column）
-####列出所有课程 
-####查看课程详情
-####更新课程
+`POST`
+	
+__Course/add__
 
+    {
+      "token": "a6d0a32ab22166fa1759e7b392eee6fb:2014/12/13",
+      "data":
+            {
+              "courseNumber":"5341001",
+              "courseName":"JAVA",
+              "department":"软件学院"
+              "startYear":"2014-1-1"
+            }
+    }
+    
+`RETURN`
+
+    {
+        "callStatus": "SUCCEED",
+        "errorCode": "No_Error",
+        "data": {
+            "id": 2,
+            "create_time": 1416040100307,
+            "modify_time": 1416040100846,
+            "courseNumber": "5341001",
+            "courseName": "JAVA",
+            "department": "软件学院",
+            "startYear": "2014-01-01",
+            "isActive": true,
+            "classes": [],
+            "experiments": []
+        }
+    }
+    
+`ERROR`
+
+    {
+        "callStatus": "FAILED",
+        "errorCode": "Token_Expired" || "Token_Invalid" || "Access_Denied" || "Course_Exist"
+    }
+
+####删除课程  （同样不是真删除，设置一个停用column）
+`DELETE`
+	
+__Course/delete/{id}__
+
+    {
+      "token": "a6d0a32ab22166fa1759e7b392eee6fb:2014/12/13",
+    }
+    
+`RETURN`
+
+    {
+        "callStatus": "SUCCEED",
+        "errorCode": "No_Error",
+        "data": {
+            "id": 2,
+            "create_time": 1416040100307,
+            "modify_time": 1416040100846,
+            "courseNumber": "5341001",
+            "courseName": "JAVA",
+            "department": "软件学院",
+            "startYear": "2014-01-01",
+            "isActive": false,
+            "classes": [],
+            "experiments": []
+        }
+    }
+    
+`ERROR`
+
+    {
+        "callStatus": "FAILED",
+        "errorCode": "Token_Expired" || "Token_Invalid" || "Access_Denied" || "Course_Not_Exist"
+    }
+
+####列出所有课程 
+`POST`
+	
+__Course/all__
+
+    {
+      "token": "a6d0a32ab22166fa1759e7b392eee6fb:2014/12/13",
+    }
+    
+`RETURN`
+
+    {
+        "callStatus": "SUCCEED",
+        "errorCode": "No_Error",
+        "data": [
+            {
+                "id": 2,
+                "create_time": 1416040100307,
+                "modify_time": 1416040100846,
+                "courseNumber": "5341001",
+                "courseName": "JAVA",
+                "department": "软件学院",
+                "startYear": "2014-01-01",
+                "isActive": true,
+                "classes": [],
+                "experiments": []
+            },
+            ...
+        ]
+    }
+    
+`ERROR`
+
+    {
+        "callStatus": "FAILED",
+        "errorCode": "Token_Expired" || "Token_Invalid" || "Access_Denied"
+    }
+####查看课程详情
+`POST`
+	
+__Course/profile/{id}__
+
+    {
+      "token": "a6d0a32ab22166fa1759e7b392eee6fb:2014/12/13",
+    }
+    
+`RETURN`
+
+    {
+        "callStatus": "SUCCEED",
+        "errorCode": "No_Error",
+        "data": {
+            "id": 2,
+            "create_time": 1416040100307,
+            "modify_time": 1416040100846,
+            "courseNumber": "5341001",
+            "courseName": "JAVA",
+            "department": "软件学院",
+            "startYear": "2014-01-01",
+            "isActive": true,
+            "classes": [],
+            "experiments": []
+        }
+    }
+    
+`ERROR`
+
+    {
+        "callStatus": "FAILED",
+        "errorCode": "Token_Expired" || "Token_Invalid" || "Access_Denied" || "Course_Not_Exist"
+    }
+####更新课程
+`POST`
+	
+__Course/update/{id}__
+
+    {
+      "token": "a6d0a32ab22166fa1759e7b392eee6fb:2014/12/13",
+    }
+    
+`RETURN`
+
+    {
+        "callStatus": "SUCCEED",
+        "errorCode": "No_Error",
+        "data": {
+            "id": 2,
+            "create_time": 1416040100307,
+            "modify_time": 1416040100846,
+            "courseNumber": "5341001",
+            "courseName": "JAVA",
+            "department": "软件学院",
+            "startYear": "2014-01-01",
+            "isActive": true,
+            "classes": [],
+            "experiments": []
+        }
+    }
+    
+`ERROR`
+
+    {
+        "callStatus": "FAILED",
+        "errorCode": "Token_Expired" || "Token_Invalid" || "Access_Denied" || "Course_Not_Exist"
+    }
 ####添加一门实验
+`POST`
+	
+__Experiment/add__
+
+    {
+      "token": "2ca358ec562e1e2f6cda17390739cb62:2014/12/15",
+      "data":
+            {
+              "experimentNumber":"5341001-1",
+              "experimentName":"JAVA EXPER",
+              "minimumStudent":"10",
+              "maximumStudent":"40"
+            }
+    }
+    
+`RETURN`
+
+    {
+        "callStatus": "SUCCEED",
+        "errorCode": "No_Error",
+        "data": {
+            "id": 1,
+            "create_time": 1416041273437,
+            "modify_time": 1416041274262,
+            "experimentNumber": "5341001-1",
+            "experimentName": "JAVA EXPER",
+            "minimumStudent": 10,
+            "maximumStudent": 40,
+            "isActive": true,
+            "courses": [],
+            "labs": []
+        }
+    }
+    
+`ERROR`
+
+    {
+        "callStatus": "FAILED",
+        "errorCode": "Token_Expired" || "Token_Invalid" || "Access_Denied" || "Experiment_Exist"
+    }
 ####删除实验 （同样不是真删除，设置一个停用column）
+`DELETE`
+	
+__Experiment/delete/{id}__
+
+    {
+      "token": "2ca358ec562e1e2f6cda17390739cb62:2014/12/15"
+    }
+    
+`RETURN`
+
+    {
+        "callStatus": "SUCCEED",
+        "errorCode": "No_Error",
+        "data": {
+            "id": 1,
+            "create_time": 1416041273437,
+            "modify_time": 1416041274262,
+            "experimentNumber": "5341001-1",
+            "experimentName": "JAVA EXPER",
+            "minimumStudent": 10,
+            "maximumStudent": 40,
+            "isActive": false,
+            "courses": [],
+            "labs": []
+        }
+    }
+    
+`ERROR`
+
+    {
+        "callStatus": "FAILED",
+        "errorCode": "Token_Expired" || "Token_Invalid" || "Access_Denied" || "Experiment_Not_Exist"
+    }
 ####列出所有实验
+`POST`
+	
+__Experiment/all__
+
+    {
+      "token": "2ca358ec562e1e2f6cda17390739cb62:2014/12/15"
+    }
+    
+`RETURN`
+
+    {
+        "callStatus": "SUCCEED",
+        "errorCode": "No_Error",
+        "data": [
+            {
+                "id": 1,
+                "create_time": 1416041273437,
+                "modify_time": 1416041274262,
+                "experimentNumber": "5341001-1",
+                "experimentName": "JAVA EXPER",
+                "minimumStudent": 10,
+                "maximumStudent": 40,
+                "isActive": true,
+                "courses": [],
+                "labs": []
+            },
+            ...
+        ]
+    }
+    
+`ERROR`
+
+    {
+        "callStatus": "FAILED",
+        "errorCode": "Token_Expired" || "Token_Invalid" || "Access_Denied"
+    }
 ####查看实验详情
+`POST`
+	
+__Experiment/profile/{id}__
+
+    {
+      "token": "2ca358ec562e1e2f6cda17390739cb62:2014/12/15"
+    }
+    
+`RETURN`
+
+    {
+        "callStatus": "SUCCEED",
+        "errorCode": "No_Error",
+        "data": {
+            "id": 1,
+            "create_time": 1416041273437,
+            "modify_time": 1416041274262,
+            "experimentNumber": "5341001-1",
+            "experimentName": "JAVA EXPER",
+            "minimumStudent": 10,
+            "maximumStudent": 40,
+            "isActive": true,
+            "courses": [],
+            "labs": []
+        }
+    }
+    
+`ERROR`
+
+    {
+        "callStatus": "FAILED",
+        "errorCode": "Token_Expired" || "Token_Invalid" || "Access_Denied" || "Experiment_Not_Exist"
+    }
 ####更新实验信息
+`POST`
+	
+__Experiment/update/{id}__
+
+    {
+      "token": "2ca358ec562e1e2f6cda17390739cb62:2014/12/15"
+    }
+    
+`RETURN`
+
+    {
+        "callStatus": "SUCCEED",
+        "errorCode": "No_Error",
+        "data": {
+            "id": 1,
+            "create_time": 1416041273437,
+            "modify_time": 1416041274262,
+            "experimentNumber": "5341001-1",
+            "experimentName": "JAVA EXPER",
+            "minimumStudent": 10,
+            "maximumStudent": 40,
+            "isActive": true,
+            "courses": [],
+            "labs": []
+        }
+    }
+    
+`ERROR`
+
+    {
+        "callStatus": "FAILED",
+        "errorCode": "Token_Expired" || "Token_Invalid" || "Access_Denied" || "Experiment_Not_Exist"
+    }

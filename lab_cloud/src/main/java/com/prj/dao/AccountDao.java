@@ -11,7 +11,7 @@ import com.prj.util.Page;
 public interface AccountDao {
 	Integer addAccount(Account v);
 
-	Account deleteAccountById(Integer id);
+	Account disableAccountById(Integer id);
 
 	Account findAccountbyId(int id);
 

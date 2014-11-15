@@ -16,24 +16,24 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "lab")
 public class Lab extends BaseEntity {
-	private enum Status {
+	public enum Status {
 		OPEN,
 		CLOSED
 	}
 	
-	private String number;
+	private String labNumber;
 	private Boolean isActive = true;
 	private Integer capacity;
-	private Status status;
+	private Status status = Status.OPEN;
 	private Set<Experiment> experiments = new HashSet<Experiment>(0);
 	private Set<LabPlan> labPlans = new HashSet<LabPlan>(0);
 
 	@Column(nullable = false)
-	public String getNumber() {
-		return number;
+	public String getLabNumber() {
+		return labNumber;
 	}
-	public void setNumber(String number) {
-		this.number = number;
+	public void setLabNumber(String labNumber) {
+		this.labNumber = labNumber;
 	}
 	
 	@Column(nullable = false)

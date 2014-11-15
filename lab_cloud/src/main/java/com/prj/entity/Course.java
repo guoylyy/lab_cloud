@@ -1,6 +1,6 @@
 package com.prj.entity;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -58,6 +58,10 @@ public class Course extends BaseEntity {
 	public void setStartYear(Date startYear) {
 		this.startYear = startYear;
 	}
+//	public void setStartYear(String startYear) {
+//		System.out.println(startYear);
+//		this.startYear = DateUtils.getDateFormString(startYear + "-1-1 0:0:0");
+//	}
 	
 	@Column(nullable = false)
 	public Boolean getIsActive() {

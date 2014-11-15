@@ -132,7 +132,7 @@ public class AccountController {
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	@ResponseBody
 	public DataWrapper<Account> deleteAccount(@RequestBody DataWrapper<?> wrapper, @PathVariable int id) {
-		return vs.deleteAccountById(id);
+		return vs.disableAccountById(id);
 	}
 	
 	@AccountAccess(checkAccountCharacter = AccountCharacter.ADMINISTRATOR)
@@ -158,4 +158,9 @@ public class AccountController {
 		ret.setErrorCode(ex.getErrorCode());
 		return ret;
 	}
+	
+//    @ExceptionHandler(ResourceNotFoundException.class)
+//    public String handleResourceNotFoundException() {
+//        return "404";
+//    }
 }

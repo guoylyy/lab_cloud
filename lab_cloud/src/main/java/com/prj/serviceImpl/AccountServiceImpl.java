@@ -67,8 +67,8 @@ public class AccountServiceImpl implements AccountService {
 		return ret;
 	}
 
-	public DataWrapper<Account> deleteAccountById(Integer id) {
-		Account a = dao.deleteAccountById(id);
+	public DataWrapper<Account> disableAccountById(Integer id) {
+		Account a = dao.disableAccountById(id);
 		DataWrapper<Account> ret = new DataWrapper<Account>(a);
 		if (a == null) {
 			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);

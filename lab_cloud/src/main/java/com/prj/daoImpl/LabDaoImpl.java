@@ -37,7 +37,7 @@ public class LabDaoImpl extends AbstractHibernateDao<Lab, Integer>implements Lab
 	@SuppressWarnings("unchecked")
 	public DataWrapper<List<Lab>> getAllLab() {
 		List<Lab> result = getCurrentSession().createCriteria(Lab.class)
-				.addOrder(Order.asc("number"))
+				.addOrder(Order.asc("labNumber"))
 				.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY)
 				.list();
 		DataWrapper<List<Lab>> ret = new DataWrapper<List<Lab>>();
@@ -49,7 +49,7 @@ public class LabDaoImpl extends AbstractHibernateDao<Lab, Integer>implements Lab
 	public DataWrapper<List<Lab>> getAllActiveLab() {
 		List<Lab> result = getCurrentSession().createCriteria(Lab.class)
 				.add(Restrictions.eq("isActive", true))
-				.addOrder(Order.asc("number"))
+				.addOrder(Order.asc("labNumber"))
 				.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY)
 				.list();
 		DataWrapper<List<Lab>> ret = new DataWrapper<List<Lab>>();
@@ -65,9 +65,9 @@ public class LabDaoImpl extends AbstractHibernateDao<Lab, Integer>implements Lab
 		return saveOrUpdate(v);
 	}
 
-	public Lab getLabByNumber(String number) {
+	public Lab getLabByNumber(String labNumber) {
 		Criteria criteria = getCurrentSession().createCriteria(Lab.class);
-		criteria.add(Restrictions.eq("number", number));
+		criteria.add(Restrictions.eq("labNumber", labNumber));
 		List<?> ret = criteria.list();
 		if (ret != null && ret.size() > 0) {
 			return (Lab)ret.get(0);
