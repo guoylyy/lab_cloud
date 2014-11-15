@@ -25,57 +25,6 @@ public class AccountServiceImpl implements AccountService {
 	@Resource(name = "AccountDaoImpl")
 	AccountDao dao;
 
-	public DataWrapper<List<Account>> getAllAccount() {
-		return dao.getAllAccount();
-	}
-
-	public DataWrapper<Account> deleteAccountById(Integer id) {
-		Account a = dao.deleteAccountById(id);
-		DataWrapper<Account> ret = new DataWrapper<Account>(a);
-		if (a == null) {
-			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
-		}
-		return ret;
-	}
-
-//	public Integer addAccount(Account v) {
-//		return dao.addAccount(v);
-//	}
-
-	public DataWrapper<Account> updateAccount(Account v) {
-		Account a = dao.updateAccount(v);
-		DataWrapper<Account> ret = new DataWrapper<Account>(a);
-		if (a == null) {
-			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
-		}
-		return ret;
-	}
-
-	public DataWrapper<Account> getAccountById(int id) {
-		DataWrapper<Account> ret = new DataWrapper<Account>();
-		Account a = dao.findAccountbyId(id);
-		ret.setData(a);
-		if (a == null) {
-			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
-		}
-		return ret;
-	}
-
-	public Page<Account> getAccountbyPage(int pagenumber, int pagesize) {
-		return dao.getAccountbyPage(pagenumber, pagesize);
-	}
-
-	public Page<Account> searchAccount(int pagenumber, int pagesize,
-			String name) {
-		//return dao.searchAccount(pagenumber, pagesize, name);
-		return null;
-	}
-
-	public Page<Account> getByPageWithConditions(int pagenumber,
-			int pagesize, List<SimpleExpression> list) {
-		return dao.getByPageWithConditions(pagenumber, pagesize, list);
-	}
-
 	public DataWrapper<Account> login(Account account) {
 		DataWrapper<Account> ret = new DataWrapper<Account>();
 		Account a = dao.getAccountByNumber(account.getAccountNumber());
@@ -83,8 +32,11 @@ public class AccountServiceImpl implements AccountService {
 			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
 		} else if (!a.getIsActive()) {
 			ret.setErrorCode(ErrorCodeEnum.Account_Not_Active);
-		} else if (!a.getAccountPassword().equals(MD5Tool.GetMd5(account.getAccountPassword()))) {
-//			System.out.println("POST:" + MD5Tool.GetMd5(account.getAccountPassword()) + "\nDB  :" + a.getAccountPassword());
+		} else if (!a.getAccountPassword().equals(
+				MD5Tool.GetMd5(account.getAccountPassword()))) {
+			// System.out.println("POST:" +
+			// MD5Tool.GetMd5(account.getAccountPassword()) + "\nDB  :" +
+			// a.getAccountPassword());
 			ret.setErrorCode(ErrorCodeEnum.Password_Wrong);
 		} else {
 			a.setLastLoginTime(Calendar.getInstance().getTime());
@@ -94,7 +46,13 @@ public class AccountServiceImpl implements AccountService {
 		}
 		return ret;
 	}
-	
+
+	public void logout(Integer id) {
+		Account a = dao.findAccountbyId(id);
+		a.setLoginToken(null);
+		dao.updateAccount(a);
+	}
+
 	public DataWrapper<Account> addAccount(Account account) {
 		DataWrapper<Account> ret = new DataWrapper<Account>();
 		Account a = dao.getAccountByNumber(account.getAccountNumber());
@@ -109,25 +67,36 @@ public class AccountServiceImpl implements AccountService {
 		return ret;
 	}
 
-	public DataWrapper<Account> reset(PasswordReset reset) {
-		Account a = dao.findAccountbyId(reset.getId());
-		DataWrapper<Account> ret = new DataWrapper<Account>();
+	public DataWrapper<Account> deleteAccountById(Integer id) {
+		Account a = dao.deleteAccountById(id);
+		DataWrapper<Account> ret = new DataWrapper<Account>(a);
 		if (a == null) {
 			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
-		} else if (!a.getAccountPassword().equals(MD5Tool.GetMd5(reset.getOldPassword()))) {
-			ret.setErrorCode(ErrorCodeEnum.Password_Wrong);
-		} else {
-			a.setAccountPassword(MD5Tool.GetMd5(reset.getNewPassword()));
-			a.setLoginToken(null);
-			dao.updateAccount(a);
 		}
 		return ret;
 	}
 
-	public void logout(Integer id) {
+	public DataWrapper<List<Account>> getAllAccount() {
+		return dao.getAllAccount();
+	}
+
+	public DataWrapper<Account> getAccountById(int id) {
+		DataWrapper<Account> ret = new DataWrapper<Account>();
 		Account a = dao.findAccountbyId(id);
-		a.setLoginToken(null);
-		dao.updateAccount(a);
+		ret.setData(a);
+		if (a == null) {
+			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
+		}
+		return ret;
+	}
+
+	public DataWrapper<Account> updateAccount(Account v) {
+		Account a = dao.updateAccount(v);
+		DataWrapper<Account> ret = new DataWrapper<Account>(a);
+		if (a == null) {
+			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
+		}
+		return ret;
 	}
 
 	public DataWrapper<Account> updateAccountCharacter(Integer accountId,
@@ -141,5 +110,36 @@ public class AccountServiceImpl implements AccountService {
 			dao.updateAccount(a);
 		}
 		return ret;
+	}
+
+	public DataWrapper<Account> reset(PasswordReset reset) {
+		Account a = dao.findAccountbyId(reset.getId());
+		DataWrapper<Account> ret = new DataWrapper<Account>();
+		if (a == null) {
+			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
+		} else if (!a.getAccountPassword().equals(
+				MD5Tool.GetMd5(reset.getOldPassword()))) {
+			ret.setErrorCode(ErrorCodeEnum.Password_Wrong);
+		} else {
+			a.setAccountPassword(MD5Tool.GetMd5(reset.getNewPassword()));
+			a.setLoginToken(null);
+			dao.updateAccount(a);
+		}
+		return ret;
+	}
+
+	// Methods Following Are Not Checked... YET!
+	public Page<Account> getAccountbyPage(int pagenumber, int pagesize) {
+		return dao.getAccountbyPage(pagenumber, pagesize);
+	}
+
+	public Page<Account> searchAccount(int pagenumber, int pagesize, String name) {
+		// return dao.searchAccount(pagenumber, pagesize, name);
+		return null;
+	}
+
+	public Page<Account> getByPageWithConditions(int pagenumber, int pagesize,
+			List<SimpleExpression> list) {
+		return dao.getByPageWithConditions(pagenumber, pagesize, list);
 	}
 }

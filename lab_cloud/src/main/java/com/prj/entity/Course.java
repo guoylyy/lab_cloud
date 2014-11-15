@@ -19,12 +19,21 @@ import org.hibernate.annotations.Type;
 @Entity
 @Table(name = "course")
 public class Course extends BaseEntity {
+	private String courseNumber;
 	private String courseName;
 	private String department;
 	private Date startYear;
+	private Boolean isActive = true;
 	private Set<Class> classes = new HashSet<Class>(0);
 	private Set<Experiment> experiments = new HashSet<Experiment>(0);
 	
+	@Column(nullable = false)
+	public String getCourseNumber() {
+		return courseNumber;
+	}
+	public void setCourseNumber(String courseNumber) {
+		this.courseNumber = courseNumber;
+	}
 	@Column(nullable = false)
 	public String getCourseName() {
 		return courseName;
@@ -50,6 +59,13 @@ public class Course extends BaseEntity {
 		this.startYear = startYear;
 	}
 	
+	@Column(nullable = false)
+	public Boolean getIsActive() {
+		return isActive;
+	}
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
 	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "course")
 	public Set<Class> getClasses() {
 		return classes;

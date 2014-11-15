@@ -13,12 +13,21 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "experiment")
 public class Experiment extends BaseEntity {
+	private String experimentNumber;
 	private String experimentName;
 	private Integer minimumStudent;
 	private Integer maximumStudent;
+	private Boolean isActive = true;
 	private Set<Course> courses = new HashSet<Course>(0);
 	private Set<Lab> labs = new HashSet<Lab>(0);
 	
+	@Column(nullable = false)
+	public String getExperimentNumber() {
+		return experimentNumber;
+	}
+	public void setExperimentNumber(String experimentNumber) {
+		this.experimentNumber = experimentNumber;
+	}
 	@Column(nullable = false)
 	public String getExperimentName() {
 		return experimentName;
@@ -42,7 +51,13 @@ public class Experiment extends BaseEntity {
 	public void setMaximumStudent(Integer maximumStudent) {
 		this.maximumStudent = maximumStudent;
 	}
-	
+	@Column(nullable = false)
+	public Boolean getIsActive() {
+		return isActive;
+	}
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
 	@ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "experiments")
 	public Set<Course> getCourses() {
 		return courses;

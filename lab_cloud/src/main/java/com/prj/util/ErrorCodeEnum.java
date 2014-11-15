@@ -12,7 +12,13 @@ public enum ErrorCodeEnum implements Serializable{
 	Account_Not_Active("Account Not Active", 5),
 	Token_Expired("Token Expired", 6),
 	Token_Invalid("Token Invalid", 7),
-	Access_Denied("Access Denied", 8);
+	Access_Denied("Access Denied", 8), 
+	Lab_Not_Exist("Lab Not Exist", 9), 
+	Lab_Exist("Lab Exist", 10), 
+	Course_Not_Exist("Course Not Exist", 11),
+	Course_Exist("Course Exist", 12),
+	Experiment_Not_Exist("Experiment Not Exist", 13),
+	Experiment_Exist("Course Exist", 14);
 	
 	private String label;
 	private Integer code;

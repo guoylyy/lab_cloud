@@ -21,11 +21,28 @@ public class Lab extends BaseEntity {
 		CLOSED
 	}
 	
+	private String number;
+	private Boolean isActive = true;
 	private Integer capacity;
 	private Status status;
 	private Set<Experiment> experiments = new HashSet<Experiment>(0);
 	private Set<LabPlan> labPlans = new HashSet<LabPlan>(0);
 
+	@Column(nullable = false)
+	public String getNumber() {
+		return number;
+	}
+	public void setNumber(String number) {
+		this.number = number;
+	}
+	
+	@Column(nullable = false)
+	public Boolean getIsActive() {
+		return isActive;
+	}
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
 	@Column(nullable = false)
 	public Integer getCapacity() {
 		return capacity;
@@ -53,10 +70,7 @@ public class Lab extends BaseEntity {
 		this.experiments = experiments;
 	}
 	
-	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-	@JoinTable(	name = "lab_experiment",
-				joinColumns = {@JoinColumn(name = "labId")},
-				inverseJoinColumns = {@JoinColumn(name = "labPlanId")})
+	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "lab")
 	public Set<LabPlan> getLabPlans() {
 		return labPlans;
 	}

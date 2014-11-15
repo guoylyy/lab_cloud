@@ -16,7 +16,9 @@ import com.prj.util.DataWrapper;
 import com.prj.util.Page;
 
 @Service("AccountDaoImpl")
-public class AccountDaoImpl extends AbstractHibernateDao<Account, Integer>implements AccountDao {
+public class AccountDaoImpl extends AbstractHibernateDao<Account, Integer>
+		implements AccountDao {
+	// private static Logger logger = Logger.getLogger(AccountDaoImpl.class);
 
 	protected AccountDaoImpl() {
 		super(Account.class);
@@ -34,19 +36,40 @@ public class AccountDaoImpl extends AbstractHibernateDao<Account, Integer>implem
 		return a;
 	}
 
+	@SuppressWarnings("unchecked")
+	public DataWrapper<List<Account>> getAllAccount() {
+		List<Account> result = getCurrentSession()
+				.createCriteria(Account.class)
+				.addOrder(Order.asc("accountNumber"))
+				.setResultTransformer(
+						CriteriaSpecification.DISTINCT_ROOT_ENTITY).list();
+		DataWrapper<List<Account>> ret = new DataWrapper<List<Account>>();
+		ret.setData(result);
+		return ret;
+	}
+
 	public Account findAccountbyId(int id) {
 		return findById(id);
 	}
 
-	@SuppressWarnings("unchecked")
-	public DataWrapper<List<Account>> getAllAccount() {
-		List<Account> result = getCurrentSession().createCriteria(Account.class)
-				.addOrder(Order.asc("accountNumber"))
-				.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY)
-				.list();
-		DataWrapper<List<Account>> ret = new DataWrapper<List<Account>>();
-		ret.setData(result);
-		return ret;
+	public Account getAccountByNumber(String number) {
+		Criteria criteria = getCurrentSession().createCriteria(Account.class);
+		criteria.add(Restrictions.eq("accountNumber", number));
+		List<?> ret = criteria.list();
+		if (ret != null && ret.size() > 0) {
+			return (Account) ret.get(0);
+		}
+		return null;
+	}
+
+	public Account findAccountbyToken(String token) {
+		Criteria criteria = getCurrentSession().createCriteria(Account.class);
+		criteria.add(Restrictions.eq("loginToken", token));
+		List<?> ret = criteria.list();
+		if (ret != null && ret.size() > 0) {
+			return (Account) ret.get(0);
+		}
+		return null;
 	}
 
 	public Account updateAccount(Account v) {
@@ -66,80 +89,6 @@ public class AccountDaoImpl extends AbstractHibernateDao<Account, Integer>implem
 	public Page<Account> getByPageWithConditions(int pagenumber, int pagesize,
 			List<SimpleExpression> list) {
 		// TODO Auto-generated method stub
-		return null;
-	}
-
-//	@Autowired
-//	protected SessionFactory sessionFactory;
-
-//	@Autowired
-//	CommonDao commonDao;
-
-//	private static Logger logger = Logger.getLogger(AccountDaoImpl.class);
-
-//	public boolean addAccount(Account v) {
-//		return commonDao.addObject(v);
-//	}
-//
-//	public boolean deleteAccount(Account v) {
-//		// TODO Auto-generated method stub
-//		return commonDao.deleteObject(v);
-//	}
-//
-//	public Account findAccountbyId(int id) {
-//		// TODO Auto-generated method stub
-//		Session session = sessionFactory.getCurrentSession();
-//		Account v = null;
-//		v = (Account) session.get(Account.class, id);
-//		return v;
-//
-//	}
-//
-//	public List<Account> getAllAccount() {
-//		// TODO Auto-generated method stub
-//
-//		return commonDao.getAllObject("com.prj.entity.Account");
-//	}
-//
-//	public Account updateAccount(Account v) {
-//		// TODO Auto-generated method stub
-//		return (Account) commonDao.updateObject(v);
-//	}
-//
-//	public Page<Account> getAccountbyPage(int pagenumber, int pagesize) {
-//		// TODO Auto-generated method stub
-//
-//		return commonDao.getObjectbyPage("com.prj.entity.Account",
-//				pagenumber, pagesize);
-//	}
-//
-//	public Page<Account> getByPageWithConditions(int pagenumber,
-//			int pagesize, List<SimpleExpression> list) {
-//		return commonDao.getByPageWithConditions("com.prj.entity.Account",
-//				pagenumber, pagesize, list);
-//	}
-//
-//	public List<Account> getByCondition(List<SimpleExpression> list) {
-//		return commonDao.getByConditions("com.prj.entity.Account", list);
-//	}
-//
-	public Account getAccountByNumber(String number) {
-		Criteria criteria = getCurrentSession().createCriteria(Account.class);
-		criteria.add(Restrictions.eq("accountNumber", number));
-		List<?> ret = criteria.list();
-		if (ret != null && ret.size() > 0) {
-			return (Account)ret.get(0);
-		}
-		return null;
-	}
-
-	public Account findAccountbyToken(String token) {
-		Criteria criteria = getCurrentSession().createCriteria(Account.class);
-		criteria.add(Restrictions.eq("loginToken", token));
-		List<?> ret = criteria.list();
-		if (ret != null && ret.size() > 0) {
-			return (Account)ret.get(0);
-		}
 		return null;
 	}
 }

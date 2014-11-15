@@ -11,15 +11,24 @@ import com.prj.util.Page;
 import com.prj.util.PasswordReset;
 
 public interface AccountService {
-	DataWrapper<List<Account>> getAllAccount();
+	DataWrapper<Account> login(Account account);
+
+	void logout(Integer id);
+
+	DataWrapper<Account> addAccount(Account account);
 
 	public DataWrapper<Account> deleteAccountById(Integer id);
 
-//	Integer addAccount(Account entity);
+	DataWrapper<List<Account>> getAllAccount();
+
+	DataWrapper<Account> getAccountById(int id);
 
 	DataWrapper<Account> updateAccount(Account entity);
 
-	DataWrapper<Account> getAccountById(int id);
+	DataWrapper<Account> updateAccountCharacter(Integer accountId,
+	AccountCharacter accountCharacter);
+
+	DataWrapper<Account> reset(PasswordReset data);
 
 	Page<Account> getAccountbyPage(int pagenumber, int pagesize);
 
@@ -27,16 +36,5 @@ public interface AccountService {
 
 	Page<Account> getByPageWithConditions(int pagenumber, int pagesize,
 			List<SimpleExpression> list);
-
-	DataWrapper<Account> login(Account account);
-
-	DataWrapper<Account> addAccount(Account account);
-
-	DataWrapper<Account> reset(PasswordReset data);
-
-	void logout(Integer id);
-
-	DataWrapper<Account> updateAccountCharacter(Integer accountId,
-			AccountCharacter accountCharacter);
 
 }
