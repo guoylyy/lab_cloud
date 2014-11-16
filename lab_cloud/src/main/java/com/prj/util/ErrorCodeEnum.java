@@ -18,7 +18,9 @@ public enum ErrorCodeEnum implements Serializable{
 	Course_Not_Exist("Course Not Exist", 11),
 	Course_Exist("Course Exist", 12),
 	Experiment_Not_Exist("Experiment Not Exist", 13),
-	Experiment_Exist("Course Exist", 14);
+	Experiment_Exist("Course Exist", 14),
+	Lab_Not_Active("Lab Not Active", 15),
+	Experiment_Not_Active("Experiment Not Active", 16);
 	
 	private String label;
 	private Integer code;
