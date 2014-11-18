@@ -20,6 +20,8 @@ hs_err_pid*
 bin/
 build/
 classes/
+files/
+logs/
 
 *.project
 .gradle

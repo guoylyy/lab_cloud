@@ -971,3 +971,28 @@ __Experiment/update/{id}__
         "callStatus": "FAILED",
         "errorCode": "Token_Expired" || "Token_Invalid" || "Access_Denied" || "Experiment_Not_Exist"
     }
+
+####上传文件
+`POST`
+`Content-Type: multipart/form-data`
+
+__Upload/file/{id}__
+
+    {
+      "token": "2ca358ec562e1e2f6cda17390739cb62:2014/12/15",
+      "data": (file)
+    }
+    
+`RETURN`
+
+    {
+        "callStatus": "SUCCEED",
+        "errorCode": "No_Error"
+    }
+    
+`ERROR`
+
+    {
+        "callStatus": "FAILED",
+        "errorCode": "Token_Expired" || "Token_Invalid" || "Access_Denied" || "Account_Not_Exist"
+    }

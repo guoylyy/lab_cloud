@@ -20,7 +20,8 @@ public enum ErrorCodeEnum implements Serializable{
 	Experiment_Not_Exist("Experiment Not Exist", 13),
 	Experiment_Exist("Course Exist", 14),
 	Lab_Not_Active("Lab Not Active", 15),
-	Experiment_Not_Active("Experiment Not Active", 16);
+	Experiment_Not_Active("Experiment Not Active", 16),
+	File_Creation_Error("File Creation Error", 17);
 	
 	private String label;
 	private Integer code;

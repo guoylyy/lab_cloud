@@ -119,4 +119,18 @@ public class DateUtils {
 		
 		return ret;
 	}
+	
+	public static String getCurrentDateString() {
+		return getDateString(Calendar.getInstance());
+	}
+	
+	public static String getDateString(Calendar cal) {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(cal.get(Calendar.YEAR));
+		buffer.append('-');
+		buffer.append(cal.get(Calendar.MONTH) + 1);
+		buffer.append('-');
+		buffer.append(cal.get(Calendar.DAY_OF_MONTH));
+		return buffer.toString();
+	}
 }
