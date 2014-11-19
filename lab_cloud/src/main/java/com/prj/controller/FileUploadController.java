@@ -36,7 +36,7 @@ public class FileUploadController {
 		if (ret.getErrorCode() != ErrorCodeEnum.No_Error)
 			return ret;
 		
-		MultipartFile file = wrapper.getData();
+		MultipartFile file = wrapper.getFile();
 		String path = request.getSession().getServletContext().getRealPath("/files");
 		return fs.saveFile(path, id, file);
 	}
