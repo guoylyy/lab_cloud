@@ -2,8 +2,6 @@ package com.prj.util;
 
 import java.io.Serializable;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class DataWrapper<T> implements Serializable {
 
 	private static final long serialVersionUID = -3075889087516685551L;
@@ -15,7 +13,6 @@ public class DataWrapper<T> implements Serializable {
 	private Integer accountId;
 	
 	private T data;
-	private MultipartFile file;
 	
 	private int numPerPage;
 	private int currPageNum;
@@ -78,14 +75,6 @@ public class DataWrapper<T> implements Serializable {
 
 	public void setData(T data) {
 		this.data = data;
-	}
-
-	public MultipartFile getFile() {
-		return file;
-	}
-
-	public void setFile(MultipartFile file) {
-		this.file = file;
 	}
 
 	public int getNumPerPage() {

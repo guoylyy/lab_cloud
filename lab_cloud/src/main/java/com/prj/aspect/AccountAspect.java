@@ -70,10 +70,12 @@ public class AccountAspect {
 	private void check(DataWrapper<?> dataWrapper, AccountAccess as) {
 		String token = dataWrapper.getToken();
 		if (token == null) {
+			System.err.println("Token NULL");
 			throw new AuthorityException(ErrorCodeEnum.Token_Invalid);
 		} else {
 			Account a = dao.findAccountbyToken(token);
 			if (a == null) {
+				System.err.println("Token: " + token);
 				throw new AuthorityException(ErrorCodeEnum.Token_Invalid);
 			} else if (!TokenTool.isTokenValid(token)) {
 				throw new AuthorityException(ErrorCodeEnum.Token_Expired);
