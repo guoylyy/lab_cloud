@@ -8,47 +8,88 @@
  * Service in the prjApp.
  */
 angular.module('prjApp')
-  .service('SystemManageService', function SystemManageService() {
-    // AngularJS will instantiate a singleton by calling "new" on this function
-    this.loadUser = function(userType, pageNum){
-    	var ulist = [
-    		{
-    			accountNumber:'132',
-    			accountName:'12332131',
-                accountPassword:'12332131',
-    			accountEmail:'fdsf@qq.com',
-                desc:'fdsafa',
-    			role:1
-    		},
-    		{
-    			accountNumber:'132',
-    			accountName:'12332131',
-                accountPassword:'12332131',
-    			accountEmail:'fdsf@qq.com',
-                desc:'fdsafa',
-    			role:1
-    		},
-    		{
-    			accountNumber:'132',
-    			accountName:'12332131',
-                accountPassword:'12332131',
-    			accountEmail:'fdsf@qq.com',
-                desc:'fdsafa',
-    			role:1
-    		}
-    	];
-    	return ulist;
-    };
+    .service('SystemManageService', function SystemManageService($http, $q, $rootScope, $location, $localStorage, Generalservice) {
+        this.loadUser = function(userType, pageNum) {
+            return Generalservice.generalPost('Account/all', {
+                'token': $rootScope.token
+            });
+        };
 
-    this.loadLab = function(pageNum){
-    	return [];
-    };
+        this.removeUser = function(uid) {
+            return Generalservice.generalDelete('Account/delete/' + uid);
+        };
 
-    this.loadExperiment = function(pageNum){
-        return [];
-    };
+        this.addUser = function(data) {
+            data.token = $rootScope.token;
+            return Generalservice.generalPost('Account/add', data);
+        };
 
-    this.loadCourse = function(pageNum){
-        return [];
-    };
-  });
+        this.updateUser = function(uid, data) {
+            data.token = $rootScope.token;
+            return Generalservice.generalPost('Account/update/' + uid, data);
+        };
+
+
+        this.loadLab = function(pageNum) {
+            return Generalservice.generalPost('Lab/all', {
+                'token': $rootScope.token
+            });
+        };
+
+        this.removeLab = function(uid) {
+            return Generalservice.generalDelete('Lab/delete/' + uid);
+        };
+
+        this.addLab = function(data) {
+            data.token = $rootScope.token;
+            return Generalservice.generalPost('Lab/add', data);
+        };
+
+        this.updateLab = function(uid, data) {
+            data.token = $rootScope.token;
+            return Generalservice.generalPost('Lab/update/' + uid, data);
+        };
+
+
+
+        this.loadExperiment = function(pageNum) {
+            return Generalservice.generalPost('Experiment/all', {
+                'token': $rootScope.token
+            });
+        };
+
+        this.removeExperiment = function(uid) {
+            return Generalservice.generalDelete('Experiment/delete/' + uid);
+        };
+
+        this.addExperiment = function(data) {
+            data.token = $rootScope.token;
+            return Generalservice.generalPost('Experiment/add', data);
+        };
+
+        this.updateExperiment = function(uid, data) {
+            data.token = $rootScope.token;
+            return Generalservice.generalPost('Experiment/update/' + uid, data);
+        };
+
+        this.loadCourse = function(pageNum) {
+            return Generalservice.generalPost('Course/all', {
+                'token': $rootScope.token
+            });
+        };
+
+        this.removeCourse = function(uid) {
+            return Generalservice.generalDelete('Course/delete/' + uid);
+        };
+
+        this.addCourse = function(data) {
+            data.token = $rootScope.token;
+            return Generalservice.generalPost('Course/add', data);
+        };
+
+        this.updateCourse = function(uid, data) {
+            data.token = $rootScope.token;
+            return Generalservice.generalPost('Course/update/' + uid, data);
+        };
+
+    });

@@ -57,9 +57,9 @@ public class ExperimentControllerTest {
 	@Test
 	public void testDeleteExperiment() {
 		testAddExperiment();
-		ret = ctrl.deleteExperiment(postData, experiment.getId());
+		ret = ctrl.deleteExperiment( experiment.getId());
 		assertEquals(ErrorCodeEnum.No_Error, ret.getErrorCode());
-		ret = ctrl.deleteExperiment(postData, 1);
+		ret = ctrl.deleteExperiment(1);
 		assertEquals(ErrorCodeEnum.Experiment_Not_Exist, ret.getErrorCode());
 		
 	}

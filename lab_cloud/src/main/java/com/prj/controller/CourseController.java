@@ -36,7 +36,7 @@ public class CourseController {
 	@AccountAccess(checkAccountCharacter = AccountCharacter.ADMINISTRATOR)
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public DataWrapper<Course> deleteCourse(@RequestBody DataWrapper<?> wrapper, @PathVariable int id) {
+	public DataWrapper<Course> deleteCourse(@PathVariable int id) {
 		return vs.deleteCourseById(id);
 	}
 

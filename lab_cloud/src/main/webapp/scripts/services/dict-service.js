@@ -9,23 +9,36 @@
  */
 angular.module('prjApp')
   .service('DictService', function DictService() {
-    // AngularJS will instantiate a singleton by calling "new" on this function
 
     this.getRoleDict = function(){
     	var userRoles = [
             {
                 name: "学生",
-                id: 1
+                id: 'STUDENT'
             },
             {
                 name: "管理员",
-                id: 3
+                id: 'ADMINISTRATOR'
             }, {
                 name: "教师",
-                id: 2
+                id: 'TEACHER'
             } 
         ];
         return userRoles;
+    };
+
+    this.getLabStatusDict = function(){
+        var labStatuses = [
+            {
+                name:"开放",
+                id:"OPEN"
+            },
+            {
+                name:"关闭",
+                id:"CLOSED"
+            }
+        ];
+        return labStatuses;
     };
 
 

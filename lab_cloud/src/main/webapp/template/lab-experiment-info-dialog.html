@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="cell title" style="width: 37%;height: 50px;">实验编号</div>
                 <div class="cell" style="width: 63%;height: 50px;">
-                    <input type="text" name="name" ng-model="data.id" class="right form-control"/>
+                    <input type="text" name="name" ng-model="data.experimentNumber" class="right form-control"/>
                 </div>
             </div>
             <div class="row">
@@ -19,16 +19,16 @@
                 </div>
             </div>
             <div class="row">
-                <div class="cell title" style="width: 37%;height: 50px;">是否开放</div>
+                <div class="cell title" style="width: 37%;height: 50px;">实验最少人数</div>
                 <div class="cell" style="width: 63%;height: 50px;">
-                    <input type="checkbox" ng-model="data.isOpen" class="right form-control"/>
+                    <input type="number" ng-model="data.minimumStudent" class="right form-control"/>
                 </div>
             </div>
+            
             <div class="row">
-                <div class="cell title" style="width: 37%;height: 50px;">描述</div>
+                <div class="cell title" style="width: 37%;height: 50px;">实验最大人数</div>
                 <div class="cell" style="width: 63%;height: 50px;">
-                    <textarea ng-model="data.desc" class="right form-control">
-                    </textarea> 
+                    <input type="number" ng-model="data.maximumStudent" class="right form-control"/>
                 </div>
             </div>
             

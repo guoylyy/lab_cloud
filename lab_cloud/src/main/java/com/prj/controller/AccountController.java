@@ -131,7 +131,7 @@ public class AccountController {
 	@AccountAccess(checkAccountCharacter = AccountCharacter.ADMINISTRATOR)
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public DataWrapper<Account> deleteAccount(@RequestBody DataWrapper<?> wrapper, @PathVariable int id) {
+	public DataWrapper<Account> deleteAccount(@PathVariable int id) {
 		return vs.disableAccountById(id);
 	}
 	

@@ -59,9 +59,9 @@ public class LabControllerTest {
 	@Test
 	public void testDeleteLab() {
 		testAddLab();
-		ret = ctrl.deleteLab(postData, lab.getId());
+		ret = ctrl.deleteLab( lab.getId());
 		assertEquals(ErrorCodeEnum.No_Error, ret.getErrorCode());
-		ret = ctrl.deleteLab(postData, 1);
+		ret = ctrl.deleteLab( 1);
 		assertEquals(ErrorCodeEnum.Lab_Not_Exist, ret.getErrorCode());
 		
 	}

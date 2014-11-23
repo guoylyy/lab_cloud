@@ -12,7 +12,7 @@ angular.module('prjApp')
   .filter('userRole', function (DictService) {
     return function (input) {
     	var roles = DictService.getRoleDict();
-    	var name = 'ss';
+    	var name = '';
     	for(var i in roles){
     		var role = roles[i];
     		if(role.id == input){

@@ -213,7 +213,7 @@ public class AccountControllerTest {
 		assertEquals(ErrorCodeEnum.No_Error, ret.getErrorCode());
 		
 		postData = new DataWrapper(admin.getLoginToken());
-		ret = ctrl.deleteAccount(postData, 37);
+		ret = ctrl.deleteAccount(37);
 		assertEquals(CallStatusEnum.SUCCEED, ret.getCallStatus());
 		assertEquals(ErrorCodeEnum.No_Error, ret.getErrorCode());
 		
@@ -221,7 +221,7 @@ public class AccountControllerTest {
 		assertEquals(CallStatusEnum.FAILED, ret.getCallStatus());
 		assertEquals(ErrorCodeEnum.Account_Not_Active, ret.getErrorCode());
 		
-		ret = ctrl.deleteAccount(postData, 2);
+		ret = ctrl.deleteAccount(2);
 		assertEquals(CallStatusEnum.FAILED, ret.getCallStatus());
 		assertEquals(ErrorCodeEnum.Account_Not_Exist, ret.getErrorCode());
 	}

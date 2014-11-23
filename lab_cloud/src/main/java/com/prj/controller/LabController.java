@@ -36,7 +36,7 @@ public class LabController {
 	@AccountAccess(checkAccountCharacter = AccountCharacter.ADMINISTRATOR)
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public DataWrapper<Lab> deleteLab(@RequestBody DataWrapper<?> wrapper, @PathVariable int id) {
+	public DataWrapper<Lab> deleteLab(@PathVariable int id) {
 		return vs.deleteLabById(id);
 	}
 

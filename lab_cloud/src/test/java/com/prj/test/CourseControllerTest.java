@@ -57,9 +57,9 @@ public class CourseControllerTest {
 	@Test
 	public void testDeleteCourse() {
 		testAddCourse();
-		ret = ctrl.deleteCourse(postData, course.getId());
+		ret = ctrl.deleteCourse( course.getId());
 		assertEquals(ErrorCodeEnum.No_Error, ret.getErrorCode());
-		ret = ctrl.deleteCourse(postData, 1);
+		ret = ctrl.deleteCourse( 1);
 		assertEquals(ErrorCodeEnum.Course_Not_Exist, ret.getErrorCode());
 		
 	}

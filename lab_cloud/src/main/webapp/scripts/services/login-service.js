@@ -55,10 +55,11 @@ angular.module('prjApp')
         };
 
         this.getLoginUser = function(){
-            if($rootScope.loginUser != undefined){
+            if($rootScope.loginUser != undefined && $rootScope.token != undefined){
                 return $rootScope.loginUser;
             }else if($sessionStorage.loginUser != undefined){
                 $rootScope.loginUser = $sessionStorage.loginUser;
+                $rootScope.token = $sessionStorage.token;
                 return $sessionStorage.loginUser;
             }else{
                 return false;

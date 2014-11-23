@@ -36,7 +36,7 @@ public class ExperimentController {
 	@AccountAccess(checkAccountCharacter = AccountCharacter.ADMINISTRATOR)
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public DataWrapper<Experiment> deleteExperiment(@RequestBody DataWrapper<?> wrapper, @PathVariable int id) {
+	public DataWrapper<Experiment> deleteExperiment(@PathVariable int id) {
 		return vs.deleteExperimentById(id);
 	}
 
