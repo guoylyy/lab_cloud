@@ -4,7 +4,6 @@ import javax.annotation.Resource;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 import com.prj.dao.AccountDao;
@@ -22,50 +21,11 @@ public class AccountAspect {
 	
 	@Resource(name = "AccountDaoImpl")
 	AccountDao dao;
-	
-//	@Before(value = "execution (* com.prj.controller.*.*(..)) "
-//			+ "&& !execution (* com.prj.controller.AccountController.login(..)) "
-//			+ "&& !execution (* com.prj.controller.AccountController.register(..)) "
-//			+ "&& args(dataWrapper,..)",
-//			argNames = "dataWrapper")
-//	public void checkBefore(DataWrapper<?> dataWrapper) throws AuthorityException {
-//		System.out.println(dataWrapper.getToken());
-//		checkToken(dataWrapper);
-//	}
-//
-//	@Before(value = "execution (* com.prj.controller.*.*(..)) "
-//			+ "&& !execution (* com.prj.controller.AccountController.login(..)) "
-//			+ "&& !execution (* com.prj.controller.AccountController.register(..)) "
-//			+ "&& args(id,dataWrapper,..)",
-//			argNames = "id, dataWrapper")
-//	public void checkIdBefore(Integer id, DataWrapper<?> dataWrapper) throws Exception {
-//		System.out.println(dataWrapper.getToken());
-////		String token = dataWrapper.getToken();
-////		if (!id.equals(TokenTool.getId(token)))
-////			throw new Exception("different id");
-//		checkToken(dataWrapper);
-//	}
-
-	@Pointcut("@annotation(com.prj.util.AccountAccess)")
-	public void accountAccess() {}
-	
-	@Before(value = "accountAccess() "
-			+ "&& @annotation(accountAccess)"
-			+ "&& args(dataWrapper,..)",
-			argNames = "accountAccess, dataWrapper")
-	public void checkBefore(AccountAccess accountAccess, 
-			DataWrapper<?> dataWrapper) {
+		
+	@Before("@annotation(accountAccess) && args(dataWrapper,..)")
+	public void checkBefore(DataWrapper<?> dataWrapper, AccountAccess accountAccess) {
 		check(dataWrapper, accountAccess);
 	}
-	
-//	@Before(value = "accountAccess() "
-//			+ "&& @annotation(accountAccess)"
-//			+ "&& args(id,dataWrapper,..)",
-//			argNames = "accountAccess, id, dataWrapper")
-//	public void checkIdBefore(AccountAccess accountAccess, 
-//			Integer id, DataWrapper<?> dataWrapper) {
-//		check(dataWrapper, accountAccess);
-//	}
 	
 	private void check(DataWrapper<?> dataWrapper, AccountAccess as) {
 		String token = dataWrapper.getToken();

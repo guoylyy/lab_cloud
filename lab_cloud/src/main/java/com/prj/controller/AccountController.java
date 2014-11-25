@@ -83,13 +83,12 @@ public class AccountController {
 		return vs.login(account.getData());
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@AccountAccess
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
 	@ResponseBody
-	public DataWrapper logout(@RequestBody DataWrapper<?> wrapper) {
+	public DataWrapper<Void> logout(@RequestBody DataWrapper<?> wrapper) {
 		vs.logout(wrapper.getAccountId());
-		return new DataWrapper();
+		return new DataWrapper<Void>();
 	}
 
 	@AccountAccess
@@ -149,12 +148,11 @@ public class AccountController {
 		return vs.updateAccount(account.getData());
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@ExceptionHandler(AuthorityException.class)
 	@ResponseBody
-	public DataWrapper handleAuthorityException(AuthorityException ex) {
+	public DataWrapper<Void> handleAuthorityException(AuthorityException ex) {
 		System.out.println(ex.getErrorCode().getLabel());
-		DataWrapper ret = new DataWrapper();
+		DataWrapper<Void> ret = new DataWrapper<Void>();
 		ret.setErrorCode(ex.getErrorCode());
 		return ret;
 	}

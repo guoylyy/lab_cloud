@@ -42,8 +42,8 @@ public class AccountDaoImpl extends AbstractHibernateDao<Account, Integer>
 		List<Account> result = getCurrentSession()
 				.createCriteria(Account.class)
 				.addOrder(Order.asc("accountNumber"))
-				.setResultTransformer(
-						CriteriaSpecification.DISTINCT_ROOT_ENTITY).list();
+				.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY)
+				.list();
 		DataWrapper<List<Account>> ret = new DataWrapper<List<Account>>();
 		ret.setData(result);
 		return ret;
