@@ -2,9 +2,6 @@ package com.prj.entity;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
-
-import com.prj.util.AccountCharacter;
 
 @MappedSuperclass
 public class Account extends BaseEntity {
@@ -20,6 +17,7 @@ public class Account extends BaseEntity {
 //	private AccountCharacter accountCharacter;
 	private Status status = Status.NEW;
 	private String loginToken;
+	private String iconPath;
 	
 	@Column
 	public String getNumber() {
@@ -57,5 +55,11 @@ public class Account extends BaseEntity {
 	}
 	public void setLoginToken(String loginToken) {
 		this.loginToken = loginToken;
+	}
+	public String getIconPath() {
+		return iconPath;
+	}
+	public void setIconPath(String iconPath) {
+		this.iconPath = iconPath;
 	}
 }

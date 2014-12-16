@@ -19,7 +19,7 @@ public interface AdministratorDao {
 
 	Administrator updateAdministrator(Administrator v);
 
-	Page<Administrator> getAdministratorbyPage(int pagenumber, int pagesize);
+	DataWrapper<List<Administrator>> getAdministratorbyPage(int pagenumber, int pagesize);
 
 	List<Administrator> getByCondition(List<SimpleExpression> list);
 

@@ -23,7 +23,7 @@ public enum ErrorCodeEnum implements Serializable{
 	Experiment_Not_Active("Experiment Not Active", 16),
 	File_Creation_Error("File Creation Error", 17),
 	Account_Character_Null("Account Character Null", 18), 
-	Reach_Lab_Limit("Reach Lab Limit", 19);
+	Reach_Lab_Limit("Reach Lab Limit", 19), Search_Character_Wrong, Search_Criteria_Null;
 	
 	private String label;
 	private Integer code;

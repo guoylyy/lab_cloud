@@ -15,6 +15,7 @@ import com.prj.entity.Account.Status;
 import com.prj.entity.Student;
 import com.prj.util.DataWrapper;
 import com.prj.util.Page;
+import com.prj.util.PageResult;
 
 @Service("StudentDaoImpl")
 public class StudentDaoImpl extends AbstractHibernateDao<Student, Integer>
@@ -78,9 +79,15 @@ public class StudentDaoImpl extends AbstractHibernateDao<Student, Integer>
 		return saveOrUpdate(v);
 	}
 
-	public Page<Student> getStudentbyPage(int pagenumber, int pagesize) {
-		// TODO Auto-generated method stub
-		return null;
+	public DataWrapper<List<Student>> getStudentbyPage(int pagenumber, int pagesize) {
+		PageResult<Student> pr = findByCriteriaByPage(null, pagenumber, pagesize);
+		DataWrapper<List<Student>> ret = new DataWrapper<List<Student>>();
+		ret.setData(pr.getData());
+		ret.setCurrPageNum(pr.getCurrPageNum());
+		ret.setNumPerPage(pr.getNumPerPage());
+		ret.setTotalItemNum(pr.getTotalItemNum());
+		ret.setTotalPageNum(pr.getTotalPageNum());
+		return ret;
 	}
 
 	public List<Student> getByCondition(List<SimpleExpression> list) {

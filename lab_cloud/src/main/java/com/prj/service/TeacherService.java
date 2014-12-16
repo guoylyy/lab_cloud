@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.criterion.SimpleExpression;
 
+import com.prj.entity.Administrator;
 import com.prj.entity.Teacher;
 import com.prj.util.DataWrapper;
 import com.prj.util.Page;
@@ -26,7 +27,7 @@ public interface TeacherService {
 
 	DataWrapper<Teacher> reset(PasswordReset data);
 
-	Page<Teacher> getTeacherbyPage(int pagenumber, int pagesize);
+	DataWrapper<List<Teacher>> getTeacherbyPage(int pagenumber, int pagesize);
 
 	Page<Teacher> searchTeacher(int pagenumber, int pagesize, String name);
 

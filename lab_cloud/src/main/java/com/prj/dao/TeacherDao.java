@@ -19,7 +19,7 @@ public interface TeacherDao {
 
 	Teacher updateTeacher(Teacher v);
 
-	Page<Teacher> getTeacherbyPage(int pagenumber, int pagesize);
+	DataWrapper<List<Teacher>> getTeacherbyPage(int pagenumber, int pagesize);
 
 	List<Teacher> getByCondition(List<SimpleExpression> list);
 

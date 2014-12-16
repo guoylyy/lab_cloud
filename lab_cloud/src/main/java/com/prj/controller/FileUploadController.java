@@ -37,12 +37,12 @@ public class FileUploadController {
 	@ResponseBody
 	public DataWrapper uploadFile(DataWrapper<MultipartFile> wrapper, @PathVariable int id, HttpServletRequest request) {
 		DataWrapper ret = as.getAccountById(id);
-		if (ret.getErrorCode() != ErrorCodeEnum.No_Error)
+		if (!ret.getErrorCode().equals(ErrorCodeEnum.No_Error))
 			return ret;
 		
 		MultipartFile file = wrapper.getData();
 		String path = request.getSession().getServletContext().getRealPath("/files");
-		return fs.saveFile(path, id, file);
+		return fs.saveFileById(path, file, id);
 	}
 	
 	@SuppressWarnings("rawtypes")

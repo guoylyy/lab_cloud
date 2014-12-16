@@ -86,11 +86,11 @@ public class AdministratorServiceImpl implements AdministratorService {
 		return ret;
 	}
 
-	// Methods Following Are Not Checked... YET!
-	public Page<Administrator> getAdministratorbyPage(int pagenumber, int pagesize) {
+	public DataWrapper<List<Administrator>> getAdministratorbyPage(int pagenumber, int pagesize) {
 		return dao.getAdministratorbyPage(pagenumber, pagesize);
 	}
 
+	// Methods Following Are Not Checked... YET!
 	public Page<Administrator> searchAdministrator(int pagenumber, int pagesize, String name) {
 		// return dao.searchAdministrator(pagenumber, pagesize, name);
 		return null;

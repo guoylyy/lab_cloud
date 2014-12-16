@@ -1,7 +1,6 @@
 package com.prj.dao;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -12,7 +11,6 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.prj.entity.BaseEntity;
 import com.prj.util.PageResult;
 
 public abstract class AbstractHibernateDao<E, I extends Serializable> {

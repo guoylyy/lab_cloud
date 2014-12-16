@@ -81,6 +81,13 @@ public class StudentController {
 		return vs.updateStudent(student.getData());
 	}
 	
+	@AccountAccess(checkAccountCharacter = AccountCharacter.ADMINISTRATOR)
+	@RequestMapping(value = "/page/{pageSize}/{pageNumber}", method = RequestMethod.POST)
+	@ResponseBody
+	public DataWrapper<List<Student>> getStudentList(@RequestBody DataWrapper<?> wrapper, @PathVariable Integer pageSize, @PathVariable Integer pageNumber) {
+		return vs.getStudentbyPage(pageNumber, pageSize);
+	}
+	
 	@ExceptionHandler(AuthorityException.class)
 	@ResponseBody
 	public DataWrapper<Void> handleAuthorityException(AuthorityException ex) {

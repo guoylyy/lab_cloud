@@ -1,5 +1,6 @@
 package com.prj.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -18,11 +19,13 @@ import com.prj.entity.Student;
 import com.prj.entity.Teacher;
 import com.prj.service.AccountService;
 import com.prj.util.AccountCharacter;
+import com.prj.util.CallStatusEnum;
 import com.prj.util.DataWrapper;
 import com.prj.util.ErrorCodeEnum;
 import com.prj.util.MD5Tool;
 import com.prj.util.Page;
 import com.prj.util.PasswordReset;
+import com.prj.util.SearchCriteria;
 import com.prj.util.TokenTool;
 
 @Service("AccountServiceImpl")
@@ -37,7 +40,7 @@ public class AccountServiceImpl implements AccountService {
 	@Resource(name = "AdministratorDaoImpl")
 	AdministratorDao administractorDao;
 	
-	private Account getAccountByChar(Account account, AccountCharacter ac) {
+	public Account getAccountByChar(Account account, AccountCharacter ac) {
 		Account ret = null;
 		switch (ac) {
 		case STUDENT:
@@ -57,7 +60,15 @@ public class AccountServiceImpl implements AccountService {
 		return ret;
 	}
 	
-	private Account updateAccountByChar(Account account, AccountCharacter ac) {
+	public DataWrapper<Account> updateAccountByChar(Account account, AccountCharacter ac) {
+		Account a = updateByChar(account, ac);
+		if (a == null) {
+			
+		}
+		return new DataWrapper<Account>(updateByChar(account, ac));
+	}
+	
+	private Account updateByChar(Account account, AccountCharacter ac) {
 		Account ret = null;
 		switch (ac) {
 		case STUDENT:
@@ -95,7 +106,7 @@ public class AccountServiceImpl implements AccountService {
 //			a.setLastLoginTime(Calendar.getInstance().getTime());
 			a.setLoginToken(TokenTool.generateToken(a));
 			ret.setToken(a.getLoginToken());
-			ret.setData(updateAccountByChar(a, ac));
+			ret.setData(updateByChar(a, ac));
 		}
 		return ret;
 	}
@@ -148,6 +159,31 @@ public class AccountServiceImpl implements AccountService {
 		return dao.getAllAccount();
 	}
 
+	public DataWrapper<Account> getAccountByIdChar(Integer id, AccountCharacter ac) {
+		Account a = null;
+		DataWrapper<Account> ret = new DataWrapper<Account>();
+		
+		switch (ac) {
+		case STUDENT:
+			a = studentDao.findStudentbyId(id);
+			break;
+		case ADMINISTRATOR:
+			a = administractorDao.findAdministratorbyId(id);
+			break;
+		case TEACHER:
+			a = teacherDao.findTeacherbyId(id);
+			break;
+		default:
+			break;
+		}
+		if (a == null) {
+			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
+		} else {
+			ret.setData(a);
+		}
+		return ret;
+	}
+	
 	public DataWrapper<Account> getAccountById(int id) {
 		DataWrapper<Account> ret = new DataWrapper<Account>();
 		Account a = dao.findAccountbyId(id);
@@ -209,5 +245,76 @@ public class AccountServiceImpl implements AccountService {
 	public Page<Account> getByPageWithConditions(int pagenumber, int pagesize,
 			List<SimpleExpression> list) {
 		return dao.getByPageWithConditions(pagenumber, pagesize, list);
+	}
+
+//	private DataWrapper<List<Account>> toAccountList(DataWrapper<List<?>> wrapper) {
+//		List<Account> al = new ArrayList<Account>();
+//		List<?> sl = wrapper.getData();
+//		for (Object o : sl) {
+//			al.
+//		}
+//	}
+	
+	@Override
+	public DataWrapper<List<? extends Account>> searchAccount(SearchCriteria sc) {
+		DataWrapper<List<? extends Account>> ret = new DataWrapper<List<? extends Account>>();
+		String number = sc.getNumber();
+		AccountCharacter ac = sc.getCharacter();
+		Account a = null;
+		if (number == null && ac == null) {
+			ret.setErrorCode(ErrorCodeEnum.Search_Criteria_Null);
+		} else if (number == null) {
+			switch (ac) {
+			case ADMINISTRATOR:
+				ret.setData(administractorDao.getAllAdministrator().getData());
+				break;
+			case STUDENT:
+				ret.setData(studentDao.getAllStudent().getData());
+				break;
+			case TEACHER:
+				ret.setData(teacherDao.getAllTeacher().getData());
+				break;
+			default:
+				ret.setErrorCode(ErrorCodeEnum.Search_Character_Wrong);
+				break;
+			}
+		} else if (ac == null){
+			a = administractorDao.getAdministratorByNumber(number);
+			if (a == null) {
+				a = studentDao.getStudentByNumber(number);
+				if (a == null) {
+					a = teacherDao.getTeacherByNumber(number);
+					if (a == null) {
+						ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
+					}
+				}
+			}
+			if (ret.getCallStatus().equals(CallStatusEnum.SUCCEED)) {
+				List<Account> l = new ArrayList<Account>();
+				l.add(a);
+				ret.setData(l);
+			}
+		} else {
+			switch (ac) {
+			case ADMINISTRATOR:
+				a = administractorDao.getAdministratorByNumber(number);
+				break;
+			case STUDENT:
+				a = studentDao.getStudentByNumber(number);
+				break;
+			case TEACHER:
+				a = teacherDao.getTeacherByNumber(number);
+				break;
+			default:
+				ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
+				break;
+			}
+			if (ret.getCallStatus() == CallStatusEnum.SUCCEED) {
+				List<Account> l = new ArrayList<Account>();
+				l.add(a);
+				ret.setData(l);
+			}
+		}
+		return ret;
 	}
 }

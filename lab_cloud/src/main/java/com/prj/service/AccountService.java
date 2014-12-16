@@ -9,6 +9,7 @@ import com.prj.util.AccountCharacter;
 import com.prj.util.DataWrapper;
 import com.prj.util.Page;
 import com.prj.util.PasswordReset;
+import com.prj.util.SearchCriteria;
 
 public interface AccountService {
 	DataWrapper<Account> login(Account account, AccountCharacter ac);
@@ -17,7 +18,7 @@ public interface AccountService {
 
 	DataWrapper<Account> addAccount(Account account);
 
-	public DataWrapper<Account> disableAccountById(Integer id);
+	DataWrapper<Account> disableAccountById(Integer id);
 
 	DataWrapper<List<Account>> getAllAccount();
 
@@ -37,4 +38,11 @@ public interface AccountService {
 	Page<Account> getByPageWithConditions(int pagenumber, int pagesize,
 			List<SimpleExpression> list);
 
+	DataWrapper<List<? extends Account>> searchAccount(SearchCriteria sc);
+	
+	Account getAccountByChar(Account account, AccountCharacter ac);
+
+	DataWrapper<Account> getAccountByIdChar(Integer id, AccountCharacter ac);
+	
+	DataWrapper<Account> updateAccountByChar(Account account, AccountCharacter ac);
 }

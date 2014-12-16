@@ -26,7 +26,7 @@ public interface AdministratorService {
 
 	DataWrapper<Administrator> reset(PasswordReset data);
 
-	Page<Administrator> getAdministratorbyPage(int pagenumber, int pagesize);
+	DataWrapper<List<Administrator>> getAdministratorbyPage(int pagenumber, int pagesize);
 
 	Page<Administrator> searchAdministrator(int pagenumber, int pagesize, String name);
 

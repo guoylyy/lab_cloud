@@ -19,7 +19,7 @@ public interface StudentDao {
 
 	Student updateStudent(Student v);
 
-	Page<Student> getStudentbyPage(int pagenumber, int pagesize);
+	DataWrapper<List<Student>> getStudentbyPage(int pagenumber, int pagesize);
 
 	List<Student> getByCondition(List<SimpleExpression> list);
 

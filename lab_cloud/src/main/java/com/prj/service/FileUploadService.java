@@ -2,9 +2,14 @@ package com.prj.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.prj.entity.Account;
+import com.prj.util.AccountCharacter;
 import com.prj.util.DataWrapper;
 
 public interface FileUploadService {
-	@SuppressWarnings("rawtypes")
-	DataWrapper saveFile(String path, int id, MultipartFile fileList);
+	DataWrapper<String> saveFile(String path, MultipartFile file, String fileName);
+	
+	DataWrapper<String> saveFileById(String path, MultipartFile file, int id);
+
+	DataWrapper<String> saveIcon(String path, MultipartFile file, String iconName);
 }

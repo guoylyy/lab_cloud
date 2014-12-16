@@ -82,6 +82,13 @@ public class AdministratorController {
 		return vs.updateAdministrator(administrator.getData());
 	}
 	
+	@AccountAccess(checkAccountCharacter = AccountCharacter.ADMINISTRATOR)
+	@RequestMapping(value = "/page/{pageSize}/{pageNumber}", method = RequestMethod.POST)
+	@ResponseBody
+	public DataWrapper<List<Administrator>> getAdministratorList(@RequestBody DataWrapper<?> wrapper, @PathVariable Integer pageSize, @PathVariable Integer pageNumber) {
+		return vs.getAdministratorbyPage(pageNumber, pageSize);
+	}
+	
 	@ExceptionHandler(AuthorityException.class)
 	@ResponseBody
 	public DataWrapper<Void> handleAuthorityException(AuthorityException ex) {

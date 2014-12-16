@@ -3,29 +3,33 @@ package com.prj.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.prj.entity.Account;
 import com.prj.service.AccountService;
+import com.prj.service.FileUploadService;
 import com.prj.util.AccountAccess;
-import com.prj.util.AccountCharacter;
 import com.prj.util.AuthorityException;
+import com.prj.util.CallStatusEnum;
 import com.prj.util.DataWrapper;
-import com.prj.util.PasswordReset;
+import com.prj.util.SearchCriteria;
 
 @Controller
 @RequestMapping(value = "/Account")
 public class AccountController {
 
 	@Resource(name = "AccountServiceImpl")
-	AccountService vs;
+	AccountService as;
+	@Resource(name = "FileUploadServiceImpl")
+	FileUploadService fs;
 
 //	@RequestMapping(value = "/table", method = RequestMethod.GET)
 //	public String IndexView(Model model) {
@@ -35,17 +39,47 @@ public class AccountController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
 	public DataWrapper<Account> login(@RequestBody DataWrapper<Account> account) {
-		return vs.login(account.getData(), account.getAccountCharacter());
+		return as.login(account.getData(), account.getAccountCharacter());
 	}
 	
 	@AccountAccess
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
 	@ResponseBody
 	public DataWrapper<Void> logout(@RequestBody DataWrapper<?> wrapper) {
-		vs.logout(wrapper.getAccountId(), wrapper.getAccountCharacter());
+		as.logout(wrapper.getAccountId(), wrapper.getAccountCharacter());
 		return new DataWrapper<Void>();
 	}
 
+	@AccountAccess
+	@RequestMapping(value = "/search", method = RequestMethod.POST) 
+	@ResponseBody
+	public DataWrapper<List<? extends Account>> search(@RequestBody DataWrapper<SearchCriteria> wrapper) {
+		SearchCriteria sc = wrapper.getData();
+		return as.searchAccount(sc);
+	}
+	
+	@AccountAccess
+	@RequestMapping(value = "/upload/icon", method = RequestMethod.POST) 
+	@ResponseBody
+	public DataWrapper<String> uploadIcon(@RequestBody DataWrapper<MultipartFile> wrapper, HttpServletRequest request) {
+//		MultipartFile file = wrapper.getData();
+//		String path = request.getSession().getServletContext().getRealPath("/files/"+wrapper.getAccountCharacter()+"/"+wrapper.getAccountId()+"/icon");
+//		DataWrapper<String> fsRet = fs.saveIcon(path, file, "icon");
+//		if (fsRet.getCallStatus().equals(CallStatusEnum.FAILED)) {
+//			return fsRet;
+//		}
+//		DataWrapper<Account> asRet = as.getAccountByIdChar(wrapper.getAccountId(), wrapper.getAccountCharacter());
+//		if (asRet.getCallStatus().equals(CallStatusEnum.FAILED)) {
+//			return asRet;
+//		}
+//		asRet.getData().setIconPath(fsRet.getData());
+//		as.updateAccount(entity)
+//		ret.setData(null);
+//		return ret;
+		return null;
+	}
+	
+	
 //	@AccountAccess
 //	@RequestMapping(value = "/profile", method = RequestMethod.POST)
 //	@ResponseBody

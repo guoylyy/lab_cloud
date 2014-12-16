@@ -11,10 +11,11 @@ import org.springframework.stereotype.Service;
 
 import com.prj.dao.AbstractHibernateDao;
 import com.prj.dao.TeacherDao;
-import com.prj.entity.Teacher;
 import com.prj.entity.Account.Status;
+import com.prj.entity.Teacher;
 import com.prj.util.DataWrapper;
 import com.prj.util.Page;
+import com.prj.util.PageResult;
 
 @Service("TeacherDaoImpl")
 public class TeacherDaoImpl extends AbstractHibernateDao<Teacher, Integer>
@@ -78,9 +79,15 @@ public class TeacherDaoImpl extends AbstractHibernateDao<Teacher, Integer>
 		return saveOrUpdate(v);
 	}
 
-	public Page<Teacher> getTeacherbyPage(int pagenumber, int pagesize) {
-		// TODO Auto-generated method stub
-		return null;
+	public DataWrapper<List<Teacher>> getTeacherbyPage(int pagenumber, int pagesize) {
+		PageResult<Teacher> pr = findByCriteriaByPage(null, pagenumber, pagesize);
+		DataWrapper<List<Teacher>> ret = new DataWrapper<List<Teacher>>();
+		ret.setData(pr.getData());
+		ret.setCurrPageNum(pr.getCurrPageNum());
+		ret.setNumPerPage(pr.getNumPerPage());
+		ret.setTotalItemNum(pr.getTotalItemNum());
+		ret.setTotalPageNum(pr.getTotalPageNum());
+		return ret;
 	}
 
 	public List<Teacher> getByCondition(List<SimpleExpression> list) {

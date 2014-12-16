@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.prj.dao.StudentDao;
 import com.prj.entity.Account.Status;
+import com.prj.entity.Administrator;
 import com.prj.entity.Student;
 import com.prj.service.StudentService;
 import com.prj.util.DataWrapper;
@@ -86,11 +87,11 @@ public class StudentServiceImpl implements StudentService {
 		return ret;
 	}
 
-	// Methods Following Are Not Checked... YET!
-	public Page<Student> getStudentbyPage(int pagenumber, int pagesize) {
+	public DataWrapper<List<Student>> getStudentbyPage(int pagenumber, int pagesize) {
 		return dao.getStudentbyPage(pagenumber, pagesize);
 	}
 
+	// Methods Following Are Not Checked... YET!
 	public Page<Student> searchStudent(int pagenumber, int pagesize, String name) {
 		// return dao.searchStudent(pagenumber, pagesize, name);
 		return null;

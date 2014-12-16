@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.criterion.SimpleExpression;
 
+import com.prj.entity.Administrator;
 import com.prj.entity.Student;
 import com.prj.util.DataWrapper;
 import com.prj.util.Page;
@@ -22,7 +23,7 @@ public interface StudentService {
 
 	DataWrapper<Student> reset(PasswordReset data);
 
-	Page<Student> getStudentbyPage(int pagenumber, int pagesize);
+	DataWrapper<List<Student>> getStudentbyPage(int pagenumber, int pagesize);
 
 	Page<Student> searchStudent(int pagenumber, int pagesize, String name);
 

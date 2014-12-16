@@ -11,10 +11,11 @@ import org.springframework.stereotype.Service;
 
 import com.prj.dao.AbstractHibernateDao;
 import com.prj.dao.AdministratorDao;
-import com.prj.entity.Administrator;
 import com.prj.entity.Account.Status;
+import com.prj.entity.Administrator;
 import com.prj.util.DataWrapper;
 import com.prj.util.Page;
+import com.prj.util.PageResult;
 
 @Service("AdministratorDaoImpl")
 public class AdministratorDaoImpl extends AbstractHibernateDao<Administrator, Integer>
@@ -78,9 +79,15 @@ public class AdministratorDaoImpl extends AbstractHibernateDao<Administrator, In
 		return saveOrUpdate(v);
 	}
 
-	public Page<Administrator> getAdministratorbyPage(int pagenumber, int pagesize) {
-		// TODO Auto-generated method stub
-		return null;
+	public DataWrapper<List<Administrator>> getAdministratorbyPage(int pagenumber, int pagesize) {
+		PageResult<Administrator> pr = findByCriteriaByPage(null, pagenumber, pagesize);
+		DataWrapper<List<Administrator>> ret = new DataWrapper<List<Administrator>>();
+		ret.setData(pr.getData());
+		ret.setCurrPageNum(pr.getCurrPageNum());
+		ret.setNumPerPage(pr.getNumPerPage());
+		ret.setTotalItemNum(pr.getTotalItemNum());
+		ret.setTotalPageNum(pr.getTotalPageNum());
+		return ret;
 	}
 
 	public List<Administrator> getByCondition(List<SimpleExpression> list) {
