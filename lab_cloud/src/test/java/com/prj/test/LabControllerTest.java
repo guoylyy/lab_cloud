@@ -105,8 +105,8 @@ public class LabControllerTest {
 	
 	private DataWrapper<Account> login(String number, String password) {
 		Account loginAdmin = new Account();
-		loginAdmin.setAccountNumber(number);
-		loginAdmin.setAccountPassword(password);
+		loginAdmin.setNumber(number);
+		loginAdmin.setPassword(password);
 		return accountCtrl.login(new DataWrapper<Account>(loginAdmin));
 	}
 	

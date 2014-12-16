@@ -10,6 +10,7 @@ public class DataWrapper<T> implements Serializable {
 	private ErrorCodeEnum errorCode;
 
 	private String token;
+	private AccountCharacter accountCharacter;
 	private Integer accountId;
 	
 	private T data;
@@ -59,6 +60,14 @@ public class DataWrapper<T> implements Serializable {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public AccountCharacter getAccountCharacter() {
+		return accountCharacter;
+	}
+
+	public void setAccountCharacter(AccountCharacter accountCharacter) {
+		this.accountCharacter = accountCharacter;
 	}
 
 	public Integer getAccountId() {

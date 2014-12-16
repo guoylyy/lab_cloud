@@ -1,5 +1,6 @@
 package com.prj.entity;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,8 +11,11 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "lab")
@@ -22,13 +26,20 @@ public class Lab extends BaseEntity {
 	}
 	
 	private String labNumber;
+	private String labName;
+	private String description;
 	private Boolean isActive = true;
 	private Integer capacity;
+	private Integer machineNumber;
+//	private Boolean usage = false;
 	private Status status = Status.OPEN;
+	private Administrator creator;
+	private Administrator lastUpdater;
+	private Date creationDate;
 	private Set<Experiment> experiments = new HashSet<Experiment>(0);
 	private Set<LabPlan> labPlans = new HashSet<LabPlan>(0);
 
-	@Column(nullable = false)
+	@Column(nullable = false, name="lab_number")
 	public String getLabNumber() {
 		return labNumber;
 	}
@@ -36,6 +47,19 @@ public class Lab extends BaseEntity {
 		this.labNumber = labNumber;
 	}
 	
+	@Column(nullable = false, name="labname")
+	public String getLabName() {
+		return labName;
+	}
+	public void setLabName(String labName) {
+		this.labName = labName;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	@Column(nullable = false)
 	public Boolean getIsActive() {
 		return isActive;
@@ -76,6 +100,49 @@ public class Lab extends BaseEntity {
 	}
 	public void setLabPlans(Set<LabPlan> labPlans) {
 		this.labPlans = labPlans;
+	}
+	public Integer getMachineNumber() {
+		return machineNumber;
+	}
+	public void setMachineNumber(Integer machineNumber) {
+		this.machineNumber = machineNumber;
+	}
+	
+//	@Column(name = "usage_status")
+//	public Boolean getUsage() {
+//		return usage;
+//	}
+//	
+//	public void setUsage(Boolean usage) {
+//		this.usage = usage;
+//	}
+	
+	@ManyToOne
+	@JoinColumn(name = "creator")
+	public Administrator getCreator() {
+		return creator;
+	}
+	public void setCreator(Administrator creator) {
+		this.creator = creator;
+	}
+	
+	@ManyToOne
+	@JoinColumn(name = "last_updated_by")
+	public Administrator getLastUpdater() {
+		return lastUpdater;
+	}
+	public void setLastUpdater(Administrator lastUpdater) {
+		this.lastUpdater = lastUpdater;
+	}
+	
+	@Column(nullable=false)
+	@Type(type = "date")
+	public Date getCreationDate() {
+		return creationDate;
+	}
+	
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}
 	
 

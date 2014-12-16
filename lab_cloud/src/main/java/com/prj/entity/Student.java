@@ -1,0 +1,96 @@
+package com.prj.entity;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
+
+@Entity
+@Table(name = "student")
+public class Student extends Account {
+//	private String number;
+//	private String password;
+	private String name;
+	private String email;
+	private String grade;
+	private String major;
+//	private Status status = Status.NEW;
+
+//	private String loginToken;
+
+	private StudentClass studentClass;
+	private StudentReservation studentReservation;
+	
+//	public String getNumber() {
+//		return number;
+//	}
+//	public void setNumber(String number) {
+//		this.number = number;
+//	}
+//	public String getPassword() {
+//		return password;
+//	}
+//	public void setPassword(String password) {
+//		this.password = password;
+//	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getGrade() {
+		return grade;
+	}
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+	public String getMajor() {
+		return major;
+	}
+	public void setMajor(String major) {
+		this.major = major;
+	}
+//	public Status getStatus() {
+//		return status;
+//	}
+//	public void setStatus(Status status) {
+//		this.status = status;
+//	}
+//	public String getLoginToken() {
+//		return loginToken;
+//	}
+//	public void setLoginToken(String loginToken) {
+//		this.loginToken = loginToken;
+//	}
+
+	@ManyToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
+	@JoinColumn(name = "studentClassId")
+	@JsonIgnore
+	public StudentClass getStudentClass() {
+		return studentClass;
+	}
+	public void setStudentClass(StudentClass studentClass) {
+		this.studentClass = studentClass;
+	}
+
+	@ManyToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
+	@JoinColumn(name = "studentReaservationId")
+	@JsonIgnore
+	public StudentReservation getStudentReservation() {
+		return studentReservation;
+	}
+	public void setStudentReservation(StudentReservation studentReservation) {
+		this.studentReservation = studentReservation;
+	}
+}

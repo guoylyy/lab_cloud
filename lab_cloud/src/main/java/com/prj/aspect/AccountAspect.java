@@ -29,11 +29,14 @@ public class AccountAspect {
 	
 	private void check(DataWrapper<?> dataWrapper, AccountAccess as) {
 		String token = dataWrapper.getToken();
+		AccountCharacter ac = dataWrapper.getAccountCharacter();
 		if (token == null) {
 			System.err.println("Token NULL");
 			throw new AuthorityException(ErrorCodeEnum.Token_Invalid);
+		} else if (ac == null) {
+			throw new AuthorityException(ErrorCodeEnum.Account_Character_Null);
 		} else {
-			Account a = dao.findAccountbyToken(token);
+			Account a = dao.findAccountbyToken(token, ac);
 			if (a == null) {
 				System.err.println("Token: " + token);
 				throw new AuthorityException(ErrorCodeEnum.Token_Invalid);
@@ -42,7 +45,7 @@ public class AccountAspect {
 			} else {
 				dataWrapper.setAccountId(a.getId());
 				if (as.checkAccountCharacter() != AccountCharacter.ANY) {
-					if (a.getAccountCharacter() != as.checkAccountCharacter()) {
+					if (dataWrapper.getAccountCharacter() != as.checkAccountCharacter()) {
 						throw new AuthorityException(ErrorCodeEnum.Access_Denied);
 					}
 				}

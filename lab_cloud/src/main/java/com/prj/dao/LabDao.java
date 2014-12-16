@@ -29,4 +29,8 @@ public interface LabDao {
 
 	Page<Lab> getByPageWithConditions(int pagenumber, int pagesize,
 			List<SimpleExpression> list);
+
+	Lab getActiveLabByNumber(String labNumber);
+
+	boolean isFull();
 }

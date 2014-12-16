@@ -21,7 +21,9 @@ public enum ErrorCodeEnum implements Serializable{
 	Experiment_Exist("Course Exist", 14),
 	Lab_Not_Active("Lab Not Active", 15),
 	Experiment_Not_Active("Experiment Not Active", 16),
-	File_Creation_Error("File Creation Error", 17);
+	File_Creation_Error("File Creation Error", 17),
+	Account_Character_Null("Account Character Null", 18), 
+	Reach_Lab_Limit("Reach Lab Limit", 19);
 	
 	private String label;
 	private Integer code;

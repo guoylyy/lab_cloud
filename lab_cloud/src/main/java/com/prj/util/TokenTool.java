@@ -20,8 +20,8 @@ public class TokenTool {
 	private static Logger logger = Logger.getLogger(TokenTool.class);
 
 	public static String generateToken(Account account) {
-		String token = MD5Tool.GetMd5(account.getAccountNumber() + ":"
-				+ account.getAccountPassword() + ":" + TOKEN_RANDOM);
+		String token = MD5Tool.GetMd5(account.getNumber() + ":"
+				+ account.getPassword() + ":" + TOKEN_RANDOM);
 		Calendar c = Calendar.getInstance();
 		c.set(Calendar.MONTH, c.get(Calendar.MONTH) + 1);
 		DateFormat f = new SimpleDateFormat(TOKEN_DATE_FORMAT);

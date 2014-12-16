@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.prj.dao.AbstractHibernateDao;
 import com.prj.dao.LabDao;
 import com.prj.entity.Lab;
+import com.prj.entity.Variable;
 import com.prj.util.DataWrapper;
 import com.prj.util.Page;
 
@@ -75,6 +76,26 @@ public class LabDaoImpl extends AbstractHibernateDao<Lab, Integer>implements Lab
 		return null;
 	}
 
+	@Override
+	public Lab getActiveLabByNumber(String labNumber) {
+		List<?> ret = getCurrentSession().createCriteria(Lab.class)
+				.add(Restrictions.eq("labNumber", labNumber))
+				.add(Restrictions.eq("isActive", true))
+				.list();
+		if (ret != null && ret.size() > 0) {
+			return (Lab)ret.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public boolean isFull() {
+		return getCurrentSession().createCriteria(Lab.class)
+				.add(Restrictions.eq("isActive", true))
+				.list()
+				.size() >= Variable.maxLabNumber;
+	}
+	
 	public Page<Lab> getLabByPage(int pagenumber, int pagesize) {
 		// TODO Auto-generated method stub
 		return null;

@@ -21,7 +21,7 @@ import org.hibernate.annotations.Type;
 @Table(name = "class_reservation")
 public class ClassReservation extends BaseEntity {
 	private String classReservationNo;
-	private Account reservator;
+	private Teacher reservator;
 	private Date timestamp;
 	private Set<StudentClass> studentClasses = new HashSet<StudentClass>(0);
 	private Set<LabPlan> labPlans = new HashSet<LabPlan>(0);
@@ -37,10 +37,10 @@ public class ClassReservation extends BaseEntity {
 	@ManyToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
 	@JoinColumn(name = "classReservationId")
 	@JsonIgnore
-	public Account getReservator() {
+	public Teacher getReservator() {
 		return reservator;
 	}
-	public void setReservator(Account reservator) {
+	public void setReservator(Teacher reservator) {
 		this.reservator = reservator;
 	}
 	

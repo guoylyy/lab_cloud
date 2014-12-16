@@ -17,7 +17,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Table(name = "class")
 public class Class extends BaseEntity {
 	private Semester semester;
-	private Account teacher;
+	private Teacher teacher;
 	private Course course;
 	private StudentClass studentClass;
 	private Set<LabPlan> labPlans = new HashSet<LabPlan>(0);
@@ -35,10 +35,10 @@ public class Class extends BaseEntity {
 	@ManyToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
 	@JoinColumn(name = "teacherId")
 	@JsonIgnore
-	public Account getTeacher() {
+	public Teacher getTeacher() {
 		return teacher;
 	}
-	public void setTeacher(Account teacher) {
+	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
 	}
 	

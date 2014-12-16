@@ -16,15 +16,15 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Entity
 @Table(name = "student_class")
 public class StudentClass extends BaseEntity {
-	private Set<Account> students = new HashSet<Account>(0);
+	private Set<Student> students = new HashSet<Student>(0);
 	private Set<Class> classes = new HashSet<Class>(0);
 	private ClassReservation classReservation;
 	
 	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "studentClass")
-	public Set<Account> getStudents() {
+	public Set<Student> getStudents() {
 		return students;
 	}
-	public void setStudents(Set<Account> students) {
+	public void setStudents(Set<Student> students) {
 		this.students = students;
 	}
 	

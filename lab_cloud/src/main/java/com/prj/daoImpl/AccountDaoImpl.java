@@ -12,6 +12,11 @@ import org.springframework.stereotype.Service;
 import com.prj.dao.AbstractHibernateDao;
 import com.prj.dao.AccountDao;
 import com.prj.entity.Account;
+import com.prj.entity.Account.Status;
+import com.prj.entity.Administrator;
+import com.prj.entity.Student;
+import com.prj.entity.Teacher;
+import com.prj.util.AccountCharacter;
 import com.prj.util.DataWrapper;
 import com.prj.util.Page;
 
@@ -32,7 +37,7 @@ public class AccountDaoImpl extends AbstractHibernateDao<Account, Integer>
 		Account a = findById(id);
 		if (a == null)
 			return null;
-		a.setIsActive(false);
+		a.setStatus(Status.INACTIVE);
 //		a.setLoginToken(null);
 		return a;
 	}
@@ -63,8 +68,18 @@ public class AccountDaoImpl extends AbstractHibernateDao<Account, Integer>
 		return null;
 	}
 
-	public Account findAccountbyToken(String token) {
-		Criteria criteria = getCurrentSession().createCriteria(Account.class);
+	public Account findAccountbyToken(String token, AccountCharacter ac) {
+		Criteria criteria = null;
+		switch(ac) {
+		case STUDENT:
+			criteria = getCurrentSession().createCriteria(Student.class);
+			break;
+		case TEACHER:
+			criteria = getCurrentSession().createCriteria(Teacher.class);
+			break;
+		case ADMINISTRATOR:
+			criteria = getCurrentSession().createCriteria(Administrator.class);
+		}
 		criteria.add(Restrictions.eq("loginToken", token));
 		List<?> ret = criteria.list();
 		if (ret != null && ret.size() > 0) {

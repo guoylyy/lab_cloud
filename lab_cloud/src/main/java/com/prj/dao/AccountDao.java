@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.criterion.SimpleExpression;
 
 import com.prj.entity.Account;
+import com.prj.util.AccountCharacter;
 import com.prj.util.DataWrapper;
 import com.prj.util.Page;
 
@@ -28,6 +29,6 @@ public interface AccountDao {
 
 	Account getAccountByNumber(String number);
 
-	Account findAccountbyToken(String token);
+	Account findAccountbyToken(String token, AccountCharacter ac);
 
 }

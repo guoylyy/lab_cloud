@@ -11,9 +11,9 @@ import com.prj.util.Page;
 import com.prj.util.PasswordReset;
 
 public interface AccountService {
-	DataWrapper<Account> login(Account account);
+	DataWrapper<Account> login(Account account, AccountCharacter ac);
 
-	void logout(Integer id);
+	void logout(Integer id, AccountCharacter ac);
 
 	DataWrapper<Account> addAccount(Account account);
 
@@ -25,8 +25,8 @@ public interface AccountService {
 
 	DataWrapper<Account> updateAccount(Account entity);
 
-	DataWrapper<Account> updateAccountCharacter(Integer accountId,
-	AccountCharacter accountCharacter);
+//	DataWrapper<Account> updateAccountCharacter(Integer accountId,
+//	AccountCharacter accountCharacter);
 
 	DataWrapper<Account> reset(PasswordReset data);
 

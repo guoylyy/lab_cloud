@@ -34,8 +34,8 @@ public class CommonDao {
 		logger.info("add Object");
 		BaseEntity be = (BaseEntity) v;
 		if (be instanceof BaseEntity) {
-			be.setCreate_time(new Date());
-			be.setModify_time(new Date());
+//			be.setCreate_time(new Date());
+//			be.setModify_time(new Date());
 		}
 		try {
 			session.beginTransaction();
@@ -65,8 +65,8 @@ public class CommonDao {
 		BaseEntity o = (BaseEntity) session2.get(be.getClass().getName(),
 				be.getId());
 		if (be instanceof BaseEntity) {
-			be.setModify_time(new Date());
-			be.setCreate_time(o.getCreate_time());
+//			be.setModify_time(new Date());
+//			be.setCreate_time(o.getCreate_time());
 		}
 		session2.close();
 		try {

@@ -30,18 +30,18 @@ public abstract class AbstractHibernateDao<E, I extends Serializable> {
 		return sessionFactory.getCurrentSession();
 	}
 
-	private boolean setModifyTime(E e) {
-		BaseEntity be = (BaseEntity) e;
-		if (be instanceof BaseEntity) {
-			be.setModify_time(new Date());
-			return true;
-		}
-		return false;
-	}
+//	private boolean setModifyTime(E e) {
+//		BaseEntity be = (BaseEntity) e;
+//		if (be instanceof BaseEntity) {
+//			be.setModify_time(new Date());
+//			return true;
+//		}
+//		return false;
+//	}
 	
 	@SuppressWarnings("unchecked")
 	public I add(E e) {
-		setModifyTime(e);
+//		setModifyTime(e);
 		return (I) getCurrentSession().save(e);
 	}
 
@@ -52,12 +52,12 @@ public abstract class AbstractHibernateDao<E, I extends Serializable> {
 
 	@SuppressWarnings("unchecked")
 	public E saveOrUpdate(E e) {
-		setModifyTime(e);
+//		setModifyTime(e);
         return (E) getCurrentSession().merge(e);
 	}
 
 	public void delete(E e) {
-		setModifyTime(e);
+//		setModifyTime(e);
 		getCurrentSession().delete(e);
 	}
 

@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -20,6 +21,7 @@ public class Experiment extends BaseEntity {
 	private Boolean isActive = true;
 	private Set<Course> courses = new HashSet<Course>(0);
 	private Set<Lab> labs = new HashSet<Lab>(0);
+	private ExperimentLab experimentLab;
 	
 	@Column(nullable = false)
 	public String getExperimentNumber() {
@@ -72,5 +74,13 @@ public class Experiment extends BaseEntity {
 	}
 	public void setLabs(Set<Lab> labs) {
 		this.labs = labs;
+	}
+	
+	@OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+	public ExperimentLab getExperimentLab() {
+		return experimentLab;
+	}
+	public void setExperimentLab(ExperimentLab experimentLab) {
+		this.experimentLab = experimentLab;
 	}
 }
