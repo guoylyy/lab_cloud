@@ -33,11 +33,6 @@ public class AccountController {
 	@Resource(name = "FileUploadServiceImpl")
 	FileUploadService fs;
 
-//	@RequestMapping(value = "/table", method = RequestMethod.GET)
-//	public String IndexView(Model model) {
-//		return "Account/table";
-//	}
-
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
 	public DataWrapper<Account> login(@RequestBody DataWrapper<Account> account) {
@@ -48,8 +43,7 @@ public class AccountController {
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
 	@ResponseBody
 	public DataWrapper<Void> logout(@RequestBody DataWrapper<?> wrapper) {
-		as.logout(wrapper.getAccountId(), wrapper.getAccountCharacter());
-		return new DataWrapper<Void>();
+		return as.logout(wrapper.getAccountId(), wrapper.getAccountCharacter());
 	}
 
 	@AccountAccess
@@ -87,14 +81,14 @@ public class AccountController {
 			ret.setErrorCode(fsRet.getErrorCode());
 			return ret;
 		}
-		DataWrapper<Account> asRet = as.getAccountByIdChar(wrapper.getAccountId(), wrapper.getAccountCharacter());
+		DataWrapper<Account> asRet = as.getAccountById(wrapper.getAccountId(), wrapper.getAccountCharacter());
 		if (asRet.getCallStatus().equals(CallStatusEnum.FAILED)) {
 			ret.setErrorCode(asRet.getErrorCode());
 			return ret;
 		}
 		Account a = asRet.getData();
 		a.setIconPath(fsRet.getData());
-		asRet = as.updateAccountByChar(a, wrapper.getAccountCharacter());
+		asRet = as.updateAccount(a, wrapper.getAccountCharacter());
 		if (asRet.getCallStatus().equals(CallStatusEnum.FAILED)) {
 			ret.setErrorCode(asRet.getErrorCode());
 			return ret;
@@ -107,22 +101,22 @@ public class AccountController {
 //	@RequestMapping(value = "/profile", method = RequestMethod.POST)
 //	@ResponseBody
 //	public DataWrapper<Account> getAccount(@RequestBody DataWrapper<?> wrapper) {
-//		return vs.getAccountById(wrapper.getAccountId());
+//		return as.getAccountById(wrapper.getAccountId(), wrapper.getAccountCharacter());
 //	}
-
+//
 //	@AccountAccess
 //	@RequestMapping(value = "/reset", method = RequestMethod.POST)
 //	@ResponseBody
 //	public DataWrapper<Account> resetPassword(@RequestBody DataWrapper<PasswordReset> wrapper) {
 //		wrapper.getData().setId(wrapper.getAccountId());
-//		return vs.reset(wrapper.getData());
+//		return as.reset(wrapper.getData(), wrapper.getAccountCharacter());
 //	}
 	
 //	@AccountAccess(checkAccountCharacter = AccountCharacter.ADMINISTRATOR)
-//	@RequestMapping(value = "/add", method = RequestMethod.POST)
+//	@RequestMapping(value = "/add/{ac}", method = RequestMethod.POST)
 //	@ResponseBody
-//	public DataWrapper<Account> add(@RequestBody DataWrapper<Account> account) {
-//		return vs.addAccount(account.getData());
+//	public DataWrapper<Account> add(@RequestBody DataWrapper<? extends Account> wrapper, @PathVariable AccountCharacter ac) {
+//		return as.addAccount((Account) wrapper.getData(), wrapper.getAccountCharacter());
 //	}
 	
 //	@AccountAccess(checkAccountCharacter = AccountCharacter.ADMINISTRATOR)
