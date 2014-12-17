@@ -29,4 +29,6 @@ public interface CourseDao {
 
 	Page<Course> getByPageWithConditions(int pagenumber, int pagesize,
 			List<SimpleExpression> list);
+	
+	
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.criterion.SimpleExpression;
 
+import com.prj.entity.Experiment;
 import com.prj.entity.Lab;
 import com.prj.util.DataWrapper;
 import com.prj.util.Page;
@@ -33,4 +34,10 @@ public interface LabDao {
 	Lab getActiveLabByNumber(String labNumber);
 
 	boolean isFull();
+	
+	boolean addExperiment(int id, Experiment experiment);
+	
+	boolean deleteExperiment(int id, Experiment experiment);
+	
+	List<Experiment> getExperimentsOfLab(int id);
 }

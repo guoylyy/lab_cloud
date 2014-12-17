@@ -1,5 +1,6 @@
 package com.prj.daoImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.prj.dao.AbstractHibernateDao;
 import com.prj.dao.LabDao;
+import com.prj.entity.Experiment;
 import com.prj.entity.Lab;
 import com.prj.entity.Variable;
 import com.prj.util.DataWrapper;
@@ -111,4 +113,35 @@ public class LabDaoImpl extends AbstractHibernateDao<Lab, Integer>implements Lab
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public boolean addExperiment(int id, Experiment experiment) {
+		// TODO Auto-generated method stub
+		Lab lab = findById(id);
+		if(lab == null)
+			return false;
+		lab.getExperiments().add(experiment);
+		return true;
+	}
+
+	@Override
+	public boolean deleteExperiment(int id, Experiment experiment) {
+		// TODO Auto-generated method stub
+		Lab lab = findById(id);
+		if(lab == null)
+			return false;
+		lab.getExperiments().remove(experiment);
+		return true;
+	}
+
+	@Override
+	public List<Experiment> getExperimentsOfLab(int id) {
+		// TODO Auto-generated method stub
+		Lab lab = findById(id);
+		if(lab == null)
+			return null;
+		
+		return new ArrayList<Experiment>(lab.getExperiments());
+	}
+	
 }

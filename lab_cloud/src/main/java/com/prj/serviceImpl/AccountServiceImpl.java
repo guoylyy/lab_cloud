@@ -1,5 +1,7 @@
 package com.prj.serviceImpl;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +21,7 @@ import com.prj.entity.Student;
 import com.prj.entity.Teacher;
 import com.prj.service.AccountService;
 import com.prj.util.AccountCharacter;
+import com.prj.util.ApplicationContextUtils;
 import com.prj.util.CallStatusEnum;
 import com.prj.util.DataWrapper;
 import com.prj.util.ErrorCodeEnum;
@@ -316,5 +319,27 @@ public class AccountServiceImpl implements AccountService {
 			}
 		}
 		return ret;
+	}
+
+	@Override
+	public DataWrapper<List<? extends Account>> getAccountByRole(AccountCharacter ac) {
+		// TODO Auto-generated method stub 
+		Object obj = ApplicationContextUtils.getBean(ac.getLabel()+"DaoImpl");
+		try {
+			Method m = obj.getClass().getMethod("getAll"+ac.getLabel());
+			@SuppressWarnings("unchecked")
+			DataWrapper<List<? extends Account>> list = (DataWrapper<List<? extends Account>>)m.invoke(obj);
+			return list;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		return null;
+	}
+
+	@Override
+	public DataWrapper<List<? extends Account>> getAccountByStatus(Status status) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -45,4 +45,8 @@ public interface AccountService {
 	DataWrapper<Account> getAccountByIdChar(Integer id, AccountCharacter ac);
 	
 	DataWrapper<Account> updateAccountByChar(Account account, AccountCharacter ac);
+	
+	DataWrapper<List<? extends Account>> getAccountByRole(AccountCharacter ac);
+	
+	DataWrapper<List<? extends Account>> getAccountByStatus(Account.Status status);
 }

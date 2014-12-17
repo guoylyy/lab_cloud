@@ -7,7 +7,9 @@ import javax.annotation.Resource;
 import org.hibernate.criterion.SimpleExpression;
 import org.springframework.stereotype.Service;
 
+import com.prj.dao.ExperimentDao;
 import com.prj.dao.LabDao;
+import com.prj.entity.Experiment;
 import com.prj.entity.Lab;
 import com.prj.service.LabService;
 import com.prj.util.DataWrapper;
@@ -19,6 +21,8 @@ public class LabServiceImpl implements LabService {
 
 	@Resource(name = "LabDaoImpl")
 	LabDao dao;
+	@Resource(name = "ExperimentDaoImpl")
+	ExperimentDao experimentdao;
 
 	public DataWrapper<Lab> addLab(Lab lab) {
 		DataWrapper<Lab> ret = new DataWrapper<Lab>();
@@ -85,5 +89,44 @@ public class LabServiceImpl implements LabService {
 	public Page<Lab> getByPageWithConditions(int pagenumber,
 			int pagesize, List<SimpleExpression> list) {
 		return dao.getByPageWithConditions(pagenumber, pagesize, list);
+	}
+
+	@Override
+	public DataWrapper<Lab> addExperiment(int labid, int experimentid) {
+		// TODO Auto-generated method stub
+		DataWrapper<Lab> ret =  new DataWrapper<Lab>();
+		Experiment experiment = experimentdao.findExperimentById(experimentid);
+		if(experiment == null)
+			ret.setErrorCode(ErrorCodeEnum.Experiment_Not_Exist);
+		else
+			if(!dao.addExperiment(labid, experiment))
+				ret.setErrorCode(ErrorCodeEnum.Lab_Not_Exist);
+		return ret;
+	}
+
+	@Override
+	public DataWrapper<Lab> deleteExperiment(int labid, int experimentid) {
+		// TODO Auto-generated method stub
+		DataWrapper<Lab> ret = new DataWrapper<Lab>();
+		Experiment experiment = experimentdao.findExperimentById(experimentid);
+		if(experiment == null)
+			ret.setErrorCode(ErrorCodeEnum.Experiment_Not_Exist);
+		else
+			if(!dao.deleteExperiment(labid, experiment));
+				ret.setErrorCode(ErrorCodeEnum.Lab_Not_Exist);
+				
+		return ret;
+	}
+
+	@Override
+	public DataWrapper<List<Experiment>> getExperimentList(int labid) {
+		// TODO Auto-generated method stub
+		DataWrapper<List<Experiment>> ret = new DataWrapper<List<Experiment>>();
+		List<Experiment> list = dao.getExperimentsOfLab(labid);
+		if(list == null)
+			ret.setErrorCode(ErrorCodeEnum.Lab_Not_Exist);
+		else
+			ret.setData(list);
+		return ret;
 	}
 }

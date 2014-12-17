@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +18,7 @@ import com.prj.entity.Account;
 import com.prj.service.AccountService;
 import com.prj.service.FileUploadService;
 import com.prj.util.AccountAccess;
+import com.prj.util.AccountCharacter;
 import com.prj.util.AuthorityException;
 import com.prj.util.CallStatusEnum;
 import com.prj.util.DataWrapper;
@@ -56,6 +58,22 @@ public class AccountController {
 	public DataWrapper<List<? extends Account>> search(@RequestBody DataWrapper<SearchCriteria> wrapper) {
 		SearchCriteria sc = wrapper.getData();
 		return as.searchAccount(sc);
+	}
+	
+	
+	@RequestMapping(value = "/accountlist/role/{role}", method = RequestMethod.GET) 
+	@ResponseBody
+	public DataWrapper<List<? extends Account>> accountlistrole(@RequestBody DataWrapper<?> wrapper,@PathVariable int role) {
+		
+		return as.getAccountByRole(AccountCharacter.ADMINISTRATOR);
+	}
+	
+	@RequestMapping(value = "/accountlist/status/{status}", method = RequestMethod.GET) 
+	@ResponseBody
+	public DataWrapper<List<? extends Account>> accountliststatus(@PathVariable Account.Status status) {
+		
+		
+		return as.getAccountByStatus(status);
 	}
 	
 	@AccountAccess
