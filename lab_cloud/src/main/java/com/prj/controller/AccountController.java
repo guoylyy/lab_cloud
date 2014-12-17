@@ -61,22 +61,28 @@ public class AccountController {
 	@AccountAccess
 	@RequestMapping(value = "/upload/icon", method = RequestMethod.POST) 
 	@ResponseBody
-	public DataWrapper<String> uploadIcon(@RequestBody DataWrapper<MultipartFile> wrapper, HttpServletRequest request) {
-//		MultipartFile file = wrapper.getData();
-//		String path = request.getSession().getServletContext().getRealPath("/files/"+wrapper.getAccountCharacter()+"/"+wrapper.getAccountId()+"/icon");
-//		DataWrapper<String> fsRet = fs.saveIcon(path, file, "icon");
-//		if (fsRet.getCallStatus().equals(CallStatusEnum.FAILED)) {
-//			return fsRet;
-//		}
-//		DataWrapper<Account> asRet = as.getAccountByIdChar(wrapper.getAccountId(), wrapper.getAccountCharacter());
-//		if (asRet.getCallStatus().equals(CallStatusEnum.FAILED)) {
-//			return asRet;
-//		}
-//		asRet.getData().setIconPath(fsRet.getData());
-//		as.updateAccount(entity)
-//		ret.setData(null);
-//		return ret;
-		return null;
+	public DataWrapper<Void> uploadIcon(@RequestBody DataWrapper<MultipartFile> wrapper, HttpServletRequest request) {
+		DataWrapper<Void> ret = new DataWrapper<Void>();
+		MultipartFile file = wrapper.getData();
+		String path = request.getSession().getServletContext().getRealPath("/files/"+wrapper.getAccountCharacter()+"/"+wrapper.getAccountId()+"/icon");
+		DataWrapper<String> fsRet = fs.saveIcon(path, file, "icon");
+		if (fsRet.getCallStatus().equals(CallStatusEnum.FAILED)) {
+			ret.setErrorCode(fsRet.getErrorCode());
+			return ret;
+		}
+		DataWrapper<Account> asRet = as.getAccountByIdChar(wrapper.getAccountId(), wrapper.getAccountCharacter());
+		if (asRet.getCallStatus().equals(CallStatusEnum.FAILED)) {
+			ret.setErrorCode(asRet.getErrorCode());
+			return ret;
+		}
+		Account a = asRet.getData();
+		a.setIconPath(fsRet.getData());
+		asRet = as.updateAccountByChar(a, wrapper.getAccountCharacter());
+		if (asRet.getCallStatus().equals(CallStatusEnum.FAILED)) {
+			ret.setErrorCode(asRet.getErrorCode());
+			return ret;
+		}
+		return ret;
 	}
 	
 	

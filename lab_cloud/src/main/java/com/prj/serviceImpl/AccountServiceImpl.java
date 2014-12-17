@@ -62,10 +62,12 @@ public class AccountServiceImpl implements AccountService {
 	
 	public DataWrapper<Account> updateAccountByChar(Account account, AccountCharacter ac) {
 		Account a = updateByChar(account, ac);
+		DataWrapper<Account> ret = new DataWrapper<Account>();
 		if (a == null) {
-			
+			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
 		}
-		return new DataWrapper<Account>(updateByChar(account, ac));
+		ret.setData(a);
+		return ret;
 	}
 	
 	private Account updateByChar(Account account, AccountCharacter ac) {
