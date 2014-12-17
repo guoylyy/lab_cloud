@@ -100,4 +100,14 @@ public class StudentDaoImpl extends AbstractHibernateDao<Student, Integer>
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<Student> getStudentByStatus(Status as) {
+		// TODO Auto-generated method stub
+		Criteria criteria = getCurrentSession().createCriteria(Student.class);
+		criteria.add(Restrictions.eq("status", as));
+		@SuppressWarnings("unchecked")
+		List<Student> ret = criteria.list();
+		return ret;
+	}
 }

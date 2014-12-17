@@ -16,10 +16,11 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Entity
 @Table(name = "class")
 public class Class extends BaseEntity {
+	
 	private Semester semester;
 	private Teacher teacher;
 	private Course course;
-	private StudentClass studentClass;
+	private Set<StudentClass> studentClass = new HashSet<StudentClass>(0);
 	private Set<LabPlan> labPlans = new HashSet<LabPlan>(0);
 	
 	@ManyToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
@@ -52,13 +53,12 @@ public class Class extends BaseEntity {
 		this.course = course;
 	}
 	
-	@ManyToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
-	@JoinColumn(name = "studentId")
+	@OneToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER,mappedBy = "clazz")
 	@JsonIgnore
-	public StudentClass getStudentClass() {
+	public Set<StudentClass> getStudentClass() {
 		return studentClass;
 	}
-	public void setStudentClass(StudentClass studentClass) {
+	public void setStudentClass(Set<StudentClass> studentClass) {
 		this.studentClass = studentClass;
 	}
 

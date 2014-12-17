@@ -100,4 +100,14 @@ public class TeacherDaoImpl extends AbstractHibernateDao<Teacher, Integer>
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<Teacher> getTeacherByStatus(Status as) {
+		// TODO Auto-generated method stub
+		Criteria criteria = getCurrentSession().createCriteria(Teacher.class);
+		criteria.add(Restrictions.eq("status", as));
+		@SuppressWarnings("unchecked")
+		List<Teacher> ret = criteria.list();
+		return ret;
+	}
 }

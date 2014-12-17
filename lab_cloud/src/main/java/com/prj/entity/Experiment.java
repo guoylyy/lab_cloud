@@ -8,18 +8,22 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 @Table(name = "experiment")
 public class Experiment extends BaseEntity {
+	
 	private String experimentNumber;
 	private String experimentName;
 	private Integer minimumStudent;
 	private Integer maximumStudent;
 	private Boolean isActive = true;
-	private Set<Course> courses = new HashSet<Course>(0);
+	private Set<CourseExperiment> courseExperiment = new HashSet<CourseExperiment>(0);
 	private Set<Lab> labs = new HashSet<Lab>(0);
 	private ExperimentLab experimentLab;
 	
@@ -60,12 +64,14 @@ public class Experiment extends BaseEntity {
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
 	}
-	@ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "experiments")
-	public Set<Course> getCourses() {
-		return courses;
+	
+	@OneToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER,mappedBy = "experiment")
+	@JsonIgnore	
+	public Set<CourseExperiment> getCourseExperiment() {
+		return courseExperiment;
 	}
-	public void setCourses(Set<Course> courses) {
-		this.courses = courses;
+	public void setCourseExperiment(Set<CourseExperiment> courseExperiment) {
+		this.courseExperiment = courseExperiment;
 	}
 	
 	@ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "experiments")

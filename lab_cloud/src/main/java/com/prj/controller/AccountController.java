@@ -63,15 +63,14 @@ public class AccountController {
 	
 	@RequestMapping(value = "/accountlist/role/{role}", method = RequestMethod.GET) 
 	@ResponseBody
-	public DataWrapper<List<? extends Account>> accountlistrole(@PathVariable int role) {
+	public DataWrapper<List<? extends Account>> accountlistrole(@PathVariable AccountCharacter role) {
 		
-		return as.getAccountByRole(AccountCharacter.ADMINISTRATOR);
+		return as.getAccountByRole(role);
 	}
 	
 	@RequestMapping(value = "/accountlist/status/{status}", method = RequestMethod.GET) 
 	@ResponseBody
 	public DataWrapper<List<? extends Account>> accountliststatus(@PathVariable Account.Status status) {
-		
 		
 		return as.getAccountByStatus(status);
 	}

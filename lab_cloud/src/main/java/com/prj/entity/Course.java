@@ -12,20 +12,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "course")
 public class Course extends BaseEntity {
+	
 	private String courseNumber;
 	private String courseName;
 	private String department;
 	private Date startYear;
 	private Boolean isActive = true;
 	private Set<Class> classes = new HashSet<Class>(0);
-	private Set<Experiment> experiments = new HashSet<Experiment>(0);
+	private Set<CourseExperiment> courseExperiment = new HashSet<CourseExperiment>(0);
 	
 	@Column(nullable = false)
 	public String getCourseNumber() {
@@ -78,14 +81,13 @@ public class Course extends BaseEntity {
 		this.classes = classes;
 	}
 	
-	@ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-	@JoinTable(name = "course_experiment", 
-				joinColumns = {@JoinColumn(name = "courseId", referencedColumnName = "id")}, 
-				inverseJoinColumns = {@JoinColumn(name = "experimentId", referencedColumnName = "id")})
-	public Set<Experiment> getExperiments() {
-		return experiments;
+	@OneToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER,mappedBy = "course")
+	@JsonIgnore	
+	public Set<CourseExperiment> getCourseExperiment() {
+		return courseExperiment;
 	}
-	public void setExperiments(Set<Experiment> experiments) {
-		this.experiments = experiments;
+	public void setCourseExperiment(Set<CourseExperiment> courseExperiment) {
+		this.courseExperiment = courseExperiment;
 	}
+	
 }

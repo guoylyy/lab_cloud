@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.criterion.SimpleExpression;
 
+import com.prj.entity.Account;
 import com.prj.entity.Administrator;
 import com.prj.util.DataWrapper;
 import com.prj.util.Page;
@@ -30,4 +31,5 @@ public interface AdministratorDao {
 
 	Administrator findAdministratorbyToken(String token);
 
+	List<Administrator> getAdministratorByStatus(Account.Status as);
 }

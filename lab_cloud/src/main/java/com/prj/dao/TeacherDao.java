@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.criterion.SimpleExpression;
 
 import com.prj.entity.Teacher;
+import com.prj.entity.Account.Status;
 import com.prj.util.DataWrapper;
 import com.prj.util.Page;
 
@@ -30,4 +31,5 @@ public interface TeacherDao {
 
 	Teacher findTeacherbyToken(String token);
 
+	List<Teacher> getTeacherByStatus(Status as);
 }

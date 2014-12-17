@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.prj.dao.AbstractHibernateDao;
 import com.prj.dao.AdministratorDao;
 import com.prj.entity.Account.Status;
+import com.prj.entity.Account;
 import com.prj.entity.Administrator;
 import com.prj.util.DataWrapper;
 import com.prj.util.Page;
@@ -99,5 +100,15 @@ public class AdministratorDaoImpl extends AbstractHibernateDao<Administrator, In
 			List<SimpleExpression> list) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Administrator> getAdministratorByStatus(Account.Status as) {
+		// TODO Auto-generated method stub
+		Criteria criteria = getCurrentSession().createCriteria(Administrator.class);
+		criteria.add(Restrictions.eq("status", as));
+		@SuppressWarnings("unchecked")
+		List<Administrator> ret = criteria.list();
+		return ret;
 	}
 }

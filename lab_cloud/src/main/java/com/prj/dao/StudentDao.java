@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.criterion.SimpleExpression;
 
+import com.prj.entity.Account;
 import com.prj.entity.Student;
 import com.prj.util.DataWrapper;
 import com.prj.util.Page;
@@ -29,5 +30,7 @@ public interface StudentDao {
 	Student getStudentByNumber(String number);
 
 	Student findStudentbyToken(String token);
+	
+	List<Student> getStudentByStatus(Account.Status as);
 
 }

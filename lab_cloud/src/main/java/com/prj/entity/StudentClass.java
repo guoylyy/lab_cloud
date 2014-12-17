@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -16,25 +17,29 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Entity
 @Table(name = "student_class")
 public class StudentClass extends BaseEntity {
-	private Set<Student> students = new HashSet<Student>(0);
-	private Set<Class> classes = new HashSet<Class>(0);
+	private Student student;
+	private Class clazz;
 	private ClassReservation classReservation;
 	
-	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "studentClass")
-	public Set<Student> getStudents() {
-		return students;
+	@ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+	@JoinColumn(name="studentid")
+	public Student getStudent() {
+		return student;
 	}
-	public void setStudents(Set<Student> students) {
-		this.students = students;
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+	@ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+	@JoinColumn(name="classid")
+	public Class getClazz() {
+		return clazz;
+	}
+	public void setClazz(Class clazz) {
+		this.clazz = clazz;
 	}
 	
-	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "studentClass")
-	public Set<Class> getClasses() {
-		return classes;
-	}
-	public void setClasses(Set<Class> classes) {
-		this.classes = classes;
-	}
+	
+	
 	
 	
 	@ManyToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)

@@ -1,10 +1,14 @@
 package com.prj.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -12,7 +16,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Entity
 @Table(name = "student")
 public class Student extends Account {
-//	private String number;
+
+	//	private String number;
 //	private String password;
 	private String name;
 	private String email;
@@ -22,7 +27,7 @@ public class Student extends Account {
 
 //	private String loginToken;
 
-	private StudentClass studentClass;
+	private Set<StudentClass> studentClass = new HashSet<StudentClass>(0);
 	private StudentReservation studentReservation;
 	
 //	public String getNumber() {
@@ -74,13 +79,12 @@ public class Student extends Account {
 //		this.loginToken = loginToken;
 //	}
 
-	@ManyToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
-	@JoinColumn(name = "studentClassId")
+	@OneToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER,mappedBy="student")
 	@JsonIgnore
-	public StudentClass getStudentClass() {
+	public Set<StudentClass> getStudentClass() {
 		return studentClass;
 	}
-	public void setStudentClass(StudentClass studentClass) {
+	public void setStudentClass(Set<StudentClass> studentClass) {
 		this.studentClass = studentClass;
 	}
 

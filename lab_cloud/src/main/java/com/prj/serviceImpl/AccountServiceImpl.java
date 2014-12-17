@@ -359,6 +359,15 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public DataWrapper<List<? extends Account>> getAccountByStatus(Status status) {
 		// TODO Auto-generated method stub
-		return null;
+		DataWrapper<List<? extends Account>> ret = new DataWrapper<List<? extends Account>>();
+		List<Account> list = new ArrayList<Account>();
+		
+		list.addAll(administratorDao.getAdministratorByStatus(status));
+		list.addAll(teacherDao.getTeacherByStatus(status));
+		list.addAll(studentDao.getStudentByStatus(status));
+		
+		ret.setData(list);
+		
+		return ret;
 	}
 }
