@@ -22,9 +22,9 @@ public interface AccountService {
 
 	DataWrapper<List<Account>> getAllAccount();
 
-	DataWrapper<Account> getAccountById(int id);
+//	DataWrapper<Account> getAccountById(int id);
 
-	DataWrapper<Account> updateAccount(Account entity);
+//	DataWrapper<Account> updateAccount(Account entity);
 
 //	DataWrapper<Account> updateAccountCharacter(Integer accountId,
 //	AccountCharacter accountCharacter);
@@ -40,7 +40,7 @@ public interface AccountService {
 
 	DataWrapper<List<? extends Account>> searchAccount(SearchCriteria sc);
 	
-	Account getAccountByChar(Account account, AccountCharacter ac);
+	Account getAccountByNumber(String number, AccountCharacter ac);
 
 	DataWrapper<Account> getAccountByIdChar(Integer id, AccountCharacter ac);
 	
