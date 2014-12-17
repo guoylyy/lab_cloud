@@ -1,6 +1,6 @@
 package com.prj.serviceImpl;
 
-import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,25 +35,25 @@ import com.prj.util.TokenTool;
 public class AccountServiceImpl implements AccountService {
 
 	@Resource(name = "AccountDaoImpl")
-	AccountDao dao;
+	AccountDao accountDao;
 	@Resource(name = "StudentDaoImpl")
 	StudentDao studentDao;
 	@Resource(name = "TeacherDaoImpl")
 	TeacherDao teacherDao;
 	@Resource(name = "AdministratorDaoImpl")
-	AdministratorDao administractorDao;
+	AdministratorDao administratorDao;
 	
-	public Account getAccountByChar(Account account, AccountCharacter ac) {
+	public Account getAccountByNumber(String number, AccountCharacter ac) {
 		Account ret = null;
 		switch (ac) {
 		case STUDENT:
-			ret = studentDao.getStudentByNumber(account.getNumber());
+			ret = studentDao.getStudentByNumber(number);
 			break;
 		case ADMINISTRATOR:
-			ret =  administractorDao.getAdministratorByNumber(account.getNumber());
+			ret =  administratorDao.getAdministratorByNumber(number);
 			break;
 		case TEACHER:
-			ret = teacherDao.getTeacherByNumber(account.getNumber());
+			ret = teacherDao.getTeacherByNumber(number);
 			break;
 		default:
 			return null;
@@ -63,12 +63,29 @@ public class AccountServiceImpl implements AccountService {
 		return ret;
 	}
 	
+	private Account getByNumber(String number, AccountCharacter ac) {
+		try {
+			Class<?> clazz = this.getClass();
+			Field field = clazz.getDeclaredField(ac.getLowerCaseLabel()+"Dao");
+			Object dao = field.get(this);
+			Method method = dao.getClass().getMethod("get"+ac.getCapitalizedLabel()+"ByNumber", String.class);
+			Account ret = (Account)method.invoke(dao, number);
+			return ret;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public DataWrapper<Account> updateAccountByChar(Account account, AccountCharacter ac) {
 		Account a = updateByChar(account, ac);
+		DataWrapper<Account> ret = new DataWrapper<Account>();
 		if (a == null) {
-			
+			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
 		}
-		return new DataWrapper<Account>(updateByChar(account, ac));
+		ret.setData(a);
+		return ret;
 	}
 	
 	private Account updateByChar(Account account, AccountCharacter ac) {
@@ -78,7 +95,7 @@ public class AccountServiceImpl implements AccountService {
 			ret = studentDao.updateStudent((Student) account);
 			break;
 		case ADMINISTRATOR:
-			ret = administractorDao.updateAdministrator((Administrator) account);
+			ret = administratorDao.updateAdministrator((Administrator) account);
 			break;
 		case TEACHER:
 			ret = teacherDao.updateTeacher((Teacher) account);
@@ -92,7 +109,7 @@ public class AccountServiceImpl implements AccountService {
 	
 	public DataWrapper<Account> login(Account account, AccountCharacter ac) {
 		DataWrapper<Account> ret = new DataWrapper<Account>();
-		Account a = getAccountByChar(account, ac);
+		Account a = getByNumber(account.getNumber(), ac);
 		
 //		Account a = dao.getAccountByNumber(account.getNumber());
 		if (a == null) {
@@ -121,7 +138,7 @@ public class AccountServiceImpl implements AccountService {
 			a = studentDao.findStudentbyId(id);
 			break;
 		case ADMINISTRATOR:
-			a = administractorDao.findAdministratorbyId(id);
+			a = administratorDao.findAdministratorbyId(id);
 			break;
 		case TEACHER:
 			a = teacherDao.findTeacherbyId(id);
@@ -131,17 +148,17 @@ public class AccountServiceImpl implements AccountService {
 		}
 		if (a != null) {
 			a.setLoginToken(null);
-			dao.updateAccount(a);
+			accountDao.updateAccount(a);
 		}
 	}
 
 	public DataWrapper<Account> addAccount(Account account) {
 		DataWrapper<Account> ret = new DataWrapper<Account>();
-		Account a = dao.getAccountByNumber(account.getNumber());
+		Account a = accountDao.getAccountByNumber(account.getNumber());
 		account.setPassword(MD5Tool.GetMd5(account.getPassword()));
 		if (a != null) {
 			ret.setErrorCode(ErrorCodeEnum.Account_Exist);
-		} else if (dao.addAccount(account) != null) {
+		} else if (accountDao.addAccount(account) != null) {
 			ret.setData(account);
 		} else {
 			ret.setErrorCode(ErrorCodeEnum.Unknown_Error);
@@ -150,7 +167,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	public DataWrapper<Account> disableAccountById(Integer id) {
-		Account a = dao.disableAccountById(id);
+		Account a = accountDao.disableAccountById(id);
 		DataWrapper<Account> ret = new DataWrapper<Account>(a);
 		if (a == null) {
 			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
@@ -159,7 +176,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	public DataWrapper<List<Account>> getAllAccount() {
-		return dao.getAllAccount();
+		return accountDao.getAllAccount();
 	}
 
 	public DataWrapper<Account> getAccountByIdChar(Integer id, AccountCharacter ac) {
@@ -171,7 +188,7 @@ public class AccountServiceImpl implements AccountService {
 			a = studentDao.findStudentbyId(id);
 			break;
 		case ADMINISTRATOR:
-			a = administractorDao.findAdministratorbyId(id);
+			a = administratorDao.findAdministratorbyId(id);
 			break;
 		case TEACHER:
 			a = teacherDao.findTeacherbyId(id);
@@ -187,24 +204,24 @@ public class AccountServiceImpl implements AccountService {
 		return ret;
 	}
 	
-	public DataWrapper<Account> getAccountById(int id) {
-		DataWrapper<Account> ret = new DataWrapper<Account>();
-		Account a = dao.findAccountbyId(id);
-		ret.setData(a);
-		if (a == null) {
-			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
-		}
-		return ret;
-	}
+//	public DataWrapper<Account> getAccountById(int id) {
+//		DataWrapper<Account> ret = new DataWrapper<Account>();
+//		Account a = dao.findAccountbyId(id);
+//		ret.setData(a);
+//		if (a == null) {
+//			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
+//		}
+//		return ret;
+//	}
 
-	public DataWrapper<Account> updateAccount(Account v) {
-		Account a = dao.updateAccount(v);
-		DataWrapper<Account> ret = new DataWrapper<Account>(a);
-		if (a == null) {
-			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
-		}
-		return ret;
-	}
+//	public DataWrapper<Account> updateAccount(Account v) {
+//		Account a = dao.updateAccount(v);
+//		DataWrapper<Account> ret = new DataWrapper<Account>(a);
+//		if (a == null) {
+//			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
+//		}
+//		return ret;
+//	}
 
 //	public DataWrapper<Account> updateAccountCharacter(Integer accountId,
 //			AccountCharacter accountCharacter) {
@@ -220,7 +237,7 @@ public class AccountServiceImpl implements AccountService {
 //	}
 
 	public DataWrapper<Account> reset(PasswordReset reset) {
-		Account a = dao.findAccountbyId(reset.getId());
+		Account a = accountDao.findAccountbyId(reset.getId());
 		DataWrapper<Account> ret = new DataWrapper<Account>();
 		if (a == null) {
 			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
@@ -230,14 +247,14 @@ public class AccountServiceImpl implements AccountService {
 		} else {
 			a.setPassword(MD5Tool.GetMd5(reset.getNewPassword()));
 			a.setLoginToken(null);
-			dao.updateAccount(a);
+			accountDao.updateAccount(a);
 		}
 		return ret;
 	}
 
 	// Methods Following Are Not Checked... YET!
 	public Page<Account> getAccountbyPage(int pagenumber, int pagesize) {
-		return dao.getAccountbyPage(pagenumber, pagesize);
+		return accountDao.getAccountbyPage(pagenumber, pagesize);
 	}
 
 	public Page<Account> searchAccount(int pagenumber, int pagesize, String name) {
@@ -247,7 +264,7 @@ public class AccountServiceImpl implements AccountService {
 
 	public Page<Account> getByPageWithConditions(int pagenumber, int pagesize,
 			List<SimpleExpression> list) {
-		return dao.getByPageWithConditions(pagenumber, pagesize, list);
+		return accountDao.getByPageWithConditions(pagenumber, pagesize, list);
 	}
 
 //	private DataWrapper<List<Account>> toAccountList(DataWrapper<List<?>> wrapper) {
@@ -269,7 +286,7 @@ public class AccountServiceImpl implements AccountService {
 		} else if (number == null) {
 			switch (ac) {
 			case ADMINISTRATOR:
-				ret.setData(administractorDao.getAllAdministrator().getData());
+				ret.setData(administratorDao.getAllAdministrator().getData());
 				break;
 			case STUDENT:
 				ret.setData(studentDao.getAllStudent().getData());
@@ -282,7 +299,7 @@ public class AccountServiceImpl implements AccountService {
 				break;
 			}
 		} else if (ac == null){
-			a = administractorDao.getAdministratorByNumber(number);
+			a = administratorDao.getAdministratorByNumber(number);
 			if (a == null) {
 				a = studentDao.getStudentByNumber(number);
 				if (a == null) {
@@ -300,7 +317,7 @@ public class AccountServiceImpl implements AccountService {
 		} else {
 			switch (ac) {
 			case ADMINISTRATOR:
-				a = administractorDao.getAdministratorByNumber(number);
+				a = administratorDao.getAdministratorByNumber(number);
 				break;
 			case STUDENT:
 				a = studentDao.getStudentByNumber(number);
@@ -324,11 +341,13 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public DataWrapper<List<? extends Account>> getAccountByRole(AccountCharacter ac) {
 		// TODO Auto-generated method stub 
-		Object obj = ApplicationContextUtils.getBean(ac.getLabel()+"DaoImpl");
 		try {
-			Method m = obj.getClass().getMethod("getAll"+ac.getLabel());
+			Class<?> clazz = this.getClass();
+			Field field = clazz.getDeclaredField(ac.getLowerCaseLabel()+"Dao");
+			Object dao = field.get(this);
+			Method method = dao.getClass().getMethod("getAll"+ac.getCapitalizedLabel());
 			@SuppressWarnings("unchecked")
-			DataWrapper<List<? extends Account>> list = (DataWrapper<List<? extends Account>>)m.invoke(obj);
+			DataWrapper<List<? extends Account>> list = (DataWrapper<List<? extends Account>>)method.invoke(dao);
 			return list;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -1,28 +1,42 @@
 package com.prj.util;
 
 public enum AccountCharacter {
-	ANY("Any",0),
-	ADMINISTRATOR("Administrator",1),
-	TEACHER("Teacher",2),
-	STUDENT("Student",3);
+	ANY("any"),
+	ADMINISTRATOR("administrator"),
+	TEACHER("teacher"),
+	STUDENT("student");
 	
 	private String label;
-	private Integer code;
 	
-	AccountCharacter(String label, Integer code) {
+	AccountCharacter() {}
+	
+	AccountCharacter(String label) {
 		this.setLabel(label);
-		this.setCode(code);
 	}
 
-	public void setLabel(String label) {
-		this.label = label;
-	}
-	
-	public void setCode(int code) {
-		this.code = code;
-	}
-	
 	public String getLabel() {
 		return label;
+	}
+
+	public String getUpperCaseLabel() {
+		return label.toUpperCase();
+	}
+	
+	public String getLowerCaseLabel() {
+		return label.toLowerCase();
+	}
+	
+	public String getCapitalizedLabel() {
+		if (label.length() > 1) {
+			return label.substring(0, 1).toUpperCase() + label.substring(1);
+		}
+		if (label.length() == 1){
+			return label.toUpperCase();
+		}
+		return label;
+	}
+	
+	public void setLabel(String label) {
+		this.label = label;
 	}
 }
