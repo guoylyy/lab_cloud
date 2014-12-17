@@ -38,7 +38,7 @@ public class StudentClass extends BaseEntity {
 	
 	
 	@ManyToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
-	@JoinColumn(name = "studentClassId")
+	@JoinColumn(name = "classReservationId")
 	@JsonIgnore
 	public ClassReservation getClassReservation() {
 		return classReservation;

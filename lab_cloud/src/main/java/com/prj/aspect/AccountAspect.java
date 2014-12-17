@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.prj.dao.AccountDao;
 import com.prj.entity.Account;
+import com.prj.service.AccountService;
 import com.prj.util.AccountAccess;
 import com.prj.util.AccountCharacter;
 import com.prj.util.AuthorityException;
@@ -18,16 +19,18 @@ import com.prj.util.TokenTool;
 @Component
 @Aspect
 public class AccountAspect {
-	
-	@Resource(name = "AccountDaoImpl")
-	AccountDao dao;
+	@Resource(name = "AccountServiceImpl")
+	AccountService as;
+
+//	@Resource(name = "AccountDaoImpl")
+//	AccountDao dao;
 		
 	@Before("@annotation(accountAccess) && args(dataWrapper,..)")
 	public void checkBefore(DataWrapper<?> dataWrapper, AccountAccess accountAccess) {
 		check(dataWrapper, accountAccess);
 	}
 	
-	private void check(DataWrapper<?> dataWrapper, AccountAccess as) {
+	private void check(DataWrapper<?> dataWrapper, AccountAccess aa) {
 		String token = dataWrapper.getToken();
 		AccountCharacter ac = dataWrapper.getAccountCharacter();
 		if (token == null) {
@@ -36,7 +39,7 @@ public class AccountAspect {
 		} else if (ac == null) {
 			throw new AuthorityException(ErrorCodeEnum.Account_Character_Null);
 		} else {
-			Account a = dao.findAccountbyToken(token, ac);
+			Account a = as.getAccountByToken(token, ac).getData();
 			if (a == null) {
 				System.err.println("Token: " + token);
 				throw new AuthorityException(ErrorCodeEnum.Token_Invalid);
@@ -44,8 +47,8 @@ public class AccountAspect {
 				throw new AuthorityException(ErrorCodeEnum.Token_Expired);
 			} else {
 				dataWrapper.setAccountId(a.getId());
-				if (as.checkAccountCharacter() != AccountCharacter.ANY) {
-					if (dataWrapper.getAccountCharacter() != as.checkAccountCharacter()) {
+				if (aa.checkAccountCharacter() != AccountCharacter.ANY) {
+					if (dataWrapper.getAccountCharacter() != aa.checkAccountCharacter()) {
 						throw new AuthorityException(ErrorCodeEnum.Access_Denied);
 					}
 				}

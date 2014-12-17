@@ -14,13 +14,18 @@ import com.prj.util.SearchCriteria;
 public interface AccountService {
 	DataWrapper<Account> login(Account account, AccountCharacter ac);
 
-	void logout(Integer id, AccountCharacter ac);
+	DataWrapper<Void> logout(Integer id, AccountCharacter ac);
 
-	DataWrapper<Account> addAccount(Account account);
+//	@Deprecated
+//	DataWrapper<Account> addAccount(Account account, AccountCharacter ac);
 
+	@Deprecated
 	DataWrapper<Account> disableAccountById(Integer id);
 
+	@Deprecated
 	DataWrapper<List<Account>> getAllAccount();
+	
+	DataWrapper<Account> getAccountByToken(String token, AccountCharacter ac);
 
 //	DataWrapper<Account> getAccountById(int id);
 
@@ -29,7 +34,7 @@ public interface AccountService {
 //	DataWrapper<Account> updateAccountCharacter(Integer accountId,
 //	AccountCharacter accountCharacter);
 
-	DataWrapper<Account> reset(PasswordReset data);
+	DataWrapper<Account> reset(PasswordReset data, AccountCharacter ac);
 
 	Page<Account> getAccountbyPage(int pagenumber, int pagesize);
 
@@ -40,11 +45,11 @@ public interface AccountService {
 
 	DataWrapper<List<? extends Account>> searchAccount(SearchCriteria sc);
 	
-	Account getAccountByNumber(String number, AccountCharacter ac);
+	DataWrapper<Account> getAccountByNumber(String number, AccountCharacter ac);
 
-	DataWrapper<Account> getAccountByIdChar(Integer id, AccountCharacter ac);
+	DataWrapper<Account> getAccountById(Integer id, AccountCharacter ac);
 	
-	DataWrapper<Account> updateAccountByChar(Account account, AccountCharacter ac);
+	DataWrapper<Account> updateAccount(Account account, AccountCharacter ac);
 	
 	DataWrapper<List<? extends Account>> getAccountByRole(AccountCharacter ac);
 	

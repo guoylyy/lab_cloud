@@ -35,6 +35,10 @@ public class DataWrapper<T> implements Serializable {
 		this.token = token;
 	}
 
+	public DataWrapper(ErrorCodeEnum er) {
+		this.setErrorCode(er);
+	}
+	
 	public CallStatusEnum getCallStatus() {
 		return callStatus;
 	}

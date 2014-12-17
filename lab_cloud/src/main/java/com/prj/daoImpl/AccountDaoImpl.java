@@ -79,6 +79,7 @@ public class AccountDaoImpl extends AbstractHibernateDao<Account, Integer>
 			break;
 		case ADMINISTRATOR:
 			criteria = getCurrentSession().createCriteria(Administrator.class);
+			break;
 		default:
 			return null;
 		}
