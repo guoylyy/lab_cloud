@@ -14,7 +14,7 @@ public interface AdministratorDao {
 
 	Administrator disableAdministratorById(Integer id);
 
-	Administrator findAdministratorbyId(int id);
+	Administrator findAdministratorById(int id);
 
 	DataWrapper<List<Administrator>> getAllAdministrator();
 
@@ -29,7 +29,7 @@ public interface AdministratorDao {
 
 	Administrator getAdministratorByNumber(String number);
 
-	Administrator findAdministratorbyToken(String token);
+	Administrator findAdministratorByToken(String token);
 
 	List<Administrator> getAdministratorByStatus(Account.Status as);
 }

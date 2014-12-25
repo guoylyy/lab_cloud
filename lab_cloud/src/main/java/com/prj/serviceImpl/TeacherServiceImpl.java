@@ -53,7 +53,7 @@ public class TeacherServiceImpl implements TeacherService {
 
 	public DataWrapper<Teacher> getTeacherById(int id) {
 		DataWrapper<Teacher> ret = new DataWrapper<Teacher>();
-		Teacher a = dao.findTeacherbyId(id);
+		Teacher a = dao.findTeacherById(id);
 		ret.setData(a);
 		if (a == null) {
 			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
@@ -71,7 +71,7 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	public DataWrapper<Teacher> reset(PasswordReset reset) {
-		Teacher a = dao.findTeacherbyId(reset.getId());
+		Teacher a = dao.findTeacherById(reset.getId());
 		DataWrapper<Teacher> ret = new DataWrapper<Teacher>();
 		if (a == null) {
 			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);

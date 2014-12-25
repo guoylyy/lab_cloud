@@ -14,7 +14,7 @@ public interface StudentDao {
 
 	Student disableStudentById(Integer id);
 
-	Student findStudentbyId(int id);
+	Student findStudentById(int id);
 
 	DataWrapper<List<Student>> getAllStudent();
 
@@ -29,7 +29,7 @@ public interface StudentDao {
 
 	Student getStudentByNumber(String number);
 
-	Student findStudentbyToken(String token);
+	Student findStudentByToken(String token);
 	
 	List<Student> getStudentByStatus(Account.Status as);
 

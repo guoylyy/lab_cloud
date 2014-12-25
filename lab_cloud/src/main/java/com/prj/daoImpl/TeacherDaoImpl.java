@@ -51,7 +51,7 @@ public class TeacherDaoImpl extends AbstractHibernateDao<Teacher, Integer>
 		return ret;
 	}
 
-	public Teacher findTeacherbyId(int id) {
+	public Teacher findTeacherById(int id) {
 		return findById(id);
 	}
 
@@ -65,7 +65,7 @@ public class TeacherDaoImpl extends AbstractHibernateDao<Teacher, Integer>
 		return null;
 	}
 
-	public Teacher findTeacherbyToken(String token) {
+	public Teacher findTeacherByToken(String token) {
 		Criteria criteria = getCurrentSession().createCriteria(Teacher.class);
 		criteria.add(Restrictions.eq("loginToken", token));
 		List<?> ret = criteria.list();

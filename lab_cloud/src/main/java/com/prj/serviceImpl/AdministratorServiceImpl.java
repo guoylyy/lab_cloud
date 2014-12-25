@@ -52,7 +52,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 
 	public DataWrapper<Administrator> getAdministratorById(int id) {
 		DataWrapper<Administrator> ret = new DataWrapper<Administrator>();
-		Administrator a = dao.findAdministratorbyId(id);
+		Administrator a = dao.findAdministratorById(id);
 		ret.setData(a);
 		if (a == null) {
 			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);
@@ -70,7 +70,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 	}
 
 	public DataWrapper<Administrator> reset(PasswordReset reset) {
-		Administrator a = dao.findAdministratorbyId(reset.getId());
+		Administrator a = dao.findAdministratorById(reset.getId());
 		DataWrapper<Administrator> ret = new DataWrapper<Administrator>();
 		if (a == null) {
 			ret.setErrorCode(ErrorCodeEnum.Account_Not_Exist);

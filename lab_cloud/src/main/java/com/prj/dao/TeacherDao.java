@@ -14,7 +14,7 @@ public interface TeacherDao {
 
 	Teacher disableTeacherById(Integer id);
 
-	Teacher findTeacherbyId(int id);
+	Teacher findTeacherById(int id);
 
 	DataWrapper<List<Teacher>> getAllTeacher();
 
@@ -29,7 +29,7 @@ public interface TeacherDao {
 
 	Teacher getTeacherByNumber(String number);
 
-	Teacher findTeacherbyToken(String token);
+	Teacher findTeacherByToken(String token);
 
 	List<Teacher> getTeacherByStatus(Status as);
 }

@@ -51,7 +51,7 @@ public class StudentDaoImpl extends AbstractHibernateDao<Student, Integer>
 		return ret;
 	}
 
-	public Student findStudentbyId(int id) {
+	public Student findStudentById(int id) {
 		return findById(id);
 	}
 
@@ -65,7 +65,7 @@ public class StudentDaoImpl extends AbstractHibernateDao<Student, Integer>
 		return null;
 	}
 
-	public Student findStudentbyToken(String token) {
+	public Student findStudentByToken(String token) {
 		Criteria criteria = getCurrentSession().createCriteria(Student.class);
 		criteria.add(Restrictions.eq("loginToken", token));
 		List<?> ret = criteria.list();

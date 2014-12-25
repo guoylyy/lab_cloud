@@ -6,7 +6,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
-import com.prj.dao.AccountDao;
 import com.prj.entity.Account;
 import com.prj.service.AccountService;
 import com.prj.util.AccountAccess;

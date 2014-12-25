@@ -52,7 +52,7 @@ public class AdministratorDaoImpl extends AbstractHibernateDao<Administrator, In
 		return ret;
 	}
 
-	public Administrator findAdministratorbyId(int id) {
+	public Administrator findAdministratorById(int id) {
 		return findById(id);
 	}
 
@@ -66,7 +66,7 @@ public class AdministratorDaoImpl extends AbstractHibernateDao<Administrator, In
 		return null;
 	}
 
-	public Administrator findAdministratorbyToken(String token) {
+	public Administrator findAdministratorByToken(String token) {
 		Criteria criteria = getCurrentSession().createCriteria(Administrator.class);
 		criteria.add(Restrictions.eq("loginToken", token));
 		List<?> ret = criteria.list();

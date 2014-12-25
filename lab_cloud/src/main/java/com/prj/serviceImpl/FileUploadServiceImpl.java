@@ -46,7 +46,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 			if (fileName == null)
 				fileName = file.getOriginalFilename();
 			FileOutputStream fos = new FileOutputStream(path + "/" + fileName);
-//			System.out.println("Add File: "+ path + "/" + file.getOriginalFilename());
+			System.out.println("Add File: "+ path + "/" + file.getOriginalFilename());
 			InputStream is = file.getInputStream();
 			byte[] buffer = new byte[1024 * 1024];
 			int byteread = 0;

@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.hibernate.criterion.SimpleExpression;
 
-import com.prj.entity.Administrator;
 import com.prj.entity.Student;
 import com.prj.util.DataWrapper;
 import com.prj.util.Page;
