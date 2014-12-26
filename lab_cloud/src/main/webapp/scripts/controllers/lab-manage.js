@@ -9,7 +9,6 @@
  */
 angular.module('prjApp')
   .controller('LabManageCtrl', function($scope, dialogs, SystemManageService, LoginService, $location) {
-    //TODO: place it to aop layer
     if (LoginService.getLoginUser() == false) {
       $location.path('/login');
     }

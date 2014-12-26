@@ -21,7 +21,6 @@ angular
         'ui.select2',
         'angularFileUpload',
         'dialogs.main'
-        
     ])
     .config(function ($routeProvider) {
         $routeProvider
