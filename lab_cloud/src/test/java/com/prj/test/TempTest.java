@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.prj.dao.AccountDao;
 import com.prj.entity.Account;
 import com.prj.util.MD5Tool;
-import com.prj.util.TokenTool;
 
 @RunWith(SpringJUnit4ClassRunner.class) 
 @ContextConfiguration("/proj-test.xml") 
