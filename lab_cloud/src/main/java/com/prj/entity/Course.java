@@ -15,8 +15,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Type;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "course")
@@ -28,6 +29,7 @@ public class Course extends BaseEntity {
 	private Date startYear;
 	private Boolean isActive = true;
 	private Set<Class> classes = new HashSet<Class>(0);
+	
 	private Set<CourseExperiment> courseExperiment = new HashSet<CourseExperiment>(0);
 	
 	@Column(nullable = false)
@@ -81,7 +83,7 @@ public class Course extends BaseEntity {
 		this.classes = classes;
 	}
 	
-	@OneToMany(cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER,mappedBy = "course")
+	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER,mappedBy = "course")
 	@JsonIgnore	
 	public Set<CourseExperiment> getCourseExperiment() {
 		return courseExperiment;

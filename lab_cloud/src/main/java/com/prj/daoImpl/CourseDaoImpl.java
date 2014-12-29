@@ -1,6 +1,9 @@
 package com.prj.daoImpl;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.CriteriaSpecification;
@@ -12,6 +15,8 @@ import org.springframework.stereotype.Service;
 import com.prj.dao.AbstractHibernateDao;
 import com.prj.dao.CourseDao;
 import com.prj.entity.Course;
+import com.prj.entity.CourseExperiment;
+import com.prj.entity.Experiment;
 import com.prj.util.DataWrapper;
 import com.prj.util.Page;
 
@@ -89,5 +94,54 @@ public class CourseDaoImpl extends AbstractHibernateDao<Course, Integer>implemen
 			List<SimpleExpression> list) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean addExperiment(int courseid, Experiment e, int seq) {
+		// TODO Auto-generated method stub
+		Course course = findById(courseid);
+		if(course == null)
+			return false;
+		Set<CourseExperiment> ces= course.getCourseExperiment();
+		CourseExperiment ce = new CourseExperiment();
+		ce.setCourse(course);
+		ce.setExperiment(e);
+		ce.setSequence(seq);
+		ces.add(ce);
+		return true;
+	}
+
+	@Override
+	public Course updateExperimentSequence(int courseid, int experimentid, int seq) {
+		// TODO Auto-generated method stub
+		Course course = findById(courseid);
+		if(course == null)
+			return null;
+		Set<CourseExperiment> ces= course.getCourseExperiment();
+		Iterator<CourseExperiment> i = ces.iterator();
+		while ( i.hasNext()) {
+			
+			CourseExperiment ce = i.next();
+			if(ce.getExperiment().getId()==experimentid)
+				ce.setSequence(seq);
+			
+		}
+		return course;
+	}
+
+	@Override
+	public List<Experiment> getExperimentsOfCourse(int courseid) {
+		// TODO Auto-generated method stub
+		Course course = findById(courseid);
+		Set<CourseExperiment> ces = course.getCourseExperiment();
+		List<Experiment> list = new ArrayList<Experiment>();
+		Iterator<CourseExperiment> i = ces.iterator();
+		while ( i.hasNext()) {
+			
+			CourseExperiment ce = i.next();
+			list.add(ce.getSequence()-1, ce.getExperiment());
+			
+		}
+		return list;
 	}
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.prj.entity.Course;
+import com.prj.entity.Experiment;
 import com.prj.service.CourseService;
 import com.prj.util.AccountAccess;
 import com.prj.util.AccountCharacter;
@@ -59,6 +60,18 @@ public class CourseController {
 	@ResponseBody
 	public DataWrapper<Course> updateCourse(@RequestBody DataWrapper<Course> course,  @PathVariable int id) {
 		return vs.updateCourse(course.getData());
+	}
+	
+	@RequestMapping(value = "/experiment/add/{courseid}/{experimentid}/{seq}", method = RequestMethod.GET)
+	@ResponseBody
+	public DataWrapper<Course> addexperiment(@PathVariable int courseid,@PathVariable int experimentid,@PathVariable int seq) {
+		return vs.addExperiment(courseid, experimentid, seq);
+	}
+	
+	@RequestMapping(value = "/experiment/list/{courseid}", method = RequestMethod.GET)
+	@ResponseBody
+	public DataWrapper<List<Experiment>> listexperiment(@PathVariable int courseid) {
+		return vs.getExperimentsOfCourse(courseid);
 	}
 	
 	@SuppressWarnings("rawtypes")

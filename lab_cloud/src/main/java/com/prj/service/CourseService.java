@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.criterion.SimpleExpression;
 
 import com.prj.entity.Course;
+import com.prj.entity.Experiment;
 import com.prj.util.DataWrapper;
 import com.prj.util.Page;
 
@@ -27,4 +28,8 @@ public interface CourseService {
 
 	Page<Course> getByPageWithConditions(int pagenumber, int pagesize,
 			List<SimpleExpression> list);
+	
+	DataWrapper<Course> addExperiment(int courseid, int experimentid, int seq);
+	
+	DataWrapper<List<Experiment>> getExperimentsOfCourse(int courseid);
 }
