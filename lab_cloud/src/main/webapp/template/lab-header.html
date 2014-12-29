@@ -10,7 +10,7 @@
                 </div>
                 <div class="navbar-collapse" style="position:relative;float:left;width:874px;">
                     <ul class="nav navbar-nav">
-                        <li ng-if="user.accountCharacter=='STUDENT'">
+                        <!-- <li ng-if="user.accountCharacter=='STUDENT'">
                             <a href="#/my-experiment" class="project" style="padding-right: 15px;">我的实验</a>
                             <ul style="display: none; height: 179px; padding: 0px 0px 20px; margin: 0px; width: 170px; opacity: 1;">
                                 <li class="main"><a href="javascript:void(0);">我的实验</a></li>
@@ -29,8 +29,28 @@
                                 <li class="main"><a href="javascript:void(0);">系统管理</a></li>
 
                             </ul>
+                        </li> -->
+                        
+                        <li>
+                            <a href="#/my-experiment" class="project" style="padding-right: 15px;">我的实验</a>
+                            <ul style="display: none; height: 179px; padding: 0px 0px 20px; margin: 0px; width: 170px; opacity: 1;">
+                                <li class="main"><a href="javascript:void(0);">我的实验</a></li>
+                            </ul>
                         </li>
+                        <li>
+                            <a href="#/my-class" class="lab" style="padding-right: 15px;">课程管理</a>
+                            <ul style="min-width: 200px; display: none; height: 305px; padding: 0px 0px 20px; margin: 0px; width: 200px; opacity: 1;">
+                                <li class="main"><a href="javascript:void(0);">课程管理</a></li>
 
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#/lab-user-manage" class="lab" style="padding-right: 15px;">系统管理</a>
+                            <ul style="min-width: 200px; display: none; height: 305px; padding: 0px 0px 20px; margin: 0px; width: 200px; opacity: 1;">
+                                <li class="main"><a href="javascript:void(0);">系统管理</a></li>
+
+                            </ul>
+                        </li>
 
                     </ul>
                     <ul class="nav navbar-nav navbar-right" style="position:absolute;right:0;top:0;height:9">
@@ -39,7 +59,8 @@
                             <a class="blackLink theme-1" href="#/login">注册或登录&nbsp;&nbsp;&nbsp;
                                 <span class="plus"></span></a>
                         </li> -->
-                        <li style="margin-right:0;" lab-collapse ng-if="user">
+                        <!-- <li style="margin-right:0;" lab-collapse ng-if="user"> -->
+                    <li style="margin-right:0;" lab-collapse >
                             <img class="avatar" src="images/yeoman.png">
 
                             <div class="info">
