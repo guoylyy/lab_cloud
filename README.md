@@ -1,1 +1,0 @@
-#openJ2eeTemplate
