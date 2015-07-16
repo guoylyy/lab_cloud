@@ -5,6 +5,8 @@
 package com.prj.config.security;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -20,7 +22,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 import org.springframework.web.filter.GenericFilterBean;
 import org.springframework.web.util.UrlPathHelper;
 
@@ -31,7 +32,7 @@ import com.prj.entity.Account;
 import com.prj.service.AccountService;
 
 /**
- * 
+ *  
  * @author yiliang.gyl
  * @version $Id: TokenAuthenticationFilter.java, v 0.1 Jun 21, 2015 11:01:07 AM yiliang.gyl Exp $
  */
@@ -44,6 +45,7 @@ public class TokenAuthenticationFilter extends GenericFilterBean {
     AccountService              accountService;
     @Autowired
     TokenHandler                tokenHandler;
+
     private static final String HEADER_TOKEN    = "X-Auth-Token";
     private static final String HEADER_USERNAME = "X-Username";
     private static final String HEADER_PASSWORD = "X-Password";
@@ -52,11 +54,11 @@ public class TokenAuthenticationFilter extends GenericFilterBean {
 
     private String              signOutUrl;
     private String              signInUrl;
+    private List<String>        byPassLoginUrls = new ArrayList<String>(); //无需登录的url
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
                                                                                              throws IOException,
                                                                                              ServletException {
-
         HttpServletRequest httpReq = (HttpServletRequest) request;
         HttpServletResponse httpResp = (HttpServletResponse) response;
 
@@ -64,16 +66,12 @@ public class TokenAuthenticationFilter extends GenericFilterBean {
         String currentUrl = new UrlPathHelper().getPathWithinApplication(httpReq);
 
         String token = httpReq.getHeader(HEADER_TOKEN);
-
-        // check URL in spring-security.properties
-        Assert.hasText(signInUrl, "sign in url must be set");
-        Assert.hasText(signOutUrl, "sign out url must be set");
-
         String username = httpReq.getHeader(HEADER_USERNAME);
         String password = httpReq.getHeader(HEADER_PASSWORD);
+
         if (currentUrl.equals(signInUrl) && !httpReq.getMethod().equals("DELETE")) {
+            //进入登录流程
             if (username != null && password != null && httpReq.getMethod().equals("POST")) {
-                // check username and password
                 password = MD5Tool.getMd5(password);
                 Authentication auth = new UsernamePasswordAuthenticationToken(username, password);
                 try {
@@ -102,13 +100,12 @@ public class TokenAuthenticationFilter extends GenericFilterBean {
                     setJsonResponse(httpResp, HttpServletResponse.SC_UNAUTHORIZED, new DataWrapper(
                         ErrorCodeEnum.REQUEST_RESTRICTED, "账号或密码错误"));
                 }
-                // chain.doFilter(request, response);
             } else {
                 setJsonResponse(httpResp, HttpServletResponse.SC_UNAUTHORIZED, new DataWrapper(
                     ErrorCodeEnum.REQUEST_RESTRICTED, "登录失败"));
             }
         } else if (token != null) {
-            // check token
+            // 非登录流程
             AccountUserDetails userDetails = tokenHandler.parseAccountFromToken(token);
             if (userDetails != null) {
                 Account account = (Account) accountService.read(userDetails.getAccount().getId())
@@ -118,14 +115,13 @@ public class TokenAuthenticationFilter extends GenericFilterBean {
                     setJsonResponse(httpResp, HttpServletResponse.SC_UNAUTHORIZED, new DataWrapper(
                         ErrorCodeEnum.REQUEST_RESTRICTED, "失效的登录"));
                 } else {
-                    // // extract logout URL in spring-security.properties file
                     if (currentUrl.equals(signOutUrl)) {
+                        //登出流程
                         setJsonResponse(httpResp, HttpServletResponse.SC_OK, new DataWrapper(
                             ErrorCodeEnum.NO_ERROR, "已登出"));
                     } else {
                         UsernamePasswordAuthenticationToken securityToken = new UsernamePasswordAuthenticationToken(
                             userDetails, null, userDetails.getAuthorities());
-
                         SecurityContextHolder.getContext().setAuthentication(securityToken);
                         chain.doFilter(request, response);
                     }
@@ -146,6 +142,10 @@ public class TokenAuthenticationFilter extends GenericFilterBean {
 
     public void setSignInUrl(String signInUrl) {
         this.signInUrl = signInUrl;
+    }
+
+    public void addByPassLoginUrl(String url) {
+        this.byPassLoginUrls.add(url);
     }
 
     private void setJsonResponse(HttpServletResponse response, int stauts, DataWrapper ret) {

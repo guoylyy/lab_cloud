@@ -13,7 +13,8 @@ war {
 }
 
 repositories {
-    maven { url 'http://maven.oschina.net/content/groups/public/' }
+    mavenCentral()
+    maven { url 'http://repository.sonatype.org/content/groups/public/' }
 }
 
 dependencies {

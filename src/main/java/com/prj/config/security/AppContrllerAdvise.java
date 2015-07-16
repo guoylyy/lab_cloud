@@ -17,7 +17,8 @@ import com.prj.common.util.DataWrapper;
 /**
  * 
  * @author yiliang.gyl
- * @version $Id: AppContrllerAdvise.java, v 0.1 Jun 21, 2015 11:01:02 AM yiliang.gyl Exp $
+ * @version $Id: AppContrllerAdvise.java, v 0.1 Jun 21, 2015 11:01:02 AM
+ *          yiliang.gyl Exp $
  */
 @ControllerAdvice
 public class AppContrllerAdvise {
