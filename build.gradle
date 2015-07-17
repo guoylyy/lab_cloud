@@ -59,6 +59,7 @@ dependencies {
 			'org.apache.poi:poi:3.11',
 			'org.apache.xmlbeans:xmlbeans:2.6.0',
 			'dom4j:dom4j:1.6.1',
+			'net.sf.ehcache:ehcache:2.9.1',
 			'com.voodoodyne.jackson.jsog:jackson-jsog:1.1'
 
 	compile fileTree(dir: 'src/main/webapp/WEB-INF/lib', include: '*.jar')
